@@ -1,0 +1,50 @@
+---
+import Layout from '../layouts/Layout.astro';
+import ArtImage from '../components/ArtImage.astro';
+
+const gems = [
+  { src: 'Johannas-Garden-Gem-Full-Edited.jpg', alt: 'Johanna\'s Garden Gem' },
+  { src: 'Cali-Fig-24x36-1.jpg', alt: 'Cali Fig, 24x36' },
+  { src: 'Drippy-Fig-24x36-1.jpg', alt: 'Drippy Fig, 24x36' },
+  { src: 'Drippy-Fig-Installed-24x36-1.jpg', alt: 'Drippy Fig installed' },
+  { src: 'Iris-Fig-Mock-Up.jpg', alt: 'Iris Fig mockup' },
+  { src: 'Iris-Gem-30x72-1.jpg', alt: 'Iris Gem, 30x72' },
+  { src: 'Iris-Gem-Detail-1.jpg', alt: 'Iris Gem detail' },
+  { src: 'Iris-Gem-Detail-2.jpg', alt: 'Iris Gem detail' },
+  { src: 'Iris-Gem-Detail-3.jpg', alt: 'Iris Gem detail' },
+];
+---
+<Layout title="Garden Gems | Anna Hileman Art">
+  <section class="max-w-5xl mx-auto px-6 lg:px-10 py-20 text-center">
+    <div class="text-xs uppercase tracking-[0.3em] text-[color:var(--color-accent)] mb-6">A Series</div>
+    <h1 class="font-display text-6xl lg:text-7xl">Garden Gems</h1>
+    <p class="mt-10 text-lg text-black/70 max-w-2xl mx-auto leading-relaxed">
+      Garden Gems are original, plant-inspired works created in acrylic on custom-built panels.
+      Each piece is rooted in meaning, drawing from the natural world and the stories of the
+      people who commission them.
+    </p>
+  </section>
+
+  <section class="max-w-7xl mx-auto px-6 lg:px-10 pb-24">
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 lg:gap-6">
+      {gems.map((g) => (
+        <ArtImage src={g.src} alt={g.alt} ratio="portrait" />
+      ))}
+    </div>
+  </section>
+
+  <section class="bg-[color:var(--color-accent-soft)]/30">
+    <div class="max-w-3xl mx-auto px-6 lg:px-10 py-20 text-center">
+      <h2 class="font-display text-4xl">About the Series</h2>
+      <p class="mt-8 text-lg text-black/70 leading-relaxed">
+        Each Garden Gem begins with a conversation. What plant speaks to you? What root system,
+        what season, what memory? The piece grows from there, always with signature color,
+        texture, and Anna's hand-built panel.
+      </p>
+      <a href="/contact" class="mt-10 inline-flex items-center gap-2 bg-[color:var(--color-ink)] text-[color:var(--color-paper)] px-8 py-4 tracking-wide hover:bg-[color:var(--color-accent)] transition-colors">
+        Inquire About a Garden Gem
+        <span>&rarr;</span>
+      </a>
+    </div>
+  </section>
+</Layout>

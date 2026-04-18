@@ -1,0 +1,31 @@
+Cloudflare Pages — staging and production (same repo: github.com/brian-dlptest/annahilemanart)
+
+Build settings (both projects)
+  Framework preset: Astro (or None)
+  Build command: npm run build
+  Build output directory: dist
+  Root directory: / (leave empty if repo root is the Astro project)
+  Node version: 20 (matches .node-version / package.json engines)
+
+Environment variables (set per project under Settings → Environment variables → Production)
+  PUBLIC_SITE_URL
+    Staging project:  https://staging.annahileman.com
+    Production project: https://annahileman.com
+  PUBLIC_FORMSPREE_FORM_ID
+    Optional; same Formspree form ID can be used on both, or separate forms per environment.
+
+Staging site
+  1. Create a Pages project, connect this GitHub repo.
+  2. Production branch: staging (create branch: git checkout -b staging && git push -u origin staging).
+  3. Custom domains → add staging.annahileman.com
+  4. DNS (zone on Cloudflare for annahileman.com): CNAME name "staging", target the hostname Pages shows (e.g. annahilemanart-staging.pages.dev). Proxy on (orange cloud).
+
+Production site
+  1. Create a second Pages project, same repo.
+  2. Production branch: main
+  3. Custom domains → add annahileman.com and optionally www
+  4. DNS: follow Pages prompts (often CNAME apex to pages.dev or use CNAME flattening).
+
+Cutover / DNS hygiene
+  Before switching apex records from the old host, lower TTL on relevant records (e.g. 300s) a day ahead.
+  After cutover, verify HTTPS in the browser and https://annahileman.com/sitemap-index.xml

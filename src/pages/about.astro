@@ -1,0 +1,58 @@
+---
+import Layout from '../layouts/Layout.astro';
+import ArtImage from '../components/ArtImage.astro';
+---
+<Layout title="About | Anna Hileman Art">
+  <article class="max-w-5xl mx-auto px-6 lg:px-10 py-20">
+    <div class="text-xs uppercase tracking-[0.3em] text-[color:var(--color-accent)] mb-6">About</div>
+    <h1 class="font-display text-5xl lg:text-6xl mb-12">About Anna Hileman</h1>
+
+    <div class="grid lg:grid-cols-12 gap-12">
+      <div class="lg:col-span-5">
+        <ArtImage src="Anna-Hileman-Artist-Colorado.png" alt="Anna Hileman, Colorado Artist" ratio="portrait" />
+      </div>
+      <div class="lg:col-span-7 prose prose-lg max-w-none space-y-6">
+        <p class="text-lg leading-relaxed text-black/80">
+          Anna Hileman is a Colorado-based muralist and commercial artist creating custom,
+          story-driven artwork shaped by place, meaning, and the lives of her clients.
+        </p>
+        <p class="leading-relaxed text-black/70">
+          Through Anna Hileman Art LLC, she offers full concept-to-completion services,
+          including design, mockups, installation, and delivery for residential,
+          commercial, and educational spaces.
+        </p>
+        <p class="leading-relaxed text-black/70">
+          In addition to murals, Anna creates Garden Gems, vibrant floral and plant-inspired
+          acrylic panels featuring her signature painting style, with each piece rooted in meaning.
+        </p>
+        <p class="leading-relaxed text-black/70">
+          With a BFA in Interior Design and Fine Art, Anna collaborates closely with clients
+          to weave their values and stories into every piece she creates.
+        </p>
+      </div>
+    </div>
+
+    <section class="mt-24">
+      <div class="text-xs uppercase tracking-[0.3em] text-[color:var(--color-accent)] mb-4">Publications &amp; Press</div>
+      <h2 class="font-display text-4xl mb-10">In Print</h2>
+      <div class="grid md:grid-cols-2 gap-10 items-start">
+        <div>
+          <ArtImage src="5280-Mag-Logo.png" alt="Featured in 5280 Magazine" ratio="landscape" />
+        </div>
+        <div class="space-y-4">
+          <h3 class="font-display text-2xl">5280 Magazine</h3>
+          <p class="text-black/70 leading-relaxed">
+            <strong>Road-Trip Restaurant:</strong> Threefold Bakery in Breckenridge.
+          </p>
+          <p class="text-sm text-black/60 leading-relaxed italic">
+            "The name Threefold refers to the French technique of tri-folding croissant dough,
+            and Anna's mural captures the bakery's origin story in a sweeping interior piece."
+          </p>
+          <a href="https://5280.com/threefold-bakery-in-breckenridge-named-the-best-road-trip-restaurant-by-5280-magazine/"
+             class="inline-block text-sm uppercase tracking-wider border-b border-[color:var(--color-ink)] pb-0.5 hover:text-[color:var(--color-accent)] hover:border-[color:var(--color-accent)]"
+             target="_blank" rel="noopener">Read the article</a>
+        </div>
+      </div>
+    </section>
+  </article>
+</Layout>

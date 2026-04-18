@@ -1,0 +1,69 @@
+---
+import Layout from '../layouts/Layout.astro';
+---
+<Layout title="Order a Pet Portrait | Anna Hileman Art">
+  <article class="max-w-3xl mx-auto px-6 lg:px-10 py-20">
+    <div class="text-xs uppercase tracking-[0.3em] text-[color:var(--color-accent)] mb-6">Commission</div>
+    <h1 class="font-display text-5xl mb-8">Order a Pet Portrait</h1>
+    <p class="text-lg text-black/70 leading-relaxed mb-10">
+      Fill out the form below and Anna will reach out within a few business days to discuss
+      sizing, reference photos, and timeline. For questions, see the <a href="/portraits" class="underline">portrait styles and pricing</a> page.
+    </p>
+
+    <form action="https://formspree.io/f/YOUR_FORM_ID" method="POST" class="space-y-8 bg-white border border-black/10 rounded-lg p-8 lg:p-10 shadow-sm">
+      <div>
+        <label class="block text-sm font-medium mb-2">Your name</label>
+        <input name="name" type="text" required class="w-full border border-black/15 rounded px-3 py-2 focus:outline-none focus:border-[color:var(--color-accent)]" />
+      </div>
+      <div>
+        <label class="block text-sm font-medium mb-2">Email</label>
+        <input name="email" type="email" required class="w-full border border-black/15 rounded px-3 py-2 focus:outline-none focus:border-[color:var(--color-accent)]" />
+      </div>
+      <div>
+        <label class="block text-sm font-medium mb-2">Pet's name</label>
+        <input name="pet_name" type="text" class="w-full border border-black/15 rounded px-3 py-2 focus:outline-none focus:border-[color:var(--color-accent)]" />
+      </div>
+      <div>
+        <label class="block text-sm font-medium mb-2">Preferred medium</label>
+        <select name="medium" class="w-full border border-black/15 rounded px-3 py-2 focus:outline-none focus:border-[color:var(--color-accent)]">
+          <option>Acrylic on Aluminum</option>
+          <option>Oil on Linen Canvas</option>
+          <option>Undecided, need advice</option>
+        </select>
+      </div>
+      <div>
+        <label class="block text-sm font-medium mb-2">Size</label>
+        <select name="size" class="w-full border border-black/15 rounded px-3 py-2 focus:outline-none focus:border-[color:var(--color-accent)]">
+          <option>20" x 20"</option>
+          <option>24" x 24"</option>
+          <option>30" x 30"</option>
+          <option>24" x 36"</option>
+          <option>36" x 36"</option>
+          <option>Other / not sure</option>
+        </select>
+      </div>
+      <div>
+        <label class="block text-sm font-medium mb-2">Shipping needed?</label>
+        <div class="flex gap-6 text-sm">
+          <label class="flex items-center gap-2">
+            <input name="shipping" type="radio" value="yes" /> Yes
+          </label>
+          <label class="flex items-center gap-2">
+            <input name="shipping" type="radio" value="no" /> No, local pickup
+          </label>
+        </div>
+      </div>
+      <div>
+        <label class="block text-sm font-medium mb-2">Tell me about your pet</label>
+        <textarea name="message" rows="5" class="w-full border border-black/15 rounded px-3 py-2 focus:outline-none focus:border-[color:var(--color-accent)]" placeholder="Personality, favorite things, any special story..."></textarea>
+      </div>
+      <button type="submit" class="w-full bg-[color:var(--color-ink)] text-[color:var(--color-paper)] py-4 tracking-wide hover:bg-[color:var(--color-accent)] transition-colors">
+        Send Commission Request
+      </button>
+      <p class="text-xs text-black/50 text-center">
+        You can also email <a class="underline" href="mailto:annahilemanart@gmail.com">annahilemanart@gmail.com</a>
+        or call 970.618.2424.
+      </p>
+    </form>
+  </article>
+</Layout>

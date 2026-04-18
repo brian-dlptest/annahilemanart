@@ -1,0 +1,58 @@
+---
+import Layout from '../layouts/Layout.astro';
+import ArtImage from '../components/ArtImage.astro';
+
+const projects = [
+  { title: 'Threefold Bakery', location: 'Breckenridge, Colorado', img: 'Threefold-Bakery-Interior-Mural-by-Anna-Hileman-Courtesy1600.jpeg', note: 'A sweeping interior mural telling the bakery\'s origin story through movement and light.' },
+  { title: 'Dual Immersion Academy', location: 'Grand Junction, Colorado', img: 'Dual-Immersion-Academy-School-Mural-8.jpg', note: 'Bilingual mural celebrating community, learning, and belonging.' },
+  { title: 'Wingate Elementary', location: 'Grand Junction, Colorado', img: 'DosRiosElementary.webp', note: 'Story-driven mural rooted in local landscape and heritage.' },
+];
+---
+<Layout title="Murals | Anna Hileman Art">
+  <section class="max-w-7xl mx-auto px-6 lg:px-10 py-20">
+    <div class="text-xs uppercase tracking-[0.3em] text-[color:var(--color-accent)] mb-6">Large-Scale Work</div>
+    <h1 class="font-display text-5xl lg:text-6xl max-w-3xl">Murals</h1>
+    <p class="mt-8 text-lg text-black/70 max-w-2xl leading-relaxed">
+      Large-scale, story-driven works for schools, restaurants, and residential spaces.
+      Every mural begins with the people and place it will live in.
+    </p>
+  </section>
+
+  <section class="max-w-7xl mx-auto px-6 lg:px-10 pb-24 space-y-24">
+    {projects.map((p, i) => (
+      <article class={`grid lg:grid-cols-12 gap-8 lg:gap-16 items-center ${i % 2 === 1 ? 'lg:[&>*:first-child]:order-2' : ''}`}>
+        <div class="lg:col-span-7">
+          <ArtImage src={p.img} alt={p.title} ratio="landscape" />
+        </div>
+        <div class="lg:col-span-5">
+          <div class="text-xs uppercase tracking-[0.2em] text-black/40 mb-3">{p.location}</div>
+          <h2 class="font-display text-4xl">{p.title}</h2>
+          <p class="mt-6 text-black/70 leading-relaxed">{p.note}</p>
+        </div>
+      </article>
+    ))}
+  </section>
+
+  <section class="bg-[color:var(--color-accent-soft)]/30">
+    <div class="max-w-4xl mx-auto px-6 lg:px-10 py-20 text-center">
+      <h2 class="font-display text-4xl">The Mural Process</h2>
+      <div class="mt-12 grid md:grid-cols-3 gap-10 text-left">
+        <div>
+          <div class="text-xs uppercase tracking-[0.2em] text-[color:var(--color-accent)] mb-2">01</div>
+          <h3 class="font-display text-xl mb-2">Consultation</h3>
+          <p class="text-sm text-black/70 leading-relaxed">An overview of the space, story, and key elements leads to a cohesive theme and color direction.</p>
+        </div>
+        <div>
+          <div class="text-xs uppercase tracking-[0.2em] text-[color:var(--color-accent)] mb-2">02</div>
+          <h3 class="font-display text-xl mb-2">Mockup</h3>
+          <p class="text-sm text-black/70 leading-relaxed">Space is measured and a visual mockup is superimposed onto photos so you can see the piece in place before a brush touches the wall.</p>
+        </div>
+        <div>
+          <div class="text-xs uppercase tracking-[0.2em] text-[color:var(--color-accent)] mb-2">03</div>
+          <h3 class="font-display text-xl mb-2">Installation</h3>
+          <p class="text-sm text-black/70 leading-relaxed">The work is produced and installed with care, safety, and minimal disruption to daily operations.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+</Layout>

@@ -1,0 +1,72 @@
+---
+import Layout from '../layouts/Layout.astro';
+import ArtImage from '../components/ArtImage.astro';
+
+const examples = [
+  'BINA-WEB.jpg', 'IMG_0341.jpg', 'IMG_0342.jpg', 'IMG_0344.jpg',
+  'IMG_0346.jpg', 'IMG_0333.jpg',
+];
+---
+<Layout title="Pet & Animal Portraits | Anna Hileman Art">
+  <section class="max-w-7xl mx-auto px-6 lg:px-10 py-20">
+    <div class="text-xs uppercase tracking-[0.3em] text-[color:var(--color-accent)] mb-6">Commissioned Work</div>
+    <h1 class="font-display text-5xl lg:text-6xl max-w-3xl">Pet &amp; Animal Portraits by Anna Hileman</h1>
+    <p class="mt-8 text-lg text-black/70 max-w-2xl leading-relaxed">
+      I greatly enjoy capturing a beloved pet in an original painting its owners can enjoy forever.
+      I know from experience that the bond between a pet and its family is unmistakable, and I try
+      to bring that specific personality into every portrait.
+    </p>
+    <p class="mt-4 text-lg text-black/70 max-w-2xl leading-relaxed">
+      Below you will find information regarding pricing, styles and sizing. To best answer your
+      questions, fill out the order form on the <a href="/order-pet-portrait" class="underline">Order page</a>.
+    </p>
+  </section>
+
+  <section class="max-w-7xl mx-auto px-6 lg:px-10 pb-24">
+    <div class="grid grid-cols-2 lg:grid-cols-3 gap-4 lg:gap-6">
+      {examples.map((src) => (
+        <ArtImage src={src} alt="Pet portrait" ratio="square" />
+      ))}
+    </div>
+  </section>
+
+  <section class="bg-[color:var(--color-accent-soft)]/30">
+    <div class="max-w-5xl mx-auto px-6 lg:px-10 py-20">
+      <h2 class="font-display text-4xl mb-10">Styles &amp; Pricing</h2>
+      <div class="grid md:grid-cols-2 gap-10">
+        <div>
+          <h3 class="font-display text-2xl mb-3">Acrylic on Aluminum</h3>
+          <p class="text-black/70 leading-relaxed mb-4">
+            Multi-chromatic portraits without a background. The play of light between aluminum
+            and paint gives each piece a distinct, luminous quality.
+          </p>
+          <ul class="text-sm text-black/70 space-y-1">
+            <li>20" x 20" &mdash; $600</li>
+            <li>24" x 24" &mdash; $750</li>
+            <li>30" x 30" &mdash; $850</li>
+          </ul>
+        </div>
+        <div>
+          <h3 class="font-display text-2xl mb-3">Oil on Linen Canvas</h3>
+          <p class="text-black/70 leading-relaxed mb-4">
+            A great choice if you want to include a specific setting or theme. Rich tones and
+            fine detail.
+          </p>
+          <ul class="text-sm text-black/70 space-y-1">
+            <li>20" x 20" &mdash; $500</li>
+            <li>20" x 24" &mdash; $575</li>
+            <li>24" x 24" &mdash; $750</li>
+            <li>24" x 36" &mdash; $1,150</li>
+            <li>36" x 36" &mdash; $1,350</li>
+          </ul>
+        </div>
+      </div>
+      <div class="mt-12 text-center">
+        <a href="/order-pet-portrait" class="inline-flex items-center gap-2 bg-[color:var(--color-ink)] text-[color:var(--color-paper)] px-8 py-4 tracking-wide hover:bg-[color:var(--color-accent)] transition-colors">
+          Start Your Pet Portrait
+          <span>&rarr;</span>
+        </a>
+      </div>
+    </div>
+  </section>
+</Layout>

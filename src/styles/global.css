@@ -1,0 +1,40 @@
+@import "tailwindcss";
+
+@theme {
+  --font-display: "Fraunces", "Playfair Display", Georgia, serif;
+  --font-body: "Inter", system-ui, sans-serif;
+  --color-ink: #1a1a1a;
+  --color-paper: #fafaf7;
+  --color-accent: #6b5d4f;
+  --color-accent-soft: #d9cfc2;
+}
+
+html {
+  font-family: var(--font-body);
+  color: var(--color-ink);
+  background: var(--color-paper);
+  -webkit-font-smoothing: antialiased;
+}
+
+h1, h2, h3, h4 {
+  font-family: var(--font-display);
+  font-weight: 500;
+  letter-spacing: -0.02em;
+}
+
+/* Simple image placeholder while real artwork is being downloaded */
+.placeholder-art {
+  background:
+    linear-gradient(135deg, #e8e0d3 0%, #d9cfc2 50%, #c4b7a4 100%);
+  position: relative;
+  overflow: hidden;
+}
+
+.placeholder-art::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background-image:
+    radial-gradient(circle at 30% 30%, rgba(255,255,255,0.3) 0%, transparent 50%),
+    radial-gradient(circle at 70% 70%, rgba(0,0,0,0.05) 0%, transparent 50%);
+}

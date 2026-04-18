@@ -1,0 +1,98 @@
+---
+import Layout from '../layouts/Layout.astro';
+
+const faqs = [
+  { q: 'Do you take commissions?', a: 'Yes, I am currently taking commissions. If you are interested in a commissioned piece, please email annahilemanart@gmail.com, call 970.618.2424, or use the contact form when it is connected.' },
+  { q: 'How can I be the first to know about new paintings?', a: 'Follow @annahilemanart on Instagram for the fastest updates. A newsletter sign-up may be added here; for now Instagram is the primary channel for new work.' },
+  { q: 'What medium do you use?', a: 'I work across many different mediums. It varies with the subject—including acrylic and oil, gold leaf, and custom 3-D art for commercial spaces. Most commissioned work is acrylic or oil on aluminum or linen canvas.' },
+  { q: 'How can I purchase a painting or print?', a: 'Available work is listed on this site. Sold pieces are marked below each image. Prints are available in limited supply when noted. Each painting is an original and will not be duplicated; contact me about a commission in a similar style if a piece has sold.' },
+  { q: 'What payment methods do you accept?', a: 'Cash, check, PayPal, and Venmo are accepted. There is a 10% upcharge for PayPal/Venmo to cover processing fees. A 50% deposit is typically required to begin a commissioned painting, with the remainder due upon completion.' },
+  { q: 'What is your return or exchange policy?', a: 'All paintings, prints, and products are final sale. Please email annahilemanart@gmail.com with any questions about a purchase.' },
+];
+
+const formId = import.meta.env.PUBLIC_FORMSPREE_FORM_ID;
+const formAction = formId ? `https://formspree.io/f/${formId}` : null;
+---
+<Layout title="Contact Anna Hileman">
+  <section class="max-w-7xl mx-auto px-6 lg:px-10 py-20">
+    <div class="grid lg:grid-cols-5 gap-12">
+      <div class="lg:col-span-2">
+        <div class="text-xs uppercase tracking-[0.3em] text-[color:var(--color-accent)] mb-6">Contact</div>
+        <h1 class="font-display text-5xl mb-6">Get In Touch</h1>
+        <p class="text-black/70 leading-relaxed mb-10">
+          Use the form to reach out about a commission, question, or just to say hello.
+          Please be as descriptive as possible.
+        </p>
+        <div class="space-y-4 text-sm">
+          <div>
+            <div class="text-xs uppercase tracking-wider text-black/40 mb-1">Email</div>
+            <a href="mailto:annahilemanart@gmail.com" class="hover:underline">annahilemanart@gmail.com</a>
+          </div>
+          <div>
+            <div class="text-xs uppercase tracking-wider text-black/40 mb-1">Phone</div>
+            <a href="tel:+19706182424" class="hover:underline">970.618.2424</a>
+          </div>
+          <div>
+            <div class="text-xs uppercase tracking-wider text-black/40 mb-1">Instagram</div>
+            <a href="https://www.instagram.com/annahilemanart/" class="hover:underline" target="_blank" rel="noopener">@annahilemanart</a>
+          </div>
+        </div>
+      </div>
+
+      <div class="lg:col-span-3">
+        {formAction ? (
+          <form action={formAction} method="POST" class="space-y-6 bg-white border border-black/10 rounded-lg p-8 shadow-sm">
+            <div class="grid md:grid-cols-2 gap-6">
+              <div>
+                <label class="block text-sm font-medium mb-2">Name</label>
+                <input name="name" required type="text" class="w-full border border-black/15 rounded px-3 py-2 focus:outline-none focus:border-[color:var(--color-accent)]" />
+              </div>
+              <div>
+                <label class="block text-sm font-medium mb-2">Email</label>
+                <input name="email" required type="email" class="w-full border border-black/15 rounded px-3 py-2 focus:outline-none focus:border-[color:var(--color-accent)]" />
+              </div>
+            </div>
+            <div>
+              <label class="block text-sm font-medium mb-2">Subject</label>
+              <input name="subject" type="text" class="w-full border border-black/15 rounded px-3 py-2 focus:outline-none focus:border-[color:var(--color-accent)]" />
+            </div>
+            <div>
+              <label class="block text-sm font-medium mb-2">Message</label>
+              <textarea name="message" rows="6" required class="w-full border border-black/15 rounded px-3 py-2 focus:outline-none focus:border-[color:var(--color-accent)]"></textarea>
+            </div>
+            <button type="submit" class="w-full bg-[color:var(--color-ink)] text-[color:var(--color-paper)] py-4 tracking-wide hover:bg-[color:var(--color-accent)] transition-colors">
+              Send Message
+            </button>
+          </form>
+        ) : (
+          <div class="bg-white border border-black/10 rounded-lg p-8 shadow-sm space-y-4">
+            <p class="text-black/70 leading-relaxed">
+              Online form is not configured yet. Set <code class="text-sm bg-black/5 px-1 rounded">PUBLIC_FORMSPREE_FORM_ID</code> in Cloudflare Pages (or <code class="text-sm bg-black/5 px-1 rounded">.env</code> locally) after creating a form at{' '}
+              <a href="https://formspree.io" class="underline hover:text-[color:var(--color-accent)]" target="_blank" rel="noopener">formspree.io</a>.
+            </p>
+            <p class="text-black/70 leading-relaxed">
+              Until then, email <a href="mailto:annahilemanart@gmail.com" class="underline hover:text-[color:var(--color-accent)]">annahilemanart@gmail.com</a> or call <a href="tel:+19706182424" class="underline hover:text-[color:var(--color-accent)]">970.618.2424</a>.
+            </p>
+          </div>
+        )}
+      </div>
+    </div>
+  </section>
+
+  <section class="bg-[color:var(--color-accent-soft)]/30">
+    <div class="max-w-4xl mx-auto px-6 lg:px-10 py-20">
+      <h2 class="font-display text-4xl mb-10">Frequently Asked Questions</h2>
+      <div class="space-y-4">
+        {faqs.map((f) => (
+          <details class="bg-white border border-black/10 rounded-lg p-6 group">
+            <summary class="cursor-pointer font-medium flex items-center justify-between list-none">
+              {f.q}
+              <span class="text-[color:var(--color-accent)] group-open:rotate-45 transition-transform text-2xl leading-none">+</span>
+            </summary>
+            <p class="mt-4 text-black/70 leading-relaxed">{f.a}</p>
+          </details>
+        ))}
+      </div>
+    </div>
+  </section>
+</Layout>

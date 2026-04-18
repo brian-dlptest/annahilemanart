@@ -1,0 +1,46 @@
+---
+import Layout from '../layouts/Layout.astro';
+import ArtImage from '../components/ArtImage.astro';
+---
+<Layout title="Custom & Commercial Artwork | Anna Hileman Art">
+  <section class="max-w-7xl mx-auto px-6 lg:px-10 py-20">
+    <div class="text-xs uppercase tracking-[0.3em] text-[color:var(--color-accent)] mb-6">Commercial</div>
+    <h1 class="font-display text-5xl lg:text-6xl max-w-3xl">Custom and Commercial Artwork</h1>
+    <p class="mt-8 text-lg text-black/70 max-w-2xl leading-relaxed">
+      Drawing from a background in Interior Design, Anna enhances commercial spaces with
+      original artwork that feels inevitable to its setting.
+    </p>
+  </section>
+
+  <section class="max-w-5xl mx-auto px-6 lg:px-10 pb-16">
+    <h2 class="font-display text-3xl mb-6">Key components of the service</h2>
+    <ul class="space-y-3 text-black/80">
+      <li class="flex gap-3"><span class="text-[color:var(--color-accent)]">&#10003;</span> On-site visits to understand preferences, company image, and budget</li>
+      <li class="flex gap-3"><span class="text-[color:var(--color-accent)]">&#10003;</span> Artwork and conceptual ideas tailored to the space and brand</li>
+      <li class="flex gap-3"><span class="text-[color:var(--color-accent)]">&#10003;</span> Full mockups superimposed on photos of the real space</li>
+      <li class="flex gap-3"><span class="text-[color:var(--color-accent)]">&#10003;</span> Production, delivery, and installation managed end to end</li>
+    </ul>
+  </section>
+
+  <section class="max-w-7xl mx-auto px-6 lg:px-10 pb-24 space-y-20">
+    <article>
+      <div class="text-xs uppercase tracking-[0.2em] text-black/40 mb-3">Breckenridge, Colorado</div>
+      <h2 class="font-display text-4xl mb-4">Radicato</h2>
+      <p class="text-sm uppercase tracking-wider text-black/50 mb-6">Culinary destination, James Beard Award recipient</p>
+      <ArtImage src="IMG_5993.jpeg" alt="Radicato Breckenridge" ratio="landscape" />
+      <p class="mt-6 text-black/70 leading-relaxed max-w-3xl">
+        This body of work comprises 13 custom pieces of art, each created specifically for its
+        placement within the restaurant, reflecting the kitchen's philosophy and regional story.
+      </p>
+    </article>
+    <article>
+      <div class="text-xs uppercase tracking-[0.2em] text-black/40 mb-3">Grand Junction, Colorado</div>
+      <h2 class="font-display text-4xl mb-4">Wingate Elementary School Mural</h2>
+      <p class="mt-6 text-black/70 leading-relaxed max-w-3xl">
+        Beginning with the Wingate Explorers, Anna aimed to demonstrate the vast world ahead for
+        the students while including local landmarks: the monument, wild horses, dinosaur
+        fossils, native wildflowers, and the mountains of western Colorado.
+      </p>
+    </article>
+  </section>
+</Layout>
