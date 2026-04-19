@@ -3,7 +3,7 @@
  * Fetches review snippets via Google Places Details (same place_id as Maps / WP plugin).
  * Set GOOGLE_MAPS_API_KEY with Places API enabled.
  *
- *   GOOGLE_MAPS_API_KEY=... npm run reviews:fetch
+ *   GOOGLE_MAPS_API_KEY=... GOOGLE_PLACE_ID=ChIJ... npm run reviews:fetch
  *
  * @see https://developers.google.com/maps/documentation/places/web-service/place-details
  */
@@ -16,10 +16,18 @@ const root = path.join(__dirname, '..');
 const outFile = path.join(root, 'src/data/google-reviews-fetched.json');
 
 const key = process.env.GOOGLE_MAPS_API_KEY;
-const placeId = process.env.GOOGLE_PLACE_ID ?? 'ChIJAQBkeKGIa4cRxNgoGRLnFqw';
+const placeId = process.env.GOOGLE_PLACE_ID?.trim();
 
 if (!key) {
   console.error('Missing GOOGLE_MAPS_API_KEY. Enable Places API on your key and try again.');
+  process.exit(1);
+}
+if (!placeId) {
+  console.error(
+    'Missing GOOGLE_PLACE_ID. Set the current Place ID for the business (GitHub secret or env).\n' +
+      'Find it: open Google Maps → your listing → Share → copy link, or use Google’s Place ID finder.\n' +
+      'Old IDs return NOT_FOUND — see https://developers.google.com/maps/documentation/places/web-service/place-id',
+  );
   process.exit(1);
 }
 
@@ -38,7 +46,11 @@ if (!res.ok) {
 }
 if (data.status !== 'OK') {
   console.error('Places API status:', data.status, data.error_message ?? '(no message)');
-  // Full body helps debug in GitHub Actions (REQUEST_DENIED, API not enabled, billing, etc.)
+  if (data.status === 'NOT_FOUND') {
+    console.error(
+      'This Place ID is invalid or was retired. Update GOOGLE_PLACE_ID with a fresh ID from Google Maps / Place ID finder.',
+    );
+  }
   console.error(JSON.stringify(data, null, 2));
   process.exit(1);
 }
@@ -46,6 +58,7 @@ if (data.status !== 'OK') {
 const result = data.result ?? {};
 const out = {
   source: 'google-places-api',
+  place_id: placeId,
   html_attributions: Array.isArray(data.html_attributions) ? data.html_attributions : [],
   business_name: result.name ?? null,
   maps_url: result.url ?? null,

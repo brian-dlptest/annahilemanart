@@ -11,11 +11,9 @@
  */
 import fetched from './google-reviews-fetched.json';
 
-/** Fallback if fetched JSON has no `maps_url` yet (query by place_id). */
+/** Fallback Maps search until a successful `reviews:fetch` provides `maps_url`. */
 const FALLBACK_MAPS_URL =
-  'https://www.google.com/maps?q=place_id:ChIJAQBkeKGIa4cRxNgoGRLnFqw';
-
-export const googlePlaceId = 'ChIJAQBkeKGIa4cRxNgoGRLnFqw';
+  'https://www.google.com/maps/search/Anna%20Hileman%20Art%20Colorado';
 
 type FetchedReview = {
   author_name: string;
@@ -27,6 +25,7 @@ type FetchedReview = {
 
 type FetchedPayload = {
   source: string;
+  place_id?: string | null;
   html_attributions: string[];
   reviews: FetchedReview[];
   rating: number | null;
@@ -124,3 +123,7 @@ export const googleReviewStats = {
 
 /** Google Places policy: show these when reviews come from the API (`reviews:fetch`). */
 export const googleReviewAttributions: string[] = useFetched ? payload.html_attributions : [];
+
+/** Place ID last used by `reviews:fetch` (null before a successful fetch). */
+export const googlePlaceId: string | null =
+  useFetched && payload.place_id?.trim() ? payload.place_id.trim() : null;

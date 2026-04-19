@@ -1,8 +1,9 @@
 # Fetches Google Places reviews into src/data/google-reviews-fetched.json and commits
 # if the file changed. Cloudflare Pages rebuilds from the new commit (same as a normal push).
 #
-# Requires repository secret: GOOGLE_MAPS_API_KEY (duplicate the value from Cloudflare here;
-# GitHub Actions cannot read Cloudflare env vars).
+# Repository secrets (Settings → Secrets and variables → Actions):
+#   GOOGLE_MAPS_API_KEY — Maps Platform key with Places API enabled
+#   GOOGLE_PLACE_ID — current Place ID for the business (IDs can expire; refresh if API returns NOT_FOUND)
 #
 # Scheduled runs only fire from the repo default branch — merge this workflow into `main`
 # even if commits target `staging` (see checkout ref below).
@@ -43,18 +44,24 @@ jobs:
       - name: Install dependencies
         run: npm ci
 
-      - name: Require Google Maps API secret
+      - name: Require Google Maps secrets
         env:
           GOOGLE_MAPS_API_KEY: ${{ secrets.GOOGLE_MAPS_API_KEY }}
+          GOOGLE_PLACE_ID: ${{ secrets.GOOGLE_PLACE_ID }}
         run: |
           if [ -z "$GOOGLE_MAPS_API_KEY" ]; then
-            echo "::error title=Missing secret::Add repository secret GOOGLE_MAPS_API_KEY under Settings → Secrets and variables → Actions (same key as Cloudflare)."
+            echo "::error::Add repository secret GOOGLE_MAPS_API_KEY (Settings → Secrets and variables → Actions)."
+            exit 1
+          fi
+          if [ -z "$GOOGLE_PLACE_ID" ]; then
+            echo "::error::Add repository secret GOOGLE_PLACE_ID. Google rotates Place IDs; get a current ID from Maps → your listing → Share, or https://developers.google.com/maps/documentation/javascript/examples/places-placeid-finder"
             exit 1
           fi
 
       - name: Fetch reviews from Google Places API
         env:
           GOOGLE_MAPS_API_KEY: ${{ secrets.GOOGLE_MAPS_API_KEY }}
+          GOOGLE_PLACE_ID: ${{ secrets.GOOGLE_PLACE_ID }}
         run: npm run reviews:fetch
 
       - name: Verify build
