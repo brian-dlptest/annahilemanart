@@ -38,3 +38,7 @@ h1, h2, h3, h4 {
     radial-gradient(circle at 30% 30%, rgba(255,255,255,0.3) 0%, transparent 50%),
     radial-gradient(circle at 70% 70%, rgba(0,0,0,0.05) 0%, transparent 50%);
 }
+
+#site-lightbox::backdrop {
+  background: rgba(0, 0, 0, 0.88);
+}

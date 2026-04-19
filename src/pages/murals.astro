@@ -1,5 +1,6 @@
 ---
 import Layout from '../layouts/Layout.astro';
+import LightboxThumb from '../components/LightboxThumb.astro';
 
 const includes = [
   'A collaborative design process tailored to your school’s values and culture',
@@ -59,9 +60,7 @@ const mesaThumbs = ['MV-Mural-Main-Pic.jpg', 'MV-Mural-Main-Pic-1.jpg', 'Mesa-Vi
 
       <div class="mt-10 grid grid-cols-2 md:grid-cols-3 gap-2">
         {diaThumbs.map((src) => (
-          <div class="aspect-square overflow-hidden rounded-md bg-black/5">
-            <img src={`/images/${src}`} alt="" class="w-full h-full object-cover" loading="lazy" />
-          </div>
+          <LightboxThumb src={src} alt="Dual Immersion Academy school mural" />
         ))}
       </div>
 
@@ -133,9 +132,7 @@ bajo un cielo eterno que nos quiere abrazar.`}
 
       <div class="mt-10 grid grid-cols-2 sm:grid-cols-3 gap-2">
         {wingateThumbs.map((src) => (
-          <div class="aspect-square overflow-hidden rounded-md bg-black/5">
-            <img src={`/images/${src}`} alt="" class="w-full h-full object-cover" loading="lazy" />
-          </div>
+          <LightboxThumb src={src} alt="Wingate Elementary school mural" />
         ))}
       </div>
 
@@ -161,9 +158,7 @@ bajo un cielo eterno que nos quiere abrazar.`}
 
       <div class="mt-10 grid grid-cols-2 md:grid-cols-3 gap-2">
         {rockyThumbs.map((src) => (
-          <div class="aspect-[4/3] overflow-hidden rounded-md bg-black/5">
-            <img src={`/images/${src}`} alt="" class="w-full h-full object-cover" loading="lazy" />
-          </div>
+          <LightboxThumb src={src} alt="Rocky Mountain Elementary exterior mural" aspectClass="aspect-[4/3]" />
         ))}
       </div>
 
@@ -207,9 +202,7 @@ bajo un cielo eterno que nos quiere abrazar.`}
 
       <div class="mt-10 grid grid-cols-2 md:grid-cols-4 gap-2">
         {mesaThumbs.map((src) => (
-          <div class="aspect-square overflow-hidden rounded-md bg-black/5">
-            <img src={`/images/${src}`} alt="" class="w-full h-full object-cover" loading="lazy" />
-          </div>
+          <LightboxThumb src={src} alt="Mesa View Elementary school mural" />
         ))}
       </div>
 

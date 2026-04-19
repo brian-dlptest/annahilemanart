@@ -1,0 +1,23 @@
+---
+interface Props {
+  /** Filename under /images/ */
+  src: string;
+  alt?: string;
+  /** Tailwind aspect class, e.g. aspect-square, aspect-[4/3] */
+  aspectClass?: string;
+}
+
+const { src, alt = '', aspectClass = 'aspect-square' } = Astro.props;
+const href = `/images/${src}`;
+---
+<div class:list={[aspectClass, 'overflow-hidden rounded-md bg-black/5']}>
+  <button
+    type="button"
+    class="block h-full w-full cursor-zoom-in border-0 bg-transparent p-0 text-left"
+    data-lightbox={href}
+    data-lightbox-alt={alt}
+    aria-label={alt ? `View larger: ${alt}` : 'View larger image'}
+  >
+    <img src={href} alt={alt} class="pointer-events-none h-full w-full object-cover" loading="lazy" />
+  </button>
+</div>

@@ -1,5 +1,6 @@
 ---
 import Layout from '../layouts/Layout.astro';
+import LightboxThumb from '../components/LightboxThumb.astro';
 
 const processSteps = [
   {
@@ -109,9 +110,7 @@ const qiThumbs = [
           </div>
           <div class="grid grid-cols-3 gap-2">
             {threefoldThumbs.map((src) => (
-              <div class="aspect-square overflow-hidden rounded-md bg-black/5">
-                <img src={`/images/${src}`} alt="" class="w-full h-full object-cover" loading="lazy" />
-              </div>
+              <LightboxThumb src={src} alt="Threefold Bakery mural detail" />
             ))}
           </div>
         </div>
@@ -146,9 +145,7 @@ const qiThumbs = [
           </div>
           <div class="grid grid-cols-3 gap-2">
             {radicatoThumbs.map((src) => (
-              <div class="aspect-square overflow-hidden rounded-md bg-black/5">
-                <img src={`/images/${src}`} alt="" class="w-full h-full object-cover" loading="lazy" />
-              </div>
+              <LightboxThumb src={src} alt="Radicato commissioned artwork" />
             ))}
           </div>
         </div>
@@ -180,9 +177,7 @@ const qiThumbs = [
           </div>
           <div class="grid grid-cols-3 gap-2">
             {qiThumbs.map((src) => (
-              <div class="aspect-square overflow-hidden rounded-md bg-black/5">
-                <img src={`/images/${src}`} alt="" class="w-full h-full object-cover" loading="lazy" />
-              </div>
+              <LightboxThumb src={src} alt="Quality Italian restaurant artwork" />
             ))}
           </div>
         </div>

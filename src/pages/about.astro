@@ -9,7 +9,7 @@ import ArtImage from '../components/ArtImage.astro';
 
     <div class="grid lg:grid-cols-12 gap-12">
       <div class="lg:col-span-5">
-        <ArtImage src="Anna-Hileman-Artist-Colorado.png" alt="Anna Hileman, Colorado Artist" ratio="portrait" />
+        <ArtImage src="Anna-Hileman-Artist-Colorado.png" alt="Anna Hileman, Colorado Artist" ratio="portrait" lightbox={false} />
       </div>
       <div class="lg:col-span-7 prose prose-lg max-w-none space-y-6">
         <p class="text-lg leading-relaxed text-black/80">
@@ -37,7 +37,7 @@ import ArtImage from '../components/ArtImage.astro';
       <h2 class="font-display text-4xl mb-10">In Print</h2>
       <div class="grid md:grid-cols-2 gap-10 items-start">
         <div>
-          <ArtImage src="5280-Mag-Logo.png" alt="Featured in 5280 Magazine" ratio="landscape" />
+          <ArtImage src="5280-Mag-Logo.png" alt="Featured in 5280 Magazine" ratio="landscape" lightbox={false} />
         </div>
         <div class="space-y-4">
           <h3 class="font-display text-2xl">5280 Magazine</h3>

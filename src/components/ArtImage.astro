@@ -4,9 +4,11 @@ interface Props {
   alt: string;
   class?: string;
   ratio?: 'square' | 'portrait' | 'landscape' | 'wide';
+  /** When true, click opens a full-size view (same file). Default true. Set false for nav cards or non-gallery use. */
+  lightbox?: boolean;
 }
 
-const { src, alt, class: cls = '', ratio = 'square' } = Astro.props;
+const { src, alt, class: cls = '', ratio = 'square', lightbox = true } = Astro.props;
 
 const ratioClass = {
   square: 'aspect-square',
@@ -17,22 +19,44 @@ const ratioClass = {
 
 // Use a real image if provided, otherwise placeholder
 const imageSrc = src ? `/images/${src}` : null;
+const lightboxOn = Boolean(lightbox && imageSrc);
+
+const shellClass = `${ratioClass} ${cls} overflow-hidden bg-[color:var(--color-accent-soft)] placeholder-art`;
+const triggerClass = `${shellClass} block w-full cursor-zoom-in border-0 p-0 text-left focus:outline-none focus-visible:ring-2 focus-visible:ring-[color:var(--color-accent)] focus-visible:ring-offset-2 focus-visible:ring-offset-[color:var(--color-paper)]`;
 ---
-<div class={`${ratioClass} ${cls} overflow-hidden bg-[color:var(--color-accent-soft)] placeholder-art`}>
-  {imageSrc && (
+
+{lightboxOn ? (
+  <button
+    type="button"
+    class={triggerClass}
+    data-lightbox={imageSrc}
+    data-lightbox-alt={alt}
+    aria-label={`View larger: ${alt}`}
+  >
     <img
       src={imageSrc}
-      alt={alt}
-      class="w-full h-full object-cover"
+      alt=""
+      class="pointer-events-none h-full w-full object-cover"
       loading="lazy"
     />
-  )}
-  {!imageSrc && (
-    <div class="w-full h-full flex items-center justify-center relative">
-      <div class="font-display text-[color:var(--color-accent)]/70 text-center px-4 relative z-10">
-        <div class="text-xs uppercase tracking-[0.2em] mb-2">Artwork</div>
-        <div class="text-sm">{alt}</div>
+  </button>
+) : (
+  <div class={shellClass}>
+    {imageSrc && (
+      <img
+        src={imageSrc}
+        alt={alt}
+        class="h-full w-full object-cover"
+        loading="lazy"
+      />
+    )}
+    {!imageSrc && (
+      <div class="relative z-10 flex h-full w-full items-center justify-center">
+        <div class="relative z-10 px-4 text-center font-display text-[color:var(--color-accent)]/70">
+          <div class="mb-2 text-xs uppercase tracking-[0.2em]">Artwork</div>
+          <div class="text-sm">{alt}</div>
+        </div>
       </div>
-    </div>
-  )}
-</div>
+    )}
+  </div>
+)}

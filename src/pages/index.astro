@@ -29,7 +29,7 @@ import ArtImage from '../components/ArtImage.astro';
           </div>
         </div>
         <div class="lg:col-span-6">
-          <ArtImage alt="Threefold Bakery Mural, Breckenridge" src="Threefold-Bakery-Interior-Mural-by-Anna-Hileman-Courtesy1600.jpeg" ratio="landscape" class="shadow-2xl" />
+          <ArtImage alt="Threefold Bakery Mural, Breckenridge" src="Threefold-Bakery-Interior-Mural-by-Anna-Hileman-Courtesy1600.jpeg" ratio="landscape" class="shadow-2xl" lightbox={false} />
         </div>
       </div>
     </div>
@@ -52,7 +52,7 @@ import ArtImage from '../components/ArtImage.astro';
           { href: '/news', title: 'News & Updates', blurb: 'Press, features, and stories from the studio.', img: '5280-Mag-Logo.png' },
         ].map((item) => (
           <a href={item.href} class="group block">
-            <ArtImage alt={item.title} src={item.img} ratio="portrait" class="group-hover:opacity-90 transition-opacity" />
+            <ArtImage alt={item.title} src={item.img} ratio="portrait" class="group-hover:opacity-90 transition-opacity" lightbox={false} />
             <div class="mt-4">
               <h3 class="font-display text-2xl group-hover:text-[color:var(--color-accent)] transition-colors">{item.title}</h3>
               <p class="mt-2 text-sm text-black/60 leading-relaxed">{item.blurb}</p>
