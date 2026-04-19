@@ -5,15 +5,15 @@
 ---
 <dialog
   id="site-lightbox"
-  class="site-lightbox max-h-[min(96vh,900px)] w-[min(96vw,1200px)] max-w-none border-0 bg-transparent p-0 shadow-none open:flex open:items-center open:justify-center"
+  class="site-lightbox"
   aria-modal="true"
   aria-label="Enlarged artwork"
 >
-  <div class="relative flex max-h-[min(96vh,900px)] w-full flex-col items-center justify-center">
+  <div class="relative box-border mx-auto flex max-h-[min(92vh,900px)] w-[min(92vw,1200px)] max-w-[min(92vw,1200px)] flex-col items-center justify-center gap-3 overflow-hidden px-3 pb-3 pt-12 sm:px-4 sm:pb-4 sm:pt-14">
     <button
       type="button"
       data-lightbox-close
-      class="absolute -right-1 -top-10 z-10 flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-[color:var(--color-paper)] text-[color:var(--color-ink)] shadow-md ring-1 ring-black/15 transition hover:bg-black/5 md:-right-2 md:-top-12"
+      class="absolute right-2 top-2 z-10 flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-[color:var(--color-paper)] text-[color:var(--color-ink)] shadow-md ring-1 ring-black/15 transition hover:bg-black/5 sm:right-3 sm:top-3"
       aria-label="Close"
     >
       <svg class="h-5 w-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
@@ -23,10 +23,10 @@
     <img
       src="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw=="
       alt=""
-      class="max-h-[min(85vh,860px)] w-auto max-w-full rounded object-contain shadow-2xl"
+      class="mx-auto max-h-[min(78vh,820px)] w-auto max-w-full rounded object-contain shadow-2xl"
       data-lightbox-img
     />
-    <p id="site-lightbox-caption" data-lightbox-caption class="mt-4 max-w-full text-center text-sm text-white/90 empty:hidden"></p>
+    <p id="site-lightbox-caption" data-lightbox-caption class="max-w-full shrink-0 text-center text-sm text-white/90 empty:hidden"></p>
   </div>
 </dialog>
 
@@ -57,6 +57,8 @@
         }
         if (typeof dialog.showModal === 'function') {
           dialog.showModal();
+          document.documentElement.style.overflow = 'hidden';
+          document.body.style.overflow = 'hidden';
         }
       });
 
@@ -65,6 +67,11 @@
           dialog.close();
         }
       }
+
+      dialog.addEventListener('close', function () {
+        document.documentElement.style.overflow = '';
+        document.body.style.overflow = '';
+      });
 
       if (closeBtn) {
         closeBtn.addEventListener('click', function (e) {

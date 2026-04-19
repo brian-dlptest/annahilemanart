@@ -39,6 +39,19 @@ h1, h2, h3, h4 {
     radial-gradient(circle at 70% 70%, rgba(0,0,0,0.05) 0%, transparent 50%);
 }
 
+#site-lightbox {
+  margin: auto;
+  padding: 0;
+  border: none;
+  background: transparent;
+  color-scheme: dark;
+  overflow: hidden;
+}
+
 #site-lightbox::backdrop {
   background: rgba(0, 0, 0, 0.88);
+}
+
+html:has(#site-lightbox[open]) {
+  overflow: hidden;
 }
