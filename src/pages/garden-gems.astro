@@ -9,17 +9,17 @@ const hero = {
 type GalleryItem = {
   src: string;
   alt: string;
-  /** Panoramas: span full gallery width when multi-column so the preview isn’t a thin strip. */
-  spanAll?: boolean;
+  /** Wide panorama: span 2 of 3 grid columns on lg (not full width). */
+  span2Lg?: boolean;
 };
 
-/** Remaining pieces in a fluid column-masonry layout (natural aspect ratios). */
+/** Remaining pieces: CSS Grid (1 / 2 / 3 columns), natural image heights. */
 const gallery: GalleryItem[] = [
   { src: 'Cali-Fig-24x36-1.jpg', alt: 'Cali Fig, 24x36' },
   { src: 'Drippy-Fig-24x36-1.jpg', alt: 'Drippy Fig, 24x36' },
   { src: 'Drippy-Fig-Installed-24x36-1.jpg', alt: 'Drippy Fig installed' },
   { src: 'Iris-Fig-Mock-Up.jpg', alt: 'Iris Fig mockup' },
-  { src: 'Iris-Gem-30x72-1.jpg', alt: 'Iris Gem, 30x72', spanAll: true },
+  { src: 'Iris-Gem-30x72-1.jpg', alt: 'Iris Gem, 30x72', span2Lg: true },
   { src: 'Iris-Gem-Detail-1.jpg', alt: 'Iris Gem detail' },
   { src: 'Iris-Gem-Detail-2.jpg', alt: 'Iris Gem detail' },
   { src: 'Iris-Gem-Detail-3.jpg', alt: 'Iris Gem detail' },
@@ -62,16 +62,16 @@ const heroHref = `/images/${hero.src}`;
     </button>
   </section>
 
-  <!-- Fluid masonry: multi-column layout, natural image heights -->
+  <!-- Gallery grid: lg uses 3 columns; wide panoramas can span 2 -->
   <section class="max-w-[1600px] mx-auto px-4 sm:px-6 lg:px-10 pb-24 pt-6 lg:pt-10">
-    <div class="columns-1 [column-gap:1rem] sm:columns-2 lg:columns-3 lg:[column-gap:1.25rem]">
+    <div class="grid grid-cols-1 gap-4 sm:grid-cols-2 sm:gap-4 lg:grid-cols-3 lg:gap-5">
       {gallery.map((g) => {
         const href = `/images/${g.src}`;
         return (
           <div
             class:list={[
-              'mb-4 break-inside-avoid w-full',
-              g.spanAll && 'sm:[column-span:all]',
+              'min-w-0',
+              g.span2Lg && 'lg:col-span-2',
             ]}
           >
             <button
