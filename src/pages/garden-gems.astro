@@ -32,11 +32,14 @@ const heroHref = `/images/${hero.src}`;
     </p>
   </section>
 
-  <!-- Full-bleed hero at top of gallery -->
-  <section class="w-full" aria-label="Featured Garden Gem">
+  <!-- Hero: same max width and padding as mosaic gallery below -->
+  <section
+    class="max-w-[1600px] mx-auto px-4 sm:px-6 lg:px-10"
+    aria-label="Featured Garden Gem"
+  >
     <button
       type="button"
-      class="block w-full cursor-zoom-in border-0 bg-transparent p-0 text-left focus:outline-none focus-visible:ring-2 focus-visible:ring-[color:var(--color-accent)] focus-visible:ring-offset-2 focus-visible:ring-offset-[color:var(--color-paper)]"
+      class="block w-full cursor-zoom-in overflow-hidden rounded-lg border-0 bg-[color:var(--color-accent-soft)] p-0 text-left shadow-sm ring-1 ring-black/5 transition-shadow hover:shadow-md focus:outline-none focus-visible:ring-2 focus-visible:ring-[color:var(--color-accent)] focus-visible:ring-offset-2 focus-visible:ring-offset-[color:var(--color-paper)]"
       data-lightbox={heroHref}
       data-lightbox-alt={hero.alt}
       aria-label={`View larger: ${hero.alt}`}
@@ -44,7 +47,7 @@ const heroHref = `/images/${hero.src}`;
       <img
         src={heroHref}
         alt=""
-        class="pointer-events-none block w-full max-h-[min(92vh,1400px)] object-cover object-center"
+        class="pointer-events-none block h-auto w-full"
         loading="eager"
         fetchpriority="high"
         decoding="async"
