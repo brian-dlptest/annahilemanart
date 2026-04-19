@@ -89,7 +89,15 @@ const mesaThumbs = ['MV-Mural-Main-Pic.jpg', 'MV-Mural-Main-Pic-1.jpg', 'Mesa-Vi
       <h2 class="font-display text-3xl md:text-4xl text-center">Dual Immersion Academy</h2>
 
       <div class="mt-12 grid gap-12 lg:grid-cols-2 lg:gap-14 lg:items-start">
-        <div class="space-y-8">
+        <div class="min-w-0 space-y-8">
+          <div>
+            <p class="text-base font-semibold tracking-wide text-[color:var(--color-ink)]">Grand Junction, Colorado</p>
+
+            <p class="mt-6 text-black/80 leading-relaxed">
+              Each school mural is accompanied by an original poem, written by Anna to inspire the imagery and deepen the story behind the artwork. This poem was provided in English and Spanish as both languages are taught at the Dual Immersion Academy.
+            </p>
+          </div>
+
           <div class="overflow-hidden rounded-lg bg-black/5 ring-1 ring-black/5">
             <img
               src={diaMainImage}
@@ -122,20 +130,23 @@ const mesaThumbs = ['MV-Mural-Main-Pic.jpg', 'MV-Mural-Main-Pic-1.jpg', 'Mesa-Vi
               ))}
             </div>
           </details>
+
+          <figure class="border-l-2 border-[color:var(--color-accent)] pl-6 py-1">
+            <blockquote class="text-black/80 italic leading-relaxed">
+              “I highly recommend Anna Hileman, who created a mural at our school. She was delightful to work with, understood the unique needs of the population we serve, and completed the project quickly and beautifully.”
+            </blockquote>
+            <figcaption class="mt-4 text-sm text-black/70 not-italic font-body">
+              <span class="font-semibold text-[color:var(--color-ink)]">Tyler McLaughlin</span>
+              <span class="block">Principal, Dual Immersion Academy</span>
+            </figcaption>
+          </figure>
         </div>
 
-        <div class="min-w-0">
-          <p class="text-base font-semibold tracking-wide text-[color:var(--color-ink)]">Grand Junction, Colorado</p>
-
-          <p class="mt-5 text-sm text-black/80 leading-relaxed">
-            Each school mural is accompanied by an original poem, written by Anna to inspire the imagery and deepen the story behind the artwork. This poem was provided in English and Spanish as both languages are taught at the Dual Immersion Academy.
-          </p>
-
-          <div class="mt-8 space-y-8">
-            <div>
-              <h3 class="font-display text-xl mb-3">Beneath the Sun</h3>
-              <div class="text-black/80 leading-[1.65] whitespace-pre-line font-body text-sm">
-                {`Like bobcats bold beneath the sky, we lift our youth, their spirits high.
+        <div class="min-w-0 space-y-8">
+          <div>
+            <h3 class="font-display text-xl mb-3">Beneath the Sun</h3>
+            <div class="text-black/80 leading-[1.65] whitespace-pre-line font-body text-sm">
+              {`Like bobcats bold beneath the sky, we lift our youth, their spirits high.
 With courage and hope, we show the way—
 to dream, to grow, to seize each day.
 English and Spanish, two voices, one song,
@@ -150,12 +161,12 @@ Friendship blooms, and kindness takes wing,
 at DIA where every voice may sing.
 With hearts uplifted, our spirits fly,
 under the endless, ever-reaching sky.`}
-              </div>
             </div>
-            <div>
-              <h3 class="font-display text-xl mb-3">Bajo el Sol</h3>
-              <div class="text-black/80 leading-[1.65] whitespace-pre-line font-body text-sm">
-                {`Como linces valientes bajo el cielo azul,
+          </div>
+          <div>
+            <h3 class="font-display text-xl mb-3">Bajo el Sol</h3>
+            <div class="text-black/80 leading-[1.65] whitespace-pre-line font-body text-sm">
+              {`Como linces valientes bajo el cielo azul,
 alzamos la niñez, su espíritu es luz.
 Con fe y esperanza marcamos la vía:
 soñar, crecer, vivir cada día.
@@ -171,21 +182,10 @@ Florece la amistad, la bondad se alza ya,
 en el DIA cada voz su canto dará.
 Con almas alegres nos ponemos a volar,
 bajo un cielo eterno que nos quiere abrazar.`}
-              </div>
             </div>
           </div>
         </div>
       </div>
-
-      <figure class="mt-12 lg:mt-14 max-w-3xl mx-auto pt-10 border-t border-black/10 text-center lg:text-left">
-        <blockquote class="text-black/80 italic leading-relaxed text-[0.9375rem]">
-          “I highly recommend Anna Hileman, who created a mural at our school. She was delightful to work with, understood the unique needs of the population we serve, and completed the project quickly and beautifully.”
-        </blockquote>
-        <figcaption class="mt-4 text-sm text-black/70 not-italic font-body">
-          <span class="font-semibold text-[color:var(--color-ink)]">Tyler McLaughlin</span>
-          <span class="block">Principal, Dual Immersion Academy</span>
-        </figcaption>
-      </figure>
     </div>
   </section>
 
