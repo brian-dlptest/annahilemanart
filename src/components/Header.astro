@@ -8,7 +8,27 @@ const links = [
   { href: '/about', label: 'About' },
   { href: '/contact', label: 'Contact' },
 ];
-const { pathname } = Astro.url;
+
+/** Normalize so `/about/` and `/about` match; home stays `/`. */
+function normalizePath(p: string): string {
+  if (p.length > 1 && p.endsWith('/')) return p.slice(0, -1);
+  return p || '/';
+}
+
+/** Map URLs not in the bar to their parent section for the active state. */
+const pathToNavHref: Record<string, string> = {
+  '/school-murals': '/murals',
+  '/restaurants': '/custom-artwork',
+  '/order-pet-portrait': '/portraits',
+};
+
+const raw = normalizePath(Astro.url.pathname);
+const activeHref = pathToNavHref[raw] ?? raw;
+
+const linkClass = (href: string) =>
+  activeHref === href
+    ? 'text-[color:var(--color-ink)] font-medium border-b-2 border-[color:var(--color-ink)] pb-0.5'
+    : 'text-[color:var(--color-ink)]/60 hover:text-[color:var(--color-ink)] border-b-2 border-transparent pb-0.5';
 ---
 <header class="sticky top-0 z-40 bg-[color:var(--color-paper)]/90 backdrop-blur border-b border-black/5">
   <div class="max-w-7xl mx-auto px-6 lg:px-10 flex items-center justify-between h-20">
@@ -17,11 +37,8 @@ const { pathname } = Astro.url;
       <span class="text-xs uppercase tracking-[0.2em] text-[color:var(--color-accent)]">Art</span>
     </a>
     <nav class="hidden lg:flex items-center gap-8">
-      {links.map(link => (
-        <a
-          href={link.href}
-          class={`text-sm tracking-wide transition-colors ${pathname === link.href ? 'text-[color:var(--color-ink)] font-medium' : 'text-[color:var(--color-ink)]/60 hover:text-[color:var(--color-ink)]'}`}
-        >
+      {links.map((link) => (
+        <a href={link.href} class={`text-sm tracking-wide transition-colors ${linkClass(link.href)}`}>
           {link.label}
         </a>
       ))}
@@ -33,8 +50,11 @@ const { pathname } = Astro.url;
         </svg>
       </summary>
       <nav class="absolute right-0 mt-2 w-56 bg-[color:var(--color-paper)] border border-black/10 rounded shadow-lg py-2">
-        {links.map(link => (
-          <a href={link.href} class="block px-4 py-2 text-sm hover:bg-black/5">
+        {links.map((link) => (
+          <a
+            href={link.href}
+            class={`block px-4 py-2 text-sm hover:bg-black/5 ${activeHref === link.href ? 'bg-black/[0.08] text-[color:var(--color-ink)] font-medium' : 'text-[color:var(--color-ink)]/80'}`}
+          >
             {link.label}
           </a>
         ))}
