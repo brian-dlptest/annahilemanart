@@ -1,0 +1,13 @@
+---
+description: Anna Hileman Art Astro prototype — structure and UI conventions
+globs: "**/*.{astro,css,mjs,ts}"
+alwaysApply: false
+---
+
+# Anna Hileman Art prototype
+
+- **Style**: Typography-forward portfolio, generous whitespace, soft neutrals with a warm accent; match existing `Layout`, `Header`, `Footer`, and `global.css` patterns.
+- **Pages**: Add routes as `src/pages/<route>.astro`; use `Layout` for shared head and chrome unless a page truly needs a one-off shell.
+- **Images**: Reference files under `/images/...` in `public/images/`; use shared `ArtImage` when it fits the use case.
+- **Forms**: Do not commit real Formspree secrets; keep placeholders or env-driven IDs consistent with `DEPLOY.txt`.
+- **Changes**: Keep diffs scoped; do not rename routes or restyle globally unless asked.

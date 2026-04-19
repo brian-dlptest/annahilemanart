@@ -10,7 +10,7 @@ npm install
 npm run dev
 ```
 
-Then open http://localhost:4321 in your browser.
+Then open http://localhost:4322 in your browser (port is set in `astro.config.mjs`).
 
 ## Adding real images
 
