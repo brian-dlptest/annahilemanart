@@ -2,6 +2,10 @@
  * Home page reviews: manual copy below, optionally replaced by
  * `npm run reviews:fetch` (Places Details API + same place_id as Google Maps).
  *
+ * Reviewer profile photos only exist when `google-reviews-fetched.json` has a
+ * non-empty `reviews` array (from a successful fetch). If `reviews` is empty,
+ * we use `manualReviews` below — those entries intentionally have no photos.
+ *
  * Google Place Details returns at most 5 reviews per request; there is no
  * supported way to fetch 10 via the standard Places API alone.
  */

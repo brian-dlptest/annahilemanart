@@ -56,6 +56,7 @@ const out = {
 };
 
 fs.writeFileSync(outFile, JSON.stringify(out, null, 2) + '\n');
+const withPhotos = out.reviews.filter((r) => r.profile_photo_url).length;
 console.log(
-  `Wrote ${out.reviews.length} review(s); ${out.user_ratings_total ?? '?'} total ratings → ${path.relative(root, outFile)}`,
+  `Wrote ${out.reviews.length} review(s); ${out.user_ratings_total ?? '?'} total ratings; ${withPhotos} with profile_photo_url → ${path.relative(root, outFile)}`,
 );
