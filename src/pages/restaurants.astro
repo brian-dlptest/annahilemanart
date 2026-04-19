@@ -36,26 +36,49 @@ const threefoldThumbs = [
   'Threefold-Bakery-Mural-Mid-Panel.jpg',
 ];
 
+/** Thirteen Radicato installation shots (matches copy). Replaced pet-portrait images BINA-WEB.jpg and WEB-BINA.jpg. */
 const radicatoThumbs = [
-  'IMG_6488.jpeg',
-  'IMG_6495.jpeg',
-  'IMG_6496.jpeg',
-  'IMG_6506.jpeg',
-  'IMG_6508.jpeg',
   'IMG_6120.jpeg',
   'IMG_6123.jpeg',
-  'BINA-WEB.jpg',
-  'WEB-BINA.jpg',
-];
+  'IMG_6480.jpeg',
+  'IMG_6483.jpeg',
+  'IMG_6488.jpeg',
+  'IMG_6489.jpeg',
+  'IMG_6491.jpeg',
+  'IMG_6495.jpeg',
+  'IMG_6496.jpeg',
+  'IMG_6498.jpeg',
+  'IMG_6506.jpeg',
+  'IMG_6508.jpeg',
+  'IMG_6510.jpeg',
+] as const;
 
+const radicatoMainImages = [
+  {
+    src: 'IMG_5993.jpeg',
+    alt: 'Radicato restaurant interior with commissioned artwork',
+  },
+  {
+    src: 'IMG_6495.jpeg',
+    alt: 'Garden Gem installation at Radicato, Breckenridge',
+  },
+] as const;
+
+/** Thumbnails: lions, doors, gold-leaf, exterior, ceiling process (distinct from main hero). */
 const qiThumbs = [
-  'QI-Ceiling-1.jpg',
-  'QI-Ceiling.jpg',
-  'QI-Exterior.jpg',
   'QI_Lion-Head.jpg',
+  'PLASTER-AND-RESIN-LION-HEAD_QUALITY-ITALIAN_DENVER.jpg',
   'PROCESS-FOR-QI-RESTAURANT-DOORS.jpg',
-  'HAND-PAINTED-CEILING-GOING-UP.jpg',
-];
+  'PROCESS-RESTAURANT-DOORS-QI.jpg',
+  'GOLD-LEAF-DETAIL.jpg',
+  'GOLD-LEAF-MORE-DETAIL.jpg',
+  'QI-Exterior.jpg',
+] as const;
+
+const qiMainImage = {
+  src: 'QI-Ceiling.jpg',
+  alt: 'Quality Italian Cherry Creek dining room with custom hand-painted ceiling',
+} as const;
 ---
 
 <Layout title="Restaurant Art | Anna Hileman Art">
@@ -149,13 +172,15 @@ const qiThumbs = [
             ))}
           </div>
         </div>
-        <div class="lg:sticky lg:top-28">
-          <img
-            src="/images/IMG_5993.jpeg"
-            alt="Radicato restaurant interior with commissioned artwork"
-            class="w-full rounded-lg shadow-xl object-cover aspect-[3/4] lg:min-h-[min(85vh,52rem)]"
-            loading="lazy"
-          />
+        <div class="lg:sticky lg:top-28 space-y-6">
+          {radicatoMainImages.map((img) => (
+            <img
+              src={`/images/${img.src}`}
+              alt={img.alt}
+              class="w-full rounded-lg shadow-xl object-cover aspect-[3/4]"
+              loading="lazy"
+            />
+          ))}
         </div>
       </div>
     </div>
@@ -183,8 +208,8 @@ const qiThumbs = [
         </div>
         <div class="lg:sticky lg:top-28">
           <img
-            src="/images/PLASTER-AND-RESIN-LION-HEAD_QUALITY-ITALIAN_DENVER.jpg"
-            alt="Quality Italian custom lion artwork and interior detail"
+            src={`/images/${qiMainImage.src}`}
+            alt={qiMainImage.alt}
             class="w-full rounded-lg shadow-xl object-cover aspect-[3/4] lg:min-h-[min(85vh,52rem)]"
             loading="lazy"
           />
