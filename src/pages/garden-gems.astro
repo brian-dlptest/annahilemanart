@@ -6,17 +6,24 @@ const hero = {
   alt: "Johanna's Garden Gem",
 };
 
+type GalleryItem = {
+  src: string;
+  alt: string;
+  /** Panoramas: span full gallery width when multi-column so the preview isn’t a thin strip. */
+  spanAll?: boolean;
+};
+
 /** Remaining pieces in a fluid column-masonry layout (natural aspect ratios). */
-const gallery = [
+const gallery: GalleryItem[] = [
   { src: 'Cali-Fig-24x36-1.jpg', alt: 'Cali Fig, 24x36' },
   { src: 'Drippy-Fig-24x36-1.jpg', alt: 'Drippy Fig, 24x36' },
   { src: 'Drippy-Fig-Installed-24x36-1.jpg', alt: 'Drippy Fig installed' },
   { src: 'Iris-Fig-Mock-Up.jpg', alt: 'Iris Fig mockup' },
-  { src: 'Iris-Gem-30x72-1.jpg', alt: 'Iris Gem, 30x72' },
+  { src: 'Iris-Gem-30x72-1.jpg', alt: 'Iris Gem, 30x72', spanAll: true },
   { src: 'Iris-Gem-Detail-1.jpg', alt: 'Iris Gem detail' },
   { src: 'Iris-Gem-Detail-2.jpg', alt: 'Iris Gem detail' },
   { src: 'Iris-Gem-Detail-3.jpg', alt: 'Iris Gem detail' },
-] as const;
+];
 
 const heroHref = `/images/${hero.src}`;
 ---
@@ -61,7 +68,12 @@ const heroHref = `/images/${hero.src}`;
       {gallery.map((g) => {
         const href = `/images/${g.src}`;
         return (
-          <div class="mb-4 break-inside-avoid">
+          <div
+            class:list={[
+              'mb-4 break-inside-avoid w-full',
+              g.spanAll && 'sm:[column-span:all]',
+            ]}
+          >
             <button
               type="button"
               class="block w-full cursor-zoom-in overflow-hidden rounded-lg border-0 bg-[color:var(--color-accent-soft)] p-0 text-left shadow-sm ring-1 ring-black/5 transition-shadow hover:shadow-md focus:outline-none focus-visible:ring-2 focus-visible:ring-[color:var(--color-accent)] focus-visible:ring-offset-2 focus-visible:ring-offset-[color:var(--color-paper)]"
