@@ -8,8 +8,10 @@ interface Props {
   description?: string;
 }
 
+const siteName = 'Anna Hileman Art';
+
 const {
-  title = 'Anna Hileman Art',
+  title = siteName,
   description = 'Custom murals, pet portraits, and commercial artwork by Colorado artist Anna Hileman.',
 } = Astro.props;
 ---
@@ -22,6 +24,11 @@ const {
     <link rel="apple-touch-icon" href="/images/Anna-Hileman-Art-Site-Logo.png" />
     <title>{title}</title>
     <meta name="description" content={description} />
+    <meta property="og:site_name" content={siteName} />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:type" content="website" />
+    <meta name="twitter:card" content="summary" />
     {Astro.site && (
       <link rel="canonical" href={new URL(Astro.url.pathname, Astro.site).href} />
     )}
