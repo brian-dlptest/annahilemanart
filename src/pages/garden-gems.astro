@@ -1,9 +1,13 @@
 ---
 import Layout from '../layouts/Layout.astro';
-import ArtImage from '../components/ArtImage.astro';
 
-const gems = [
-  { src: 'Johannas-Garden-Gem-Full-Edited.jpg', alt: 'Johanna\'s Garden Gem' },
+const hero = {
+  src: 'Johannas-Garden-Gem-Full-Edited.jpg',
+  alt: "Johanna's Garden Gem",
+};
+
+/** Remaining pieces in a fluid column-masonry layout (natural aspect ratios). */
+const gallery = [
   { src: 'Cali-Fig-24x36-1.jpg', alt: 'Cali Fig, 24x36' },
   { src: 'Drippy-Fig-24x36-1.jpg', alt: 'Drippy Fig, 24x36' },
   { src: 'Drippy-Fig-Installed-24x36-1.jpg', alt: 'Drippy Fig installed' },
@@ -12,8 +16,11 @@ const gems = [
   { src: 'Iris-Gem-Detail-1.jpg', alt: 'Iris Gem detail' },
   { src: 'Iris-Gem-Detail-2.jpg', alt: 'Iris Gem detail' },
   { src: 'Iris-Gem-Detail-3.jpg', alt: 'Iris Gem detail' },
-];
+] as const;
+
+const heroHref = `/images/${hero.src}`;
 ---
+
 <Layout title="Garden Gems | Anna Hileman Art">
   <section class="max-w-5xl mx-auto px-6 lg:px-10 py-20 text-center">
     <div class="text-xs uppercase tracking-[0.3em] text-[color:var(--color-accent)] mb-6">A Series</div>
@@ -25,11 +32,51 @@ const gems = [
     </p>
   </section>
 
-  <section class="max-w-7xl mx-auto px-6 lg:px-10 pb-24">
-    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 lg:gap-6">
-      {gems.map((g) => (
-        <ArtImage src={g.src} alt={g.alt} ratio="portrait" />
-      ))}
+  <!-- Full-bleed hero at top of gallery -->
+  <section class="w-full" aria-label="Featured Garden Gem">
+    <button
+      type="button"
+      class="block w-full cursor-zoom-in border-0 bg-transparent p-0 text-left focus:outline-none focus-visible:ring-2 focus-visible:ring-[color:var(--color-accent)] focus-visible:ring-offset-2 focus-visible:ring-offset-[color:var(--color-paper)]"
+      data-lightbox={heroHref}
+      data-lightbox-alt={hero.alt}
+      aria-label={`View larger: ${hero.alt}`}
+    >
+      <img
+        src={heroHref}
+        alt=""
+        class="pointer-events-none block w-full max-h-[min(92vh,1400px)] object-cover object-center"
+        loading="eager"
+        fetchpriority="high"
+        decoding="async"
+      />
+    </button>
+  </section>
+
+  <!-- Fluid masonry: multi-column layout, natural image heights -->
+  <section class="max-w-[1600px] mx-auto px-4 sm:px-6 lg:px-10 pb-24 pt-6 lg:pt-10">
+    <div class="columns-1 [column-gap:1rem] sm:columns-2 lg:columns-3 lg:[column-gap:1.25rem]">
+      {gallery.map((g) => {
+        const href = `/images/${g.src}`;
+        return (
+          <div class="mb-4 break-inside-avoid">
+            <button
+              type="button"
+              class="block w-full cursor-zoom-in overflow-hidden rounded-lg border-0 bg-[color:var(--color-accent-soft)] p-0 text-left shadow-sm ring-1 ring-black/5 transition-shadow hover:shadow-md focus:outline-none focus-visible:ring-2 focus-visible:ring-[color:var(--color-accent)] focus-visible:ring-offset-2 focus-visible:ring-offset-[color:var(--color-paper)]"
+              data-lightbox={href}
+              data-lightbox-alt={g.alt}
+              aria-label={`View larger: ${g.alt}`}
+            >
+              <img
+                src={href}
+                alt=""
+                class="pointer-events-none block h-auto w-full"
+                loading="lazy"
+                decoding="async"
+              />
+            </button>
+          </div>
+        );
+      })}
     </div>
   </section>
 
