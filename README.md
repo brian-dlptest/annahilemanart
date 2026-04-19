@@ -24,8 +24,7 @@ Then open http://localhost:4322 in your browser (port is set in `astro.config.mj
 - `/about` — About Anna
 - `/portraits` — Pet & Animal Portraits
 - `/order-pet-portrait` — Commission form
-- `/murals` — Murals overview
-- `/school-murals` — School mural service
+- `/school-murals` — School murals (canonical; `/murals` redirects here)
 - `/garden-gems` — Garden Gems series
 - `/restaurants` — Restaurant art
 - `/custom-artwork` — Commercial work

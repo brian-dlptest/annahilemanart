@@ -1,14 +1,16 @@
 ---
 interface Props {
-  /** Filename under /images/ */
-  src: string;
+  /** Filename under /images/ (used when imageUrl is not set) */
+  src?: string;
+  /** Full image URL (e.g. CDN); takes precedence over src */
+  imageUrl?: string;
   alt?: string;
   /** Tailwind aspect class, e.g. aspect-square, aspect-[4/3] */
   aspectClass?: string;
 }
 
-const { src, alt = '', aspectClass = 'aspect-square' } = Astro.props;
-const href = `/images/${src}`;
+const { src = '', imageUrl, alt = '', aspectClass = 'aspect-square' } = Astro.props;
+const href = imageUrl ?? `/images/${src}`;
 ---
 <div class:list={[aspectClass, 'overflow-hidden rounded-md bg-black/5']}>
   <button

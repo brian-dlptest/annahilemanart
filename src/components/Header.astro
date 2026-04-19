@@ -3,7 +3,7 @@ const links = [
   { href: '/', label: 'Home' },
   { href: '/restaurants', label: 'Restaurants' },
   { href: '/garden-gems', label: 'Garden Gems' },
-  { href: '/murals', label: 'School Murals' },
+  { href: '/school-murals', label: 'School Murals' },
   { href: '/portraits', label: 'Pet Portraits' },
   { href: '/about', label: 'About' },
   { href: '/contact', label: 'Contact' },
@@ -18,7 +18,7 @@ function normalizePath(p: string): string {
 
 /** Map URLs not in the bar to their parent section for the active state. */
 const pathToNavHref: Record<string, string> = {
-  '/school-murals': '/murals',
+  '/murals': '/school-murals',
   '/order-pet-portrait': '/portraits',
 };
 
