@@ -1,27 +1,37 @@
 ---
 import Layout from '../layouts/Layout.astro';
 
+/** Formspree form id (public in HTML). Override with PUBLIC_FORMSPREE_FORM_ID if you replace the form. */
+const formspreeFormId = (import.meta.env.PUBLIC_FORMSPREE_FORM_ID || '').trim() || 'mqewbgqp';
+const formAction = `https://formspree.io/f/${formspreeFormId}`;
+
+const pageDescription =
+  'Contact Anna Hileman for commissions, studio questions, or inquiries—email, phone, Instagram, or the on-site message form.';
+
+const introLead =
+  'Use the form to reach out about a commission, a question, or just to say hello. Please be as descriptive as possible.';
+
 const faqs = [
-  { q: 'Do you take commissions?', a: 'Yes, I am currently taking commissions. If you are interested in a commissioned piece, please email annahilemanart@gmail.com, call 970.618.2424, or use the contact form when it is connected.' },
+  {
+    q: 'Do you take commissions?',
+    a:
+      'Yes, I am currently taking commissions. Email annahilemanart@gmail.com, call 970.618.2424, or send a message using the form on this page.',
+  },
   { q: 'How can I be the first to know about new paintings?', a: 'Follow @annahilemanart on Instagram for the fastest updates. A newsletter sign-up may be added here; for now Instagram is the primary channel for new work.' },
   { q: 'What medium do you use?', a: 'I work across many different mediums. It varies with the subject—including acrylic and oil, gold leaf, and custom 3-D art for commercial spaces. Most commissioned work is acrylic or oil on aluminum or linen canvas.' },
   { q: 'How can I purchase a painting or print?', a: 'Available work is listed on this site. Sold pieces are marked below each image. Prints are available in limited supply when noted. Each painting is an original and will not be duplicated; contact me about a commission in a similar style if a piece has sold.' },
   { q: 'What payment methods do you accept?', a: 'Cash, check, PayPal, and Venmo are accepted. There is a 10% upcharge for PayPal/Venmo to cover processing fees. A 50% deposit is typically required to begin a commissioned painting, with the remainder due upon completion.' },
   { q: 'What is your return or exchange policy?', a: 'All paintings, prints, and products are final sale. Please email annahilemanart@gmail.com with any questions about a purchase.' },
 ];
-
-const formId = import.meta.env.PUBLIC_FORMSPREE_FORM_ID;
-const formAction = formId ? `https://formspree.io/f/${formId}` : null;
 ---
-<Layout title="Contact | Anna Hileman Art">
+<Layout title="Contact | Anna Hileman Art" description={pageDescription}>
   <section class="max-w-7xl mx-auto px-6 lg:px-10 py-20">
     <div class="grid lg:grid-cols-5 gap-12">
       <div class="lg:col-span-2">
         <div class="text-xs uppercase tracking-[0.3em] text-[color:var(--color-accent)] mb-6">Contact</div>
         <h1 class="font-display text-5xl mb-6">Get In Touch</h1>
         <p class="text-black/70 leading-relaxed mb-10">
-          Use the form to reach out about a commission, question, or just to say hello.
-          Please be as descriptive as possible.
+          {introLead}
         </p>
         <div class="space-y-4 text-sm">
           <div>
@@ -40,41 +50,77 @@ const formAction = formId ? `https://formspree.io/f/${formId}` : null;
       </div>
 
       <div class="lg:col-span-3">
-        {formAction ? (
-          <form action={formAction} method="POST" class="space-y-6 bg-white border border-black/10 rounded-lg p-8 shadow-sm">
-            <div class="grid md:grid-cols-2 gap-6">
-              <div>
-                <label class="block text-sm font-medium mb-2">Name</label>
-                <input name="name" required type="text" class="w-full border border-black/15 rounded px-3 py-2 focus:outline-none focus:border-[color:var(--color-accent)]" />
-              </div>
-              <div>
-                <label class="block text-sm font-medium mb-2">Email</label>
-                <input name="email" required type="email" class="w-full border border-black/15 rounded px-3 py-2 focus:outline-none focus:border-[color:var(--color-accent)]" />
-              </div>
+        <form
+          id="contact-form"
+          action={formAction}
+          method="POST"
+          data-formspree-id={formspreeFormId}
+          class="space-y-6 bg-white border border-black/10 rounded-lg p-8 shadow-sm"
+        >
+          <div data-fs-success>Thank you for your message. I'll reply as soon as I can.</div>
+          <div data-fs-error=""></div>
+
+          <input type="text" name="_gotcha" tabindex="-1" autocomplete="off" class="hidden" />
+          <div class="grid md:grid-cols-2 gap-6">
+            <div>
+              <label for="contact-name" class="block text-sm font-medium mb-2">Name</label>
+              <input
+                id="contact-name"
+                name="name"
+                required
+                type="text"
+                autocomplete="name"
+                data-fs-field
+                class="w-full border border-black/15 rounded px-3 py-2 focus:outline-none focus:border-[color:var(--color-accent)]"
+              />
+              <span data-fs-error="name" class="mt-1 block text-sm text-red-800 empty:hidden" />
             </div>
             <div>
-              <label class="block text-sm font-medium mb-2">Subject</label>
-              <input name="subject" type="text" class="w-full border border-black/15 rounded px-3 py-2 focus:outline-none focus:border-[color:var(--color-accent)]" />
+              <label for="contact-email" class="block text-sm font-medium mb-2">Email</label>
+              <input
+                id="contact-email"
+                name="email"
+                required
+                type="email"
+                autocomplete="email"
+                data-fs-field
+                class="w-full border border-black/15 rounded px-3 py-2 focus:outline-none focus:border-[color:var(--color-accent)]"
+              />
+              <span data-fs-error="email" class="mt-1 block text-sm text-red-800 empty:hidden" />
             </div>
-            <div>
-              <label class="block text-sm font-medium mb-2">Message</label>
-              <textarea name="message" rows="6" required class="w-full border border-black/15 rounded px-3 py-2 focus:outline-none focus:border-[color:var(--color-accent)]"></textarea>
-            </div>
-            <button type="submit" class="w-full bg-[color:var(--color-ink)] text-[color:var(--color-paper)] py-4 tracking-wide hover:bg-[color:var(--color-accent)] transition-colors">
-              Send Message
-            </button>
-          </form>
-        ) : (
-          <div class="bg-white border border-black/10 rounded-lg p-8 shadow-sm space-y-4">
-            <p class="text-black/70 leading-relaxed">
-              Online form is not configured yet. Set <code class="text-sm bg-black/5 px-1 rounded">PUBLIC_FORMSPREE_FORM_ID</code> in Cloudflare Pages (or <code class="text-sm bg-black/5 px-1 rounded">.env</code> locally) after creating a form at{' '}
-              <a href="https://formspree.io" class="underline hover:text-[color:var(--color-accent)]" target="_blank" rel="noopener">formspree.io</a>.
-            </p>
-            <p class="text-black/70 leading-relaxed">
-              Until then, email <a href="mailto:annahilemanart@gmail.com" class="underline hover:text-[color:var(--color-accent)]">annahilemanart@gmail.com</a> or call <a href="tel:+19706182424" class="underline hover:text-[color:var(--color-accent)]">970.618.2424</a>.
-            </p>
           </div>
-        )}
+          <div>
+            <label for="contact-subject" class="block text-sm font-medium mb-2">Subject</label>
+            <input
+              id="contact-subject"
+              name="subject"
+              type="text"
+              autocomplete="off"
+              data-fs-field
+              class="w-full border border-black/15 rounded px-3 py-2 focus:outline-none focus:border-[color:var(--color-accent)]"
+            />
+            <span data-fs-error="subject" class="mt-1 block text-sm text-red-800 empty:hidden" />
+          </div>
+          <div>
+            <label for="contact-message" class="block text-sm font-medium mb-2">Message</label>
+            <textarea
+              id="contact-message"
+              name="message"
+              rows="6"
+              required
+              data-fs-field
+              class="w-full border border-black/15 rounded px-3 py-2 focus:outline-none focus:border-[color:var(--color-accent)]"
+            />
+            <span data-fs-error="message" class="mt-1 block text-sm text-red-800 empty:hidden" />
+          </div>
+          <button
+            type="submit"
+            data-fs-submit-btn
+            class="w-full bg-[color:var(--color-ink)] text-[color:var(--color-paper)] py-4 tracking-wide hover:bg-[color:var(--color-accent)] transition-colors disabled:opacity-60"
+          >
+            Send Message
+          </button>
+        </form>
       </div>
     </div>
   </section>
@@ -95,4 +141,59 @@ const formAction = formId ? `https://formspree.io/f/${formId}` : null;
       </div>
     </div>
   </section>
+
+  <script>
+    import { initForm } from '@formspree/ajax';
+
+    const form = document.getElementById('contact-form');
+    const id = form?.dataset.formspreeId;
+    if (form && id) {
+      initForm({
+        formElement: form,
+        formId: id,
+        useDefaultStyles: false,
+      });
+    }
+  </script>
+
+  <style is:global>
+    #contact-form [data-fs-success]:not([data-fs-active]),
+    #contact-form [data-fs-error]:not([data-fs-active]) {
+      display: none;
+    }
+
+    #contact-form [data-fs-success][data-fs-active] {
+      display: block;
+      margin-bottom: 1.25rem;
+      border-radius: 0.5rem;
+      border: 1px solid color-mix(in srgb, var(--color-accent) 35%, transparent);
+      background: color-mix(in srgb, var(--color-accent-soft) 45%, var(--color-paper));
+      padding: 1rem 1.25rem;
+      color: var(--color-ink);
+      font-size: 0.9375rem;
+      line-height: 1.5;
+    }
+
+    #contact-form [data-fs-error=''][data-fs-active] {
+      display: block;
+      margin-bottom: 1.25rem;
+      border-radius: 0.5rem;
+      border: 1px solid rgb(254 202 202);
+      background: rgb(254 242 242);
+      padding: 0.75rem 1rem;
+      font-size: 0.875rem;
+      color: rgb(127 29 29);
+    }
+
+    #contact-form [data-fs-error]:not([data-fs-error=''])[data-fs-active] {
+      display: block;
+      margin-top: 0.25rem;
+      font-size: 0.8125rem;
+      color: rgb(153 27 27);
+    }
+
+    #contact-form [data-fs-field][aria-invalid='true'] {
+      border-color: rgb(185 28 28);
+    }
+  </style>
 </Layout>
