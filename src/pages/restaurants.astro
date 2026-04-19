@@ -36,21 +36,27 @@ const threefoldThumbs = [
   'Threefold-Bakery-Mural-Mid-Panel.jpg',
 ];
 
-/** Thirteen Radicato installation shots (matches copy). Replaced pet-portrait images BINA-WEB.jpg and WEB-BINA.jpg. */
+/**
+ * Radicato gallery: 4×4 grid on wide screens. Filenames are install/detail shots; hero images below are excluded here.
+ * If any frame should change, swap filenames (files live under public/images/).
+ */
 const radicatoThumbs = [
   'IMG_6120.jpeg',
   'IMG_6123.jpeg',
   'IMG_6480.jpeg',
   'IMG_6483.jpeg',
   'IMG_6488.jpeg',
+  'IMG_6488-2.jpeg',
   'IMG_6489.jpeg',
   'IMG_6491.jpeg',
-  'IMG_6495.jpeg',
   'IMG_6496.jpeg',
   'IMG_6498.jpeg',
   'IMG_6506.jpeg',
   'IMG_6508.jpeg',
   'IMG_6510.jpeg',
+  'IMG_6514.jpeg',
+  'IMG_6515.jpeg',
+  'IMG_6516.jpeg',
 ] as const;
 
 const radicatoMainImages = [
@@ -160,13 +166,13 @@ const qiMainImage = {
         <div class="space-y-8 min-w-0">
           <div class="text-black/80 leading-relaxed space-y-4 text-[15px] md:text-base">
             <p>
-              Inside Radicato, a curated collection of 13 custom-commissioned artworks enriches the dining experience, each created specifically for the space. The collection explores the idea of being <em>rooted</em>—a visual reflection of Radicato’s name and its connection to place, community, and craft.
+              Inside Radicato, a curated collection of custom-commissioned artworks enriches the dining experience, each created specifically for the space. The collection explores the idea of being <em>rooted</em>—a visual reflection of Radicato’s name and its connection to place, community, and craft.
             </p>
             <p>
               Using materials such as gold leaf, alcohol ink, acrylic paint, wire, and layered butcher paper, the artworks add rich texture and depth throughout the restaurant. Anchoring the collection is a 10-foot custom Garden Gem installation, Anna’s signature series inspired by plants, roots, and growth. Garden Gems are site-specific works that celebrate origin, nourishment, and what lies beneath the surface—serving as a visual centerpiece that embodies Radicato’s deeply rooted ethos.
             </p>
           </div>
-          <div class="grid grid-cols-3 gap-2">
+          <div class="grid grid-cols-2 gap-2 sm:grid-cols-4">
             {radicatoThumbs.map((src) => (
               <LightboxThumb src={src} alt="Radicato commissioned artwork" />
             ))}
