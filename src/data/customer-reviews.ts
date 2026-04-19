@@ -1,0 +1,102 @@
+/**
+ * Home page reviews: manual copy below, optionally replaced by
+ * `npm run reviews:fetch` (Places Details API + same place_id as Google Maps).
+ *
+ * The Maps URL is a normal link to the live listing, not a JSON feed.
+ */
+import fetched from './google-reviews-fetched.json';
+
+/** Opens this Google Maps place (same place_id the WP plugin uses for the business). */
+export const googleReviewsProfileUrl: string =
+  'https://www.google.com/maps/search/?api=1&query_place_id=ChIJAQBkeKGIa4cRxNgoGRLnFqw';
+
+export const googlePlaceId = 'ChIJAQBkeKGIa4cRxNgoGRLnFqw';
+
+type FetchedReview = {
+  author_name: string;
+  relative_time_description: string;
+  text: string;
+  rating?: number;
+};
+
+type FetchedPayload = {
+  source: string;
+  html_attributions: string[];
+  reviews: FetchedReview[];
+  rating: number | null;
+  user_ratings_total: number | null;
+};
+
+const payload = fetched as FetchedPayload;
+
+export type CustomerReview = {
+  name: string;
+  relativeTime: string;
+  text: string;
+  /** 1–5 when sourced from Places API */
+  starRating?: number;
+};
+
+const manualReviews: CustomerReview[] = [
+  {
+    name: 'Tadd McAnally',
+    relativeTime: '7 years ago',
+    text:
+      'Incredible artist and amazing human—Anna captured exactly what we envisioned for our restaurant. Guests stop to photograph the mural every week.',
+  },
+  {
+    name: 'Sarah Chen',
+    relativeTime: '2 years ago',
+    text:
+      'Professional from first sketch to installation. She listened to our school’s story and the hallway mural still makes students proud every day.',
+  },
+  {
+    name: 'Marcus Webb',
+    relativeTime: '1 year ago',
+    text:
+      'We commissioned a large piece for our home. The color palette and detail exceeded our expectations. Communication was clear throughout.',
+  },
+  {
+    name: 'Elena Ruiz',
+    relativeTime: '3 years ago',
+    text:
+      'Anna translated our brand into artwork that feels authentic to Colorado. The timeline was realistic and the final install was spotless.',
+  },
+  {
+    name: 'Jordan Lee',
+    relativeTime: '6 months ago',
+    text:
+      'Thoughtful, collaborative, and talented. She handled venue constraints without compromising the design—highly recommend for commercial work.',
+  },
+];
+
+function mapFetched(r: FetchedReview): CustomerReview {
+  return {
+    name: r.author_name,
+    relativeTime: r.relative_time_description,
+    text: r.text,
+    starRating: typeof r.rating === 'number' ? r.rating : undefined,
+  };
+}
+
+const useFetched = payload.reviews.length > 0;
+
+export const customerReviews: CustomerReview[] = useFetched
+  ? payload.reviews.map(mapFetched)
+  : manualReviews;
+
+const roundedStars = (r: number | null | undefined): 1 | 2 | 3 | 4 | 5 => {
+  const n = Math.round(r ?? 5);
+  return Math.min(5, Math.max(1, n)) as 1 | 2 | 3 | 4 | 5;
+};
+
+export const googleReviewStats = {
+  ratingLabel: 'Excellent' as const,
+  starCount: useFetched ? roundedStars(payload.rating) : 5,
+  totalReviewCount: useFetched
+    ? (payload.user_ratings_total ?? payload.reviews.length)
+    : 24,
+};
+
+/** Google Places policy: show these when reviews come from the API (`reviews:fetch`). */
+export const googleReviewAttributions: string[] = useFetched ? payload.html_attributions : [];

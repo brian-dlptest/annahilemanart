@@ -1,0 +1,60 @@
+# Fetches Google Places reviews into src/data/google-reviews-fetched.json and commits
+# if the file changed. Cloudflare Pages rebuilds from the new commit (same as a normal push).
+#
+# Requires repository secret: GOOGLE_MAPS_API_KEY (duplicate the value from Cloudflare here;
+# GitHub Actions cannot read Cloudflare env vars).
+#
+# Scheduled runs only fire from the repo default branch — merge this workflow into `main`
+# even if commits target `staging` (see checkout ref below).
+
+name: Refresh Google reviews
+
+on:
+  schedule:
+    # Daily 06:15 UTC (~11pm previous day US Mountain, varies with DST)
+    - cron: '15 6 * * *'
+  workflow_dispatch:
+
+concurrency:
+  group: refresh-google-reviews
+  cancel-in-progress: false
+
+jobs:
+  fetch-and-commit:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          ref: staging
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: npm
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Fetch reviews from Google Places API
+        env:
+          GOOGLE_MAPS_API_KEY: ${{ secrets.GOOGLE_MAPS_API_KEY }}
+        run: npm run reviews:fetch
+
+      - name: Verify build
+        run: npm run build
+
+      - name: Commit and push if changed
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add src/data/google-reviews-fetched.json
+          if git diff --cached --quiet; then
+            echo "No changes to google-reviews-fetched.json"
+            exit 0
+          fi
+          git commit -m "chore: refresh Google reviews from Places API"
+          git push
