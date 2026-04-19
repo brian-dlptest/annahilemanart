@@ -33,8 +33,13 @@ fullUrl.searchParams.set('key', key);
 const res = await fetch(fullUrl);
 const data = await res.json();
 
+if (!res.ok) {
+  console.error('Places HTTP error:', res.status, res.statusText);
+}
 if (data.status !== 'OK') {
-  console.error('Places API error:', data.status, data.error_message ?? '');
+  console.error('Places API status:', data.status, data.error_message ?? '(no message)');
+  // Full body helps debug in GitHub Actions (REQUEST_DENIED, API not enabled, billing, etc.)
+  console.error(JSON.stringify(data, null, 2));
   process.exit(1);
 }
 
