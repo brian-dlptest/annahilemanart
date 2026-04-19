@@ -25,7 +25,9 @@ if (!key) {
 
 const fullUrl = new URL('https://maps.googleapis.com/maps/api/place/details/json');
 fullUrl.searchParams.set('place_id', placeId);
-fullUrl.searchParams.set('fields', 'reviews,rating,user_ratings_total');
+// name + url: business title and canonical Maps link (fixes generic /search URLs).
+// Google returns at most 5 reviews per Place Details call — there is no official "10" via this API.
+fullUrl.searchParams.set('fields', 'name,url,reviews,rating,user_ratings_total');
 fullUrl.searchParams.set('key', key);
 
 const res = await fetch(fullUrl);
@@ -40,6 +42,8 @@ const result = data.result ?? {};
 const out = {
   source: 'google-places-api',
   html_attributions: Array.isArray(data.html_attributions) ? data.html_attributions : [],
+  business_name: result.name ?? null,
+  maps_url: result.url ?? null,
   reviews: (result.reviews ?? []).map((r) => ({
     author_name: r.author_name,
     relative_time_description: r.relative_time_description,

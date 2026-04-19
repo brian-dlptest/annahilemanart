@@ -2,13 +2,14 @@
  * Home page reviews: manual copy below, optionally replaced by
  * `npm run reviews:fetch` (Places Details API + same place_id as Google Maps).
  *
- * The Maps URL is a normal link to the live listing, not a JSON feed.
+ * Google Place Details returns at most 5 reviews per request; there is no
+ * supported way to fetch 10 via the standard Places API alone.
  */
 import fetched from './google-reviews-fetched.json';
 
-/** Opens this Google Maps place (same place_id the WP plugin uses for the business). */
-export const googleReviewsProfileUrl: string =
-  'https://www.google.com/maps/search/?api=1&query_place_id=ChIJAQBkeKGIa4cRxNgoGRLnFqw';
+/** Fallback if fetched JSON has no `maps_url` yet (query by place_id). */
+const FALLBACK_MAPS_URL =
+  'https://www.google.com/maps?q=place_id:ChIJAQBkeKGIa4cRxNgoGRLnFqw';
 
 export const googlePlaceId = 'ChIJAQBkeKGIa4cRxNgoGRLnFqw';
 
@@ -17,6 +18,7 @@ type FetchedReview = {
   relative_time_description: string;
   text: string;
   rating?: number;
+  profile_photo_url?: string | null;
 };
 
 type FetchedPayload = {
@@ -25,6 +27,8 @@ type FetchedPayload = {
   reviews: FetchedReview[];
   rating: number | null;
   user_ratings_total: number | null;
+  maps_url?: string | null;
+  business_name?: string | null;
 };
 
 const payload = fetched as FetchedPayload;
@@ -35,6 +39,8 @@ export type CustomerReview = {
   text: string;
   /** 1–5 when sourced from Places API */
   starRating?: number;
+  /** Reviewer photo from Places API when available */
+  profilePhotoUrl?: string | null;
 };
 
 const manualReviews: CustomerReview[] = [
@@ -76,6 +82,7 @@ function mapFetched(r: FetchedReview): CustomerReview {
     relativeTime: r.relative_time_description,
     text: r.text,
     starRating: typeof r.rating === 'number' ? r.rating : undefined,
+    profilePhotoUrl: r.profile_photo_url || null,
   };
 }
 
@@ -84,6 +91,19 @@ const useFetched = payload.reviews.length > 0;
 export const customerReviews: CustomerReview[] = useFetched
   ? payload.reviews.map(mapFetched)
   : manualReviews;
+
+/** Canonical listing link from Places `url` when fetched; else stable place_id link. */
+export const googleReviewsProfileUrl: string = (
+  useFetched && payload.maps_url && payload.maps_url.trim()
+    ? payload.maps_url.trim()
+    : FALLBACK_MAPS_URL
+);
+
+/** Business title from Places `name` when fetched. */
+export const googleBusinessDisplayName: string =
+  useFetched && payload.business_name?.trim()
+    ? payload.business_name.trim()
+    : 'Anna Hileman Art';
 
 const roundedStars = (r: number | null | undefined): 1 | 2 | 3 | 4 | 5 => {
   const n = Math.round(r ?? 5);
