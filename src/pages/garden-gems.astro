@@ -18,15 +18,15 @@ const gardenGemsBreadcrumbs = buildBreadcrumbs(Astro.site, [
 ]);
 
 const gems = [
-  { src: 'Johannas-Garden-Gem-Full-Edited.jpg', alt: 'Johanna\'s Garden Gem' },
-  { src: 'Cali-Fig-24x36-1.jpg', alt: 'Cali Fig, 24x36' },
-  { src: 'Drippy-Fig-24x36-1.jpg', alt: 'Drippy Fig, 24x36' },
-  { src: 'Drippy-Fig-Installed-24x36-1.jpg', alt: 'Drippy Fig installed' },
-  { src: 'Iris-Fig-Mock-Up.jpg', alt: 'Iris Fig mockup' },
-  { src: 'Iris-Gem-30x72-1.jpg', alt: 'Iris Gem, 30x72' },
-  { src: 'Iris-Gem-Detail-1.jpg', alt: 'Iris Gem detail' },
-  { src: 'Iris-Gem-Detail-2.jpg', alt: 'Iris Gem detail' },
-  { src: 'Iris-Gem-Detail-3.jpg', alt: 'Iris Gem detail' },
+  { src: 'Johannas-Garden-Gem-Full-Edited.jpg', alt: "Johanna's Garden Gem — hand-painted botanical steel panel" },
+  { src: 'Cali-Fig-24x36-1.jpg', alt: 'Cali Fig — acrylic on steel, 24×36 in' },
+  { src: 'Drippy-Fig-24x36-1.jpg', alt: 'Drippy Fig — acrylic on steel, 24×36 in' },
+  { src: 'Drippy-Fig-Installed-24x36-1.jpg', alt: 'Drippy Fig installed on an exterior garden wall' },
+  { src: 'Iris-Fig-Mock-Up.jpg', alt: 'Iris Fig — design mockup for a custom commission' },
+  { src: 'Iris-Gem-30x72-1.jpg', alt: 'Iris Gem — acrylic on steel, 30×72 in' },
+  { src: 'Iris-Gem-Detail-1.jpg', alt: 'Iris Gem detail — brush texture and layered color' },
+  { src: 'Iris-Gem-Detail-2.jpg', alt: 'Iris Gem detail — painted petals at close range' },
+  { src: 'Iris-Gem-Detail-3.jpg', alt: 'Iris Gem detail — base of the painted stem' },
 ];
 
 const processSteps = [
@@ -55,6 +55,7 @@ const processSteps = [
   description="Garden Gems are weather-ready hand-painted steel sculptures by Colorado artist Anna Hileman — outdoor art designed for patios, gardens, and entryways."
   ogImage="/images/Johannas-Garden-Gem-Full-Edited.jpg"
   ogImageAlt="Garden Gem hand-painted steel sculpture by Anna Hileman"
+  preloadImage="/images/Johannas-Garden-Gem-Full-Edited.jpg"
 >
   <section class="border-b border-black/5">
     <div class="max-w-7xl mx-auto px-6 lg:px-10 py-16 lg:py-24">
@@ -129,11 +130,11 @@ const processSteps = [
     </div>
 
     <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 lg:gap-6">
-      {gems.map((g, index) => (
+      {gems.map((g) => (
         <figure class="group bg-[color:var(--color-accent-soft)]/15 border border-black/5 rounded-lg p-3">
           <ArtImage src={g.src} alt={g.alt} ratio="portrait" />
           <figcaption class="pt-3 px-1 text-xs uppercase tracking-[0.18em] text-black/60 group-hover:text-[color:var(--color-ink)] transition-colors">
-            Piece {String(index + 1).padStart(2, '0')}
+            {g.alt}
           </figcaption>
         </figure>
       ))}

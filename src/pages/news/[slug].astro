@@ -1,7 +1,9 @@
 ---
 import Layout from '../../layouts/Layout.astro';
+import JsonLd from '../../components/JsonLd.astro';
 import { getCollection, render } from 'astro:content';
 import { toAbsoluteSiteUrl } from '../../data/news';
+import { buildBreadcrumbs } from '../../data/schemas';
 
 export async function getStaticPaths() {
   const posts = await getCollection('news', ({ data }) => !data.draft);
@@ -23,6 +25,8 @@ const dateFmt = new Intl.DateTimeFormat('en-US', {
 const pageTitle = post.data.seoTitle ?? `${post.data.title} | News & Updates`;
 const pageDescription = post.data.seoDescription ?? post.data.excerpt;
 const socialImage = post.data.featuredImage ? toAbsoluteSiteUrl(Astro.site, post.data.featuredImage) : undefined;
+const siteOrigin = Astro.site ? Astro.site.origin : 'https://annahileman.com';
+const canonicalUrl = Astro.site ? new URL(Astro.url.pathname, Astro.site).href : `${siteOrigin}/news/${post.slug}/`;
 
 const articleSchema = {
   '@context': 'https://schema.org',
@@ -31,12 +35,25 @@ const articleSchema = {
   description: pageDescription,
   datePublished: post.data.publishDate.toISOString(),
   dateModified: (post.data.updatedDate ?? post.data.publishDate).toISOString(),
+  mainEntityOfPage: { '@type': 'WebPage', '@id': canonicalUrl },
+  url: canonicalUrl,
   author: {
     '@type': 'Person',
+    '@id': `${siteOrigin}/#person`,
     name: 'Anna Hileman',
   },
-  image: socialImage ? [socialImage] : undefined,
+  publisher: { '@id': `${siteOrigin}/#business` },
+  image: socialImage ? [socialImage] : [`${siteOrigin}/images/website-anna.jpg`],
+  articleSection: post.data.category,
+  keywords: post.data.tags,
+  inLanguage: 'en-US',
 };
+
+const articleBreadcrumbs = buildBreadcrumbs(Astro.site, [
+  { name: 'Home', slug: '' },
+  { name: 'News & Updates', slug: 'news' },
+  { name: post.data.title, slug: `news/${post.slug}` },
+]);
 ---
 
 <Layout
@@ -101,4 +118,5 @@ const articleSchema = {
   </article>
 
   <script type="application/ld+json" set:html={JSON.stringify(articleSchema)}></script>
+  <JsonLd json={articleBreadcrumbs} />
 </Layout>

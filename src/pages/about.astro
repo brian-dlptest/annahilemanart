@@ -8,6 +8,27 @@ const aboutBreadcrumbs = buildBreadcrumbs(Astro.site, [
   { name: 'About', slug: 'about' },
 ]);
 
+const siteOrigin = Astro.site ? Astro.site.origin : 'https://annahileman.com';
+
+// Press mention: 5280 Magazine on Threefold Bakery — surfaces Anna's work in structured data
+// so search engines and LLMs can attribute the press quote to the business entity.
+const pressMentionSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'NewsArticle',
+  headline: 'Threefold Bakery in Breckenridge named the Best Road-Trip Restaurant by 5280 Magazine',
+  url: 'https://5280.com/threefold-bakery-in-breckenridge-named-the-best-road-trip-restaurant-by-5280-magazine/',
+  publisher: {
+    '@type': 'Organization',
+    name: '5280 Magazine',
+    url: 'https://5280.com/',
+  },
+  about: { '@id': `${siteOrigin}/#business` },
+  mentions: [
+    { '@id': `${siteOrigin}/#person` },
+    { '@id': `${siteOrigin}/#business` },
+  ],
+};
+
 const bodyOfWork = [
   {
     title: 'School Murals',
@@ -291,4 +312,5 @@ const bodyOfWork = [
     </div>
   </section>
   <JsonLd json={aboutBreadcrumbs} />
+  <JsonLd json={pressMentionSchema} />
 </Layout>
