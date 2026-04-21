@@ -1,58 +1,280 @@
 ---
 import Layout from '../layouts/Layout.astro';
-import ArtImage from '../components/ArtImage.astro';
----
-<Layout title="About | Anna Hileman Art">
-  <article class="max-w-5xl mx-auto px-6 lg:px-10 py-20">
-    <div class="text-xs uppercase tracking-[0.3em] text-[color:var(--color-accent)] mb-6">About</div>
-    <h1 class="font-display text-5xl lg:text-6xl mb-12">About Anna Hileman</h1>
 
-    <div class="grid lg:grid-cols-12 gap-12">
-      <div class="lg:col-span-5">
-        <ArtImage src="Anna-Hileman-Artist-Colorado.png" alt="Anna Hileman, Colorado Artist" ratio="portrait" lightbox={false} />
-      </div>
-      <div class="lg:col-span-7 prose prose-lg max-w-none space-y-6">
-        <p class="text-lg leading-relaxed text-black/80">
-          Anna Hileman is a Colorado-based muralist and commercial artist creating custom,
-          story-driven artwork shaped by place, meaning, and the lives of her clients.
-        </p>
-        <p class="leading-relaxed text-black/70">
-          Through Anna Hileman Art LLC, she offers full concept-to-completion services,
-          including design, mockups, installation, and delivery for residential,
-          commercial, and educational spaces.
-        </p>
-        <p class="leading-relaxed text-black/70">
-          In addition to murals, Anna creates Garden Gems, vibrant floral and plant-inspired
-          acrylic panels featuring her signature painting style, with each piece rooted in meaning.
-        </p>
-        <p class="leading-relaxed text-black/70">
-          With a BFA in Interior Design and Fine Art, Anna collaborates closely with clients
-          to weave their values and stories into every piece she creates.
-        </p>
+const bodyOfWork = [
+  {
+    title: 'School Murals',
+    tagline: 'Hallways that tell the story of a place.',
+    image: 'Dual-Immersion-Academy-School-Mural-8.jpg',
+    href: '/murals',
+  },
+  {
+    title: 'Restaurants & Interiors',
+    tagline: 'Commissioned work for hospitality spaces.',
+    image: 'Threefold-Bakery-Interior-Mural-by-Anna-Hileman-Courtesy1600.jpeg',
+    href: '/restaurants',
+  },
+  {
+    title: 'Pet Portraits',
+    tagline: 'Paintings of the ones you love.',
+    image: 'IMG_0342.jpg',
+    href: '/portraits',
+  },
+  {
+    title: 'Garden Gems',
+    tagline: 'Botanical acrylic panels, rooted in meaning.',
+    image: 'Johannas-Garden-Gem-Full-Edited.jpg',
+    href: '/garden-gems',
+  },
+];
+---
+<Layout title="About Anna Hileman — Colorado Muralist & Commercial Artist">
+  <!-- Editorial hero: large portrait photo + name block -->
+  <section class="border-b border-black/5">
+    <div class="max-w-7xl mx-auto px-6 lg:px-10 py-20 lg:py-28">
+      <div class="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-16 items-center">
+        <div class="lg:col-span-6 min-w-0">
+          <img
+            src="/images/website-anna.jpg"
+            alt="Anna Hileman in her Colorado studio"
+            width={479}
+            height={720}
+            fetchpriority="high"
+            loading="eager"
+            decoding="async"
+            class="w-full rounded-lg shadow-2xl object-cover aspect-[3/4]"
+          />
+        </div>
+        <div class="lg:col-span-6">
+          <div class="text-xs uppercase tracking-[0.3em] text-[color:var(--color-gold)]">
+            Artist &middot; Muralist &middot; Colorado
+          </div>
+          <h1 class="mt-6 font-display text-5xl md:text-6xl lg:text-8xl leading-[0.95] text-[color:var(--color-ink)]">
+            Anna
+            <span class="block italic text-[color:var(--color-gold)]">Hileman.</span>
+          </h1>
+          <p class="mt-8 text-xl lg:text-2xl text-black/75 leading-relaxed font-display max-w-lg">
+            Story-driven artwork shaped by place, meaning, and the lives of the people who live with it.
+          </p>
+          <div class="mt-10 flex flex-wrap gap-3">
+            <a
+              href="/contact"
+              class="inline-flex items-center gap-2 bg-[color:var(--color-gold)] text-[color:var(--color-ink)] px-8 py-4 text-sm tracking-wide hover:bg-[color:var(--color-ink)] hover:text-[color:var(--color-gold)] transition-colors"
+            >
+              Start a Conversation
+              <span aria-hidden="true">&rarr;</span>
+            </a>
+            <a
+              href="#work"
+              class="inline-flex items-center gap-2 border border-[color:var(--color-ink)]/20 text-[color:var(--color-ink)] px-8 py-4 text-sm tracking-wide hover:border-[color:var(--color-ink)] transition-colors"
+            >
+              See the Work
+            </a>
+          </div>
+        </div>
       </div>
     </div>
+  </section>
 
-    <section class="mt-24">
-      <div class="text-xs uppercase tracking-[0.3em] text-[color:var(--color-accent)] mb-4">Publications &amp; Press</div>
-      <h2 class="font-display text-4xl mb-10">In Print</h2>
-      <div class="grid md:grid-cols-2 gap-10 items-start">
-        <div>
-          <ArtImage src="5280-Mag-Logo.png" alt="Featured in 5280 Magazine" ratio="landscape" lightbox={false} />
+  <!-- Signature quote band -->
+  <section class="bg-[color:var(--color-ink)] text-[color:var(--color-paper)]">
+    <div class="max-w-5xl mx-auto px-6 lg:px-10 py-24 lg:py-32 text-center">
+      <div class="text-xs uppercase tracking-[0.3em] text-[color:var(--color-gold)]">
+        Working Principle
+      </div>
+      <blockquote class="mt-8 font-display text-3xl md:text-5xl lg:text-6xl leading-[1.1] italic max-w-4xl mx-auto">
+        &ldquo;Art shaped by place, meaning, and
+        {' '}
+        <span class="text-[color:var(--color-gold)]">story.</span>&rdquo;
+      </blockquote>
+    </div>
+  </section>
+
+  <!-- Bio essay + studio image -->
+  <section class="border-b border-black/5">
+    <div class="max-w-7xl mx-auto px-6 lg:px-10 py-20 lg:py-28">
+      <div class="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-16">
+        <div class="lg:col-span-7">
+          <div class="text-xs uppercase tracking-[0.3em] text-[color:var(--color-gold)] mb-6">
+            The Short Version
+          </div>
+          <div class="font-display text-xl md:text-2xl leading-relaxed text-[color:var(--color-ink)] space-y-6">
+            <p>
+              <span class="float-left font-display text-7xl leading-[0.8] mr-3 mt-1 text-[color:var(--color-gold)]">A</span>nna Hileman is a Colorado-based muralist and commercial artist creating custom, story-driven artwork for schools, restaurants, and homes.
+            </p>
+          </div>
+          <div class="mt-8 space-y-5 text-base md:text-lg leading-relaxed text-black/75">
+            <p>
+              Through <strong class="text-[color:var(--color-ink)]">Anna Hileman Art LLC</strong>, she offers full concept-to-completion services&mdash;design, on-site mockups, installation, and delivery&mdash;for residential, commercial, and educational spaces.
+            </p>
+            <p>
+              In addition to murals, Anna creates <em>Garden Gems</em>, vibrant floral and plant-inspired acrylic panels featuring her signature style, and commissioned pet portraits in oil and acrylic.
+            </p>
+            <p>
+              With a BFA in Interior Design and Fine Art, she collaborates closely with every client to weave their values, stories, and sense of place into the work. Each school mural is accompanied by an original poem written for the piece.
+            </p>
+          </div>
         </div>
-        <div class="space-y-4">
-          <h3 class="font-display text-2xl">5280 Magazine</h3>
-          <p class="text-black/70 leading-relaxed">
-            <strong>Road-Trip Restaurant:</strong> Threefold Bakery in Breckenridge.
-          </p>
-          <p class="text-sm text-black/60 leading-relaxed italic">
-            "The name Threefold refers to the French technique of tri-folding croissant dough,
-            and Anna's mural captures the bakery's origin story in a sweeping interior piece."
-          </p>
-          <a href="https://5280.com/threefold-bakery-in-breckenridge-named-the-best-road-trip-restaurant-by-5280-magazine/"
-             class="inline-block text-sm uppercase tracking-wider border-b border-[color:var(--color-ink)] pb-0.5 hover:text-[color:var(--color-accent)] hover:border-[color:var(--color-accent)]"
-             target="_blank" rel="noopener">Read the article</a>
+        <div class="lg:col-span-5">
+          <figure>
+            <img
+              src="/images/Studio.jpg"
+              alt="Anna Hileman's studio, with works in progress"
+              width={1024}
+              height={768}
+              loading="lazy"
+              decoding="async"
+              class="w-full rounded-lg shadow-xl object-cover aspect-[4/3]"
+            />
+            <figcaption class="mt-4 text-xs uppercase tracking-[0.25em] text-black/50">
+              The Studio &middot; Colorado
+            </figcaption>
+          </figure>
         </div>
       </div>
-    </section>
-  </article>
+    </div>
+  </section>
+
+  <!-- Body of work grid -->
+  <section id="work" class="max-w-7xl mx-auto px-6 lg:px-10 py-20 lg:py-28">
+    <div class="max-w-2xl mb-14">
+      <div class="text-xs uppercase tracking-[0.3em] text-[color:var(--color-gold)]">
+        Bodies of Work
+      </div>
+      <h2 class="mt-4 font-display text-3xl md:text-5xl">Four portfolios, one hand.</h2>
+      <p class="mt-6 text-black/70 leading-relaxed">
+        Each body of work has its own voice, but they share a common approach: listen first, design around the place, paint with intention.
+      </p>
+    </div>
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-6 lg:gap-10">
+      {bodyOfWork.map((w) => (
+        <a
+          href={w.href}
+          class="group relative block overflow-hidden rounded-lg aspect-[4/3] bg-black/5"
+        >
+          <img
+            src={`/images/${w.image}`}
+            alt=""
+            loading="lazy"
+            decoding="async"
+            class="absolute inset-0 h-full w-full object-cover transition-transform duration-500 group-hover:scale-105"
+          />
+          <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-black/25 to-transparent" aria-hidden="true"></div>
+          <div class="absolute inset-x-0 bottom-0 p-6 lg:p-8 text-white">
+            <div class="text-[10px] uppercase tracking-[0.3em] text-[color:var(--color-gold)]">
+              Portfolio
+            </div>
+            <h3 class="mt-2 font-display text-2xl md:text-3xl">{w.title}</h3>
+            <p class="mt-2 text-sm text-white/85 max-w-sm">{w.tagline}</p>
+            <span class="mt-4 inline-flex items-center gap-2 text-xs uppercase tracking-[0.25em] text-[color:var(--color-gold)]">
+              View &rarr;
+            </span>
+          </div>
+        </a>
+      ))}
+    </div>
+  </section>
+
+  <!-- Press / In Print -->
+  <section class="border-y border-black/10 bg-[color:var(--color-accent-soft)]/25">
+    <div class="max-w-7xl mx-auto px-6 lg:px-10 py-20 lg:py-28">
+      <div class="text-center max-w-2xl mx-auto mb-14">
+        <div class="text-xs uppercase tracking-[0.3em] text-[color:var(--color-gold)]">
+          Publications &amp; Press
+        </div>
+        <h2 class="mt-4 font-display text-3xl md:text-5xl">In Print.</h2>
+      </div>
+
+      <article class="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-14 items-center">
+        <div class="lg:col-span-7">
+          <img
+            src="/images/Threefold-Bakery-Interior-Mural-by-Anna-Hileman-Courtesy1600.jpeg"
+            alt="Threefold Bakery interior mural in Breckenridge, Colorado, by Anna Hileman"
+            width={1024}
+            height={577}
+            loading="lazy"
+            decoding="async"
+            class="w-full rounded-lg shadow-xl object-cover aspect-[16/9]"
+          />
+        </div>
+        <div class="lg:col-span-5">
+          <img
+            src="/images/5280-Mag-Logo.png"
+            alt="5280 Magazine"
+            width={200}
+            height={80}
+            loading="lazy"
+            class="h-10 w-auto mb-6"
+          />
+          <div class="text-xs uppercase tracking-[0.25em] text-black/50">
+            Road-Trip Restaurant
+          </div>
+          <h3 class="mt-3 font-display text-2xl md:text-3xl">
+            Threefold Bakery, Breckenridge.
+          </h3>
+          <blockquote class="mt-6 font-display italic text-lg text-black/80 border-l-2 border-[color:var(--color-gold)] pl-6 leading-relaxed">
+            &ldquo;The name Threefold refers to the French technique of tri-folding croissant dough, and Anna&rsquo;s mural captures the bakery&rsquo;s origin story in a sweeping interior piece.&rdquo;
+          </blockquote>
+          <a
+            href="https://5280.com/threefold-bakery-in-breckenridge-named-the-best-road-trip-restaurant-by-5280-magazine/"
+            class="mt-8 inline-flex items-center gap-2 text-sm uppercase tracking-[0.2em] border-b border-[color:var(--color-ink)] pb-1 hover:text-[color:var(--color-gold)] hover:border-[color:var(--color-gold)] transition-colors"
+            target="_blank"
+            rel="noopener"
+          >
+            Read the Article
+            <span aria-hidden="true">&rarr;</span>
+          </a>
+        </div>
+      </article>
+    </div>
+  </section>
+
+  <!-- Credentials strip -->
+  <section class="border-b border-black/10">
+    <div class="max-w-7xl mx-auto px-6 lg:px-10 py-16 lg:py-20">
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-10 md:gap-14">
+        <div>
+          <div class="text-xs uppercase tracking-[0.3em] text-[color:var(--color-gold)]">
+            Education
+          </div>
+          <div class="mt-4 font-display text-xl md:text-2xl text-[color:var(--color-ink)]">
+            BFA, Interior Design &amp; Fine Art
+          </div>
+        </div>
+        <div>
+          <div class="text-xs uppercase tracking-[0.3em] text-[color:var(--color-gold)]">
+            Studio
+          </div>
+          <div class="mt-4 font-display text-xl md:text-2xl text-[color:var(--color-ink)]">
+            Anna Hileman Art LLC
+          </div>
+          <div class="mt-1 text-sm text-black/60">Residential, commercial, and educational commissions</div>
+        </div>
+        <div>
+          <div class="text-xs uppercase tracking-[0.3em] text-[color:var(--color-gold)]">
+            Based In
+          </div>
+          <div class="mt-4 font-display text-xl md:text-2xl text-[color:var(--color-ink)]">
+            Colorado
+          </div>
+          <div class="mt-1 text-sm text-black/60">Available for commissions nationwide</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Final CTA -->
+  <section class="bg-[color:var(--color-accent-soft)]/25">
+    <div class="max-w-3xl mx-auto px-6 lg:px-10 py-16 lg:py-24 text-center">
+      <h2 class="font-display text-3xl md:text-4xl">Have a wall, a space, or a face in mind?</h2>
+      <p class="mt-4 text-black/70">Tell me about it. Every piece begins with a conversation.</p>
+      <a
+        href="/contact"
+        class="mt-10 inline-flex items-center gap-2 bg-[color:var(--color-gold)] text-[color:var(--color-ink)] px-8 py-4 text-sm tracking-wide hover:bg-[color:var(--color-ink)] hover:text-[color:var(--color-gold)] transition-colors"
+      >
+        Start a Conversation
+        <span aria-hidden="true">&rarr;</span>
+      </a>
+    </div>
+  </section>
 </Layout>

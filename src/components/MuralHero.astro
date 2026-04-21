@@ -1,0 +1,74 @@
+---
+interface Props {
+  eyebrow: string;
+  title: string;
+  /** Optional italicized suffix appended to title, rendered in accent color. */
+  titleSuffix?: string;
+  subhead: string;
+  ctaHref: string;
+  ctaLabel: string;
+  /** Filename under /images/ */
+  image: string;
+  imageAlt: string;
+  /** Intrinsic width of the source image, in px, for CLS prevention. */
+  imageWidth: number;
+  /** Intrinsic height of the source image, in px. */
+  imageHeight: number;
+}
+
+const {
+  eyebrow,
+  title,
+  titleSuffix,
+  subhead,
+  ctaHref,
+  ctaLabel,
+  image,
+  imageAlt,
+  imageWidth,
+  imageHeight,
+} = Astro.props;
+---
+<section class="relative overflow-hidden h-[50vh] md:h-[60vh] lg:h-[70vh]">
+  <img
+    src={`/images/${image}`}
+    alt={imageAlt}
+    width={imageWidth}
+    height={imageHeight}
+    fetchpriority="high"
+    loading="eager"
+    decoding="async"
+    class="absolute inset-0 h-full w-full object-cover object-[center_30%]"
+  />
+</section>
+
+<section class="border-b border-black/5">
+  <div class="max-w-7xl mx-auto px-6 lg:px-10 py-16 lg:py-20">
+    <div class="text-xs uppercase tracking-[0.3em] text-[color:var(--color-gold)]">
+      {eyebrow}
+    </div>
+    <h1 class="mt-6 font-display text-4xl md:text-5xl lg:text-7xl leading-[1.05] text-[color:var(--color-ink)] max-w-5xl">
+      {title}
+      {titleSuffix && (
+        <>
+          {' '}
+          <em class="italic text-[color:var(--color-gold)]">{titleSuffix}</em>
+        </>
+      )}
+    </h1>
+    <div class="mt-10 lg:mt-14 grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-14 lg:items-end">
+      <p class="lg:col-span-7 text-lg lg:text-xl text-black/75 leading-relaxed max-w-2xl">
+        {subhead}
+      </p>
+      <div class="lg:col-span-5 lg:text-right">
+        <a
+          href={ctaHref}
+          class="inline-flex items-center gap-2 bg-[color:var(--color-gold)] text-[color:var(--color-ink)] px-8 py-4 text-sm tracking-wide hover:bg-[color:var(--color-ink)] hover:text-[color:var(--color-gold)] transition-colors"
+        >
+          {ctaLabel}
+          <span aria-hidden="true">&rarr;</span>
+        </a>
+      </div>
+    </div>
+  </div>
+</section>
