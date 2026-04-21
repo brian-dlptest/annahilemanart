@@ -1,6 +1,21 @@
 ---
 import Layout from '../layouts/Layout.astro';
 import ArtImage from '../components/ArtImage.astro';
+import JsonLd from '../components/JsonLd.astro';
+import { buildServiceSchema, buildBreadcrumbs } from '../data/schemas';
+
+const gardenGemsServiceSchema = buildServiceSchema(Astro.site, {
+  name: 'Garden Gems',
+  slug: 'garden-gems',
+  description:
+    'Weather-ready hand-painted steel sculptures by Colorado artist Anna Hileman — outdoor art designed for patios, gardens, and entryways.',
+  serviceType: 'Outdoor painted installations',
+  image: '/images/Johannas-Garden-Gem-Full-Edited.jpg',
+});
+const gardenGemsBreadcrumbs = buildBreadcrumbs(Astro.site, [
+  { name: 'Home', slug: '' },
+  { name: 'Garden Gems', slug: 'garden-gems' },
+]);
 
 const gems = [
   { src: 'Johannas-Garden-Gem-Full-Edited.jpg', alt: 'Johanna\'s Garden Gem' },
@@ -35,7 +50,12 @@ const processSteps = [
   },
 ];
 ---
-<Layout title="Garden Gems | Anna Hileman Art">
+<Layout
+  title="Garden Gems — Hand-Painted Outdoor Art | Anna Hileman Art"
+  description="Garden Gems are weather-ready hand-painted steel sculptures by Colorado artist Anna Hileman — outdoor art designed for patios, gardens, and entryways."
+  ogImage="/images/Johannas-Garden-Gem-Full-Edited.jpg"
+  ogImageAlt="Garden Gem hand-painted steel sculpture by Anna Hileman"
+>
   <section class="border-b border-black/5">
     <div class="max-w-7xl mx-auto px-6 lg:px-10 py-16 lg:py-24">
       <div class="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-16 items-center">
@@ -171,4 +191,6 @@ const processSteps = [
       </a>
     </div>
   </section>
+  <JsonLd json={gardenGemsServiceSchema} />
+  <JsonLd json={gardenGemsBreadcrumbs} />
 </Layout>

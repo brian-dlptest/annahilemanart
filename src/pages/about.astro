@@ -1,5 +1,12 @@
 ---
 import Layout from '../layouts/Layout.astro';
+import JsonLd from '../components/JsonLd.astro';
+import { buildBreadcrumbs } from '../data/schemas';
+
+const aboutBreadcrumbs = buildBreadcrumbs(Astro.site, [
+  { name: 'Home', slug: '' },
+  { name: 'About', slug: 'about' },
+]);
 
 const bodyOfWork = [
   {
@@ -28,7 +35,13 @@ const bodyOfWork = [
   },
 ];
 ---
-<Layout title="About Anna Hileman — Colorado Muralist & Commercial Artist">
+<Layout
+  title="About Anna Hileman — Colorado Muralist & Commercial Artist"
+  description="Meet Anna Hileman, a Colorado-based artist creating hand-painted murals, pet portraits, and commercial artwork for restaurants, schools, and collectors across Denver and the Front Range."
+  ogImage="/images/Anna-Hileman-Artist-Colorado.png"
+  ogImageAlt="Portrait of Colorado artist Anna Hileman"
+  preloadImage="/images/website-anna.jpg"
+>
   <!-- Editorial hero: large portrait photo + name block -->
   <section class="border-b border-black/5">
     <div class="max-w-7xl mx-auto px-6 lg:px-10 py-20 lg:py-28">
@@ -277,4 +290,5 @@ const bodyOfWork = [
       </a>
     </div>
   </section>
+  <JsonLd json={aboutBreadcrumbs} />
 </Layout>

@@ -1,46 +1,293 @@
 ---
 import Layout from '../layouts/Layout.astro';
 import ArtImage from '../components/ArtImage.astro';
+import LightboxThumb from '../components/LightboxThumb.astro';
+import JsonLd from '../components/JsonLd.astro';
+import { buildServiceSchema, buildBreadcrumbs } from '../data/schemas';
+
+const customArtworkServiceSchema = buildServiceSchema(Astro.site, {
+  name: 'Custom & Commercial Artwork',
+  slug: 'custom-artwork',
+  description:
+    'Custom commercial art commissions — hand-painted signage, ceiling installations, storefront windows, and bespoke brand work for Colorado businesses.',
+  serviceType: 'Commercial art commissions',
+  image: '/images/HAND-PAINTED-CEILING-GOING-UP.jpg',
+});
+const customArtworkBreadcrumbs = buildBreadcrumbs(Astro.site, [
+  { name: 'Home', slug: '' },
+  { name: 'Custom & Commercial', slug: 'custom-artwork' },
+]);
+
+const processSteps = [
+  {
+    eyebrow: '01 · Discovery',
+    title: 'On-site walkthrough and brand study',
+    body:
+      "We visit the space, listen to how it's meant to feel, and review brand guidelines, budgets, and timelines before a single sketch is made.",
+  },
+  {
+    eyebrow: '02 · Concept',
+    title: 'Artwork direction tailored to the setting',
+    body:
+      'Mood boards, color studies, and composition options are developed specifically for your walls, ceilings, windows, or fixtures — never from a catalog.',
+  },
+  {
+    eyebrow: '03 · Mockups',
+    title: 'Full visualization before production',
+    body:
+      "Concept artwork is superimposed onto photographs of the real space so stakeholders can see exactly what they're approving.",
+  },
+  {
+    eyebrow: '04 · Install',
+    title: 'Production, delivery, and installation',
+    body:
+      'Fabrication, transport, and on-site installation are managed end to end. We hand over a space that feels finished — not a to-do list.',
+  },
+];
+
+const capabilities = [
+  {
+    title: 'Hand-painted signage',
+    body: 'Exterior and interior lettering, logos, and storefront art painted directly onto glass, wood, plaster, or metal.',
+  },
+  {
+    title: 'Ceiling and architectural art',
+    body: 'Scaffolded ceiling paintings, beamwork, and hand-painted architectural accents for restaurants and hospitality interiors.',
+  },
+  {
+    title: 'Window painting',
+    body: 'Temporary and seasonal window art, plus permanent reverse-painted gilded window installations.',
+  },
+  {
+    title: 'Brand environments',
+    body: 'One-of-a-kind interior artwork programs — a coordinated set of pieces that tell a single brand story across a space.',
+  },
+];
+
+const galleryThumbs = [
+  { src: 'EXTERIOR-SIGNAGE.jpg', alt: 'Hand-painted exterior signage for a Colorado business' },
+  { src: 'EXTERIOR-SIGNAGE-DETAIL.jpg', alt: 'Close-up of gilded hand-lettered signage detail' },
+  { src: 'HAND-PAINTED-CEILING-GOING-UP.jpg', alt: 'Hand-painted ceiling installation in progress' },
+  { src: 'QI-Ceiling.jpg', alt: 'Finished hand-painted ceiling at Quality Italian Denver' },
+  { src: 'PROCESS-FOR-QI-RESTAURANT-DOORS.jpg', alt: 'In-process hand-painted restaurant doors' },
+  { src: 'GOLD-LEAF-DETAIL.jpg', alt: 'Gold leaf detail on commissioned artwork' },
+  { src: 'Fish-Window.jpg', alt: 'Hand-painted reverse fish window installation' },
+  { src: 'Model-A-Window-Painting-006.jpg', alt: 'Vintage Model A window painting commission' },
+];
 ---
-<Layout title="Custom & Commercial Artwork | Anna Hileman Art">
-  <section class="max-w-7xl mx-auto px-6 lg:px-10 py-20">
-    <div class="text-xs uppercase tracking-[0.3em] text-[color:var(--color-accent)] mb-6">Commercial</div>
-    <h1 class="font-display text-5xl lg:text-6xl max-w-3xl">Custom and Commercial Artwork</h1>
-    <p class="mt-8 text-lg text-black/70 max-w-2xl leading-relaxed">
-      Drawing from a background in Interior Design, Anna enhances commercial spaces with
-      original artwork that feels inevitable to its setting.
-    </p>
+<Layout
+  title="Custom & Commercial Artwork in Colorado | Anna Hileman Art"
+  description="Hand-painted commercial art for Colorado businesses — signage, ceiling installations, storefront windows, and bespoke brand environments by artist Anna Hileman."
+  ogImage="/images/HAND-PAINTED-CEILING-GOING-UP.jpg"
+  ogImageAlt="Hand-painted ceiling installation by Anna Hileman"
+  preloadImage="/images/HAND-PAINTED-CEILING-GOING-UP.jpg"
+>
+  <!-- Hero -->
+  <section class="border-b border-black/5">
+    <div class="max-w-7xl mx-auto px-6 lg:px-10 py-20 lg:py-28">
+      <div class="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-16 items-center">
+        <div class="lg:col-span-6 min-w-0">
+          <div class="text-xs uppercase tracking-[0.3em] text-[color:var(--color-accent)] mb-6">
+            Commercial &amp; Commissioned Work
+          </div>
+          <h1 class="font-display text-5xl lg:text-7xl leading-[1.05]">
+            Custom artwork that belongs to the space it's in.
+          </h1>
+          <p class="mt-8 text-lg text-black/70 max-w-xl leading-relaxed">
+            Drawing on a background in interior design, Anna Hileman creates commissioned
+            artwork for Colorado restaurants, hotels, schools, and private interiors — signage,
+            ceilings, windows, and bespoke brand environments, all hand-painted.
+          </p>
+          <div class="mt-10 flex flex-wrap gap-4">
+            <a
+              href="/contact"
+              class="inline-flex items-center gap-2 rounded-full bg-[color:var(--color-ink)] px-6 py-3 text-sm uppercase tracking-wider text-[color:var(--color-paper)] transition hover:bg-[color:var(--color-accent)]"
+            >
+              Start a Project
+              <span aria-hidden="true">&rarr;</span>
+            </a>
+            <a
+              href="/restaurants"
+              class="inline-flex items-center gap-2 rounded-full border border-[color:var(--color-ink)]/20 px-6 py-3 text-sm uppercase tracking-wider text-[color:var(--color-ink)] transition hover:border-[color:var(--color-accent)] hover:text-[color:var(--color-accent)]"
+            >
+              See Restaurant Work
+            </a>
+          </div>
+        </div>
+        <div class="lg:col-span-6">
+          <div class="overflow-hidden">
+            <img
+              src="/images/HAND-PAINTED-CEILING-GOING-UP.jpg"
+              alt="Hand-painted ceiling installation in progress at a Colorado commercial interior"
+              class="w-full h-[60vh] lg:h-[70vh] object-cover"
+              loading="eager"
+              fetchpriority="high"
+            />
+          </div>
+        </div>
+      </div>
+    </div>
   </section>
 
-  <section class="max-w-5xl mx-auto px-6 lg:px-10 pb-16">
-    <h2 class="font-display text-3xl mb-6">Key components of the service</h2>
-    <ul class="space-y-3 text-black/80">
-      <li class="flex gap-3"><span class="text-[color:var(--color-accent)]">&#10003;</span> On-site visits to understand preferences, company image, and budget</li>
-      <li class="flex gap-3"><span class="text-[color:var(--color-accent)]">&#10003;</span> Artwork and conceptual ideas tailored to the space and brand</li>
-      <li class="flex gap-3"><span class="text-[color:var(--color-accent)]">&#10003;</span> Full mockups superimposed on photos of the real space</li>
-      <li class="flex gap-3"><span class="text-[color:var(--color-accent)]">&#10003;</span> Production, delivery, and installation managed end to end</li>
-    </ul>
+  <!-- Artist statement -->
+  <section class="bg-[color:var(--color-accent-soft)]/40 border-b border-black/5">
+    <div class="max-w-5xl mx-auto px-6 lg:px-10 py-20 text-center">
+      <div class="text-xs uppercase tracking-[0.3em] text-[color:var(--color-accent)] mb-6">
+        Approach
+      </div>
+      <p class="font-display text-3xl lg:text-4xl leading-[1.2] text-[color:var(--color-ink)]/90">
+        Every commercial commission begins with the architecture, the brand, and the people who
+        use the space. The artwork that results feels specific — not applied.
+      </p>
+    </div>
   </section>
 
-  <section class="max-w-7xl mx-auto px-6 lg:px-10 pb-24 space-y-20">
-    <article>
-      <div class="text-xs uppercase tracking-[0.2em] text-black/40 mb-3">Breckenridge, Colorado</div>
-      <h2 class="font-display text-4xl mb-4">Radicato</h2>
-      <p class="text-sm uppercase tracking-wider text-black/50 mb-6">Culinary destination, James Beard Award recipient</p>
-      <ArtImage src="IMG_5993.jpeg" alt="Radicato Breckenridge" ratio="landscape" />
-      <p class="mt-6 text-black/70 leading-relaxed max-w-3xl">
-        This body of work comprises 13 custom pieces of art, each created specifically for its
-        placement within the restaurant, reflecting the kitchen's philosophy and regional story.
-      </p>
+  <!-- Capabilities -->
+  <section class="max-w-7xl mx-auto px-6 lg:px-10 py-20 lg:py-28">
+    <div class="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-16">
+      <div class="lg:col-span-4">
+        <div class="text-xs uppercase tracking-[0.3em] text-[color:var(--color-accent)] mb-6">
+          Capabilities
+        </div>
+        <h2 class="font-display text-4xl lg:text-5xl leading-tight">
+          A full toolkit for the built environment.
+        </h2>
+      </div>
+      <div class="lg:col-span-8 grid grid-cols-1 sm:grid-cols-2 gap-8">
+        {capabilities.map((c) => (
+          <div>
+            <h3 class="font-display text-2xl mb-3">{c.title}</h3>
+            <p class="text-black/70 leading-relaxed">{c.body}</p>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- Process -->
+  <section class="bg-[color:var(--color-paper)] border-y border-black/5">
+    <div class="max-w-7xl mx-auto px-6 lg:px-10 py-20 lg:py-28">
+      <div class="max-w-2xl mb-16">
+        <div class="text-xs uppercase tracking-[0.3em] text-[color:var(--color-accent)] mb-6">
+          Process
+        </div>
+        <h2 class="font-display text-4xl lg:text-5xl leading-tight">
+          How a commissioned piece comes together.
+        </h2>
+      </div>
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+        {processSteps.map((step) => (
+          <div class="border-t border-black/10 pt-6">
+            <div class="text-xs uppercase tracking-[0.2em] text-[color:var(--color-accent)] mb-3">
+              {step.eyebrow}
+            </div>
+            <h3 class="font-display text-xl mb-3">{step.title}</h3>
+            <p class="text-sm text-black/70 leading-relaxed">{step.body}</p>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- Gallery -->
+  <section class="max-w-7xl mx-auto px-6 lg:px-10 py-20 lg:py-28">
+    <div class="flex items-end justify-between mb-10">
+      <div>
+        <div class="text-xs uppercase tracking-[0.3em] text-[color:var(--color-accent)] mb-4">
+          Selected Work
+        </div>
+        <h2 class="font-display text-4xl lg:text-5xl leading-tight">Hand-painted, on-site.</h2>
+      </div>
+    </div>
+    <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
+      {galleryThumbs.map((t) => (
+        <LightboxThumb src={t.src} alt={t.alt} />
+      ))}
+    </div>
+  </section>
+
+  <!-- Case studies -->
+  <section class="max-w-7xl mx-auto px-6 lg:px-10 pb-24 space-y-24">
+    <article class="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-16 items-start">
+      <div class="lg:col-span-6">
+        <ArtImage src="IMG_5993.jpeg" alt="Custom commissioned artwork at Radicato in Breckenridge, Colorado" ratio="landscape" />
+      </div>
+      <div class="lg:col-span-6">
+        <div class="text-xs uppercase tracking-[0.2em] text-black/40 mb-3">Breckenridge, Colorado</div>
+        <h3 class="font-display text-3xl lg:text-4xl mb-4">Radicato</h3>
+        <p class="text-sm uppercase tracking-wider text-[color:var(--color-accent)] mb-6">
+          Culinary destination · James Beard Award recipient
+        </p>
+        <p class="text-black/70 leading-relaxed">
+          This commission comprises thirteen custom pieces of art, each created specifically for
+          its placement within the restaurant. The body of work reflects the kitchen's philosophy,
+          regional ingredients, and the room's architectural details — an art program, not a
+          collection of paintings.
+        </p>
+      </div>
     </article>
-    <article>
-      <div class="text-xs uppercase tracking-[0.2em] text-black/40 mb-3">Grand Junction, Colorado</div>
-      <h2 class="font-display text-4xl mb-4">Wingate Elementary School Mural</h2>
-      <p class="mt-6 text-black/70 leading-relaxed max-w-3xl">
-        Beginning with the Wingate Explorers, Anna aimed to demonstrate the vast world ahead for
-        the students while including local landmarks: the monument, wild horses, dinosaur
-        fossils, native wildflowers, and the mountains of western Colorado.
-      </p>
+
+    <article class="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-16 items-start">
+      <div class="lg:col-span-6 lg:order-2">
+        <ArtImage src="QI-Ceiling.jpg" alt="Hand-painted ceiling artwork at Quality Italian Denver" ratio="landscape" />
+      </div>
+      <div class="lg:col-span-6 lg:order-1">
+        <div class="text-xs uppercase tracking-[0.2em] text-black/40 mb-3">Denver, Colorado</div>
+        <h3 class="font-display text-3xl lg:text-4xl mb-4">Quality Italian</h3>
+        <p class="text-sm uppercase tracking-wider text-[color:var(--color-accent)] mb-6">
+          Ceiling installation · Interior art program
+        </p>
+        <p class="text-black/70 leading-relaxed">
+          A scaffolded, hand-painted ceiling installation paired with interior fixtures and
+          decorative detail work — a flagship example of what commissioned commercial art looks
+          like when it's treated as architecture rather than decoration.
+        </p>
+      </div>
+    </article>
+
+    <article class="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-16 items-start">
+      <div class="lg:col-span-6">
+        <ArtImage src="Dual-Immersion-Academy-School-Mural-3.jpg" alt="Wingate and Dual Immersion Academy school mural elements in western Colorado" ratio="landscape" />
+      </div>
+      <div class="lg:col-span-6">
+        <div class="text-xs uppercase tracking-[0.2em] text-black/40 mb-3">Grand Junction, Colorado</div>
+        <h3 class="font-display text-3xl lg:text-4xl mb-4">Wingate Elementary</h3>
+        <p class="text-sm uppercase tracking-wider text-[color:var(--color-accent)] mb-6">
+          Institutional commission · Hand-painted environment
+        </p>
+        <p class="text-black/70 leading-relaxed">
+          Beginning with the Wingate Explorers, Anna designed an environment that shows the vast
+          world ahead for students while grounding them in place — the monument, wild horses,
+          dinosaur fossils, native wildflowers, and the mountains of western Colorado, all hand
+          painted at scale.
+        </p>
+      </div>
     </article>
   </section>
+
+  <!-- Final CTA -->
+  <section class="bg-[color:var(--color-ink)] text-[color:var(--color-paper)]">
+    <div class="max-w-5xl mx-auto px-6 lg:px-10 py-24 text-center">
+      <div class="text-xs uppercase tracking-[0.3em] text-[color:var(--color-paper)]/70 mb-6">
+        Commission a Project
+      </div>
+      <h2 class="font-display text-4xl lg:text-6xl leading-tight">
+        Have a space that deserves original art?
+      </h2>
+      <p class="mt-8 text-lg text-[color:var(--color-paper)]/80 max-w-2xl mx-auto leading-relaxed">
+        Share your location, timeline, and the feeling you want guests or staff to walk into.
+        Anna responds personally to every inquiry.
+      </p>
+      <a
+        href="/contact"
+        class="mt-10 inline-flex items-center gap-2 rounded-full bg-[color:var(--color-paper)] px-8 py-4 text-sm uppercase tracking-wider text-[color:var(--color-ink)] transition hover:bg-[color:var(--color-accent)] hover:text-[color:var(--color-paper)]"
+      >
+        Start the Conversation
+        <span aria-hidden="true">&rarr;</span>
+      </a>
+    </div>
+  </section>
+
+  <JsonLd json={customArtworkServiceSchema} />
+  <JsonLd json={customArtworkBreadcrumbs} />
 </Layout>

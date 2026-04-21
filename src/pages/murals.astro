@@ -3,6 +3,21 @@ import Layout from '../layouts/Layout.astro';
 import MuralHero from '../components/MuralHero.astro';
 import CaseStudy from '../components/CaseStudy.astro';
 import PoemsBlock from '../components/PoemsBlock.astro';
+import JsonLd from '../components/JsonLd.astro';
+import { buildServiceSchema, buildBreadcrumbs } from '../data/schemas';
+
+const muralsServiceSchema = buildServiceSchema(Astro.site, {
+  name: 'Custom School Murals',
+  slug: 'murals',
+  description:
+    'Hand-painted school murals across Colorado — collaborative design and classroom-ready installation for K-12 campuses.',
+  serviceType: 'Mural painting',
+  image: '/images/Dual-Immersion-Academy-School-Mural-1.jpg',
+});
+const muralsBreadcrumbs = buildBreadcrumbs(Astro.site, [
+  { name: 'Home', slug: '' },
+  { name: 'School Murals', slug: 'murals' },
+]);
 
 const diaSummary =
   "Each school mural is thoughtfully designed to reflect a school's values, mascot, and community. For Dual Immersion Academy in Grand Junction, the piece celebrates the school's bilingual identity, its bobcat mascot, and the way native flora and fauna ground students in place.";
@@ -95,7 +110,12 @@ const mesaThumbs = [
   { src: 'Dog-Prints-Mesa-View.jpg', alt: 'Mesa View Elementary — paw-print detail in the mural' },
 ];
 ---
-<Layout title="Custom School Murals in Colorado | Anna Hileman Art">
+<Layout
+  title="Custom School Murals in Colorado | Anna Hileman Art"
+  description="Custom school murals across Colorado by artist Anna Hileman. Collaborative design and hand-painted installations for K-12 campuses — from concept to classroom-ready finish."
+  ogImage="/images/Dual-Immersion-Academy-School-Mural-1.jpg"
+  ogImageAlt="Dual Immersion Academy school mural hand-painted by Anna Hileman"
+>
   <MuralHero
     eyebrow="School Murals"
     title="These hallways tell"
@@ -240,4 +260,6 @@ const mesaThumbs = [
       </a>
     </div>
   </section>
+  <JsonLd json={muralsServiceSchema} />
+  <JsonLd json={muralsBreadcrumbs} />
 </Layout>
