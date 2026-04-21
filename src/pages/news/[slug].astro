@@ -115,8 +115,61 @@ const articleBreadcrumbs = buildBreadcrumbs(Astro.site, [
         </a>
       </section>
     )}
+
+    <section class="mt-12 border-t border-black/10 pt-8">
+      <div class="text-xs uppercase tracking-[0.25em] text-black/50 mb-4">Share</div>
+      <div class="flex flex-wrap items-center gap-3">
+        <a
+          href={`https://twitter.com/intent/tweet?url=${encodeURIComponent(canonicalUrl)}&text=${encodeURIComponent(post.data.title)}`}
+          target="_blank"
+          rel="noopener"
+          class="inline-flex items-center gap-2 border border-black/15 rounded-full px-4 py-2 text-xs uppercase tracking-[0.18em] hover:border-[color:var(--color-accent)] hover:text-[color:var(--color-accent)] transition-colors"
+        >
+          Share on X
+        </a>
+        <a
+          href={`https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(canonicalUrl)}`}
+          target="_blank"
+          rel="noopener"
+          class="inline-flex items-center gap-2 border border-black/15 rounded-full px-4 py-2 text-xs uppercase tracking-[0.18em] hover:border-[color:var(--color-accent)] hover:text-[color:var(--color-accent)] transition-colors"
+        >
+          Share on Facebook
+        </a>
+        <a
+          href={`mailto:?subject=${encodeURIComponent(post.data.title)}&body=${encodeURIComponent(canonicalUrl)}`}
+          class="inline-flex items-center gap-2 border border-black/15 rounded-full px-4 py-2 text-xs uppercase tracking-[0.18em] hover:border-[color:var(--color-accent)] hover:text-[color:var(--color-accent)] transition-colors"
+        >
+          Email link
+        </a>
+        <button
+          type="button"
+          data-copy-link={canonicalUrl}
+          class="inline-flex items-center gap-2 border border-black/15 rounded-full px-4 py-2 text-xs uppercase tracking-[0.18em] hover:border-[color:var(--color-accent)] hover:text-[color:var(--color-accent)] transition-colors"
+        >
+          <span data-copy-label>Copy link</span>
+        </button>
+      </div>
+    </section>
   </article>
 
   <script type="application/ld+json" set:html={JSON.stringify(articleSchema)}></script>
   <JsonLd json={articleBreadcrumbs} />
+
+  <script is:inline>
+    document.querySelectorAll('[data-copy-link]').forEach((btn) => {
+      btn.addEventListener('click', async () => {
+        const url = btn.getAttribute('data-copy-link');
+        const label = btn.querySelector('[data-copy-label]');
+        if (!url || !label) return;
+        try {
+          await navigator.clipboard.writeText(url);
+          const prev = label.textContent;
+          label.textContent = 'Copied!';
+          setTimeout(() => { label.textContent = prev; }, 1800);
+        } catch (err) {
+          console.error('Copy failed', err);
+        }
+      });
+    });
+  </script>
 </Layout>

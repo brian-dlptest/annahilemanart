@@ -1,5 +1,9 @@
 ---
 import Layout from '../layouts/Layout.astro';
+
+/** Formspree form id (public in HTML). Override with PUBLIC_FORMSPREE_FORM_ID if you replace the form. */
+const formspreeFormId = (import.meta.env.PUBLIC_FORMSPREE_FORM_ID || '').trim() || 'mqewbgqp';
+const formAction = `https://formspree.io/f/${formspreeFormId}`;
 ---
 <Layout
   title="Order a Custom Pet Portrait | Anna Hileman Art"
@@ -13,7 +17,8 @@ import Layout from '../layouts/Layout.astro';
       sizing, reference photos, and timeline. For questions, see the <a href="/portraits" class="underline">portrait styles and pricing</a> page.
     </p>
 
-    <form action="https://formspree.io/f/YOUR_FORM_ID" method="POST" class="space-y-8 bg-white border border-black/10 rounded-lg p-8 lg:p-10 shadow-sm">
+    <form action={formAction} method="POST" class="space-y-8 bg-white border border-black/10 rounded-lg p-8 lg:p-10 shadow-sm">
+      <input type="text" name="_gotcha" tabindex="-1" autocomplete="off" class="hidden" />
       <div>
         <label class="block text-sm font-medium mb-2">Your name</label>
         <input name="name" type="text" required class="w-full border border-black/15 rounded px-3 py-2 focus:outline-none focus:border-[color:var(--color-accent)]" />

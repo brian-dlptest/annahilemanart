@@ -68,6 +68,7 @@ const personSchema = {
   ],
   address: {
     '@type': 'PostalAddress',
+    addressLocality: 'Grand Junction',
     addressRegion: 'CO',
     addressCountry: 'US',
   },
@@ -91,8 +92,11 @@ const orgSchema: Record<string, unknown> = {
   logo: `${siteOrigin}/images/Anna-Hileman-Art-Site-Logo.png`,
   founder: { '@id': `${siteOrigin}/#person` },
   priceRange: '$$-$$$$',
+  telephone: '+1-970-618-2424',
+  email: 'annahilemanart@gmail.com',
   address: {
     '@type': 'PostalAddress',
+    addressLocality: 'Grand Junction',
     addressRegion: 'CO',
     addressCountry: 'US',
   },
@@ -147,8 +151,10 @@ const websiteSchema = {
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <link rel="icon" type="image/png" href="/images/Anna-Hileman-Art-Site-Logo.png" />
-    <link rel="apple-touch-icon" href="/images/Anna-Hileman-Art-Site-Logo.png" />
+    <link rel="icon" type="image/png" sizes="512x512" href="/images/cropped-Site-Icon.png" />
+    <link rel="apple-touch-icon" sizes="180x180" href="/images/cropped-Site-Icon.png" />
+    <link rel="manifest" href="/site.webmanifest" />
+    <meta name="theme-color" content="#f6f0e6" />
     <title>{title}</title>
     <meta name="description" content={description} />
     <meta name="robots" content="index,follow,max-image-preview:large,max-snippet:-1" />

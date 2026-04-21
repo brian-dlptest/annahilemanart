@@ -30,7 +30,7 @@ const linkClass = (href: string) =>
     ? 'text-[color:var(--color-ink)] font-medium border-b-2 border-[color:var(--color-ink)] pb-0.5'
     : 'text-[color:var(--color-ink)]/60 hover:text-[color:var(--color-ink)] border-b-2 border-transparent pb-0.5';
 ---
-<header class="sticky top-0 z-40 bg-[color:var(--color-paper)]/90 backdrop-blur border-b border-black/5">
+<header class="sticky top-0 z-40 bg-[color:var(--color-paper)]/90 backdrop-blur border-b border-black/5 [will-change:backdrop-filter] [transform:translateZ(0)]">
   <div class="max-w-7xl mx-auto px-6 lg:px-10 flex items-center justify-between h-20">
     <a href="/" class="flex items-baseline gap-2">
       <span class="font-display text-2xl tracking-tight">Anna Hileman</span>
