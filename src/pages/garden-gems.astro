@@ -13,37 +13,161 @@ const gems = [
   { src: 'Iris-Gem-Detail-2.jpg', alt: 'Iris Gem detail' },
   { src: 'Iris-Gem-Detail-3.jpg', alt: 'Iris Gem detail' },
 ];
+
+const processSteps = [
+  {
+    eyebrow: '01 · Discover',
+    title: 'Start with the plant and the story.',
+    body:
+      'We begin with your plant of choice and the meaning behind it. Color memories, seasons, and symbolism all shape the composition.',
+  },
+  {
+    eyebrow: '02 · Design',
+    title: 'Mockup and palette direction.',
+    body:
+      'You receive a direction that shows scale, palette, and movement before paint is finalized so the finished piece feels intentional in your space.',
+  },
+  {
+    eyebrow: '03 · Build + Paint',
+    title: 'Hand-built panel, original finish.',
+    body:
+      'Each panel is built and painted by hand in acrylic with layered texture and saturated color, then sealed and delivered ready to install.',
+  },
+];
 ---
 <Layout title="Garden Gems | Anna Hileman Art">
-  <section class="max-w-5xl mx-auto px-6 lg:px-10 py-20 text-center">
-    <div class="text-xs uppercase tracking-[0.3em] text-[color:var(--color-accent)] mb-6">A Series</div>
-    <h1 class="font-display text-6xl lg:text-7xl">Garden Gems</h1>
-    <p class="mt-10 text-lg text-black/70 max-w-2xl mx-auto leading-relaxed">
-      Garden Gems are original, plant-inspired works created in acrylic on custom-built panels.
-      Each piece is rooted in meaning, drawing from the natural world and the stories of the
-      people who commission them.
-    </p>
+  <section class="border-b border-black/5">
+    <div class="max-w-7xl mx-auto px-6 lg:px-10 py-16 lg:py-24">
+      <div class="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-16 items-center">
+        <div class="lg:col-span-7 min-w-0">
+          <img
+            src="/images/Johannas-Garden-Gem-Full-Edited.jpg"
+            alt="Featured Garden Gem panel artwork"
+            width={1200}
+            height={1500}
+            fetchpriority="high"
+            loading="eager"
+            decoding="async"
+            class="w-full rounded-lg shadow-xl object-cover aspect-[4/5]"
+          />
+        </div>
+        <div class="lg:col-span-5">
+          <div class="text-xs uppercase tracking-[0.3em] text-[color:var(--color-gold)]">
+            Botanical Commission Series
+          </div>
+          <h1 class="mt-6 font-display text-4xl md:text-5xl lg:text-6xl leading-[1.05] text-[color:var(--color-ink)]">
+            Garden Gems,
+            <br />
+            <em class="italic text-[color:var(--color-gold)]">painted to root your story.</em>
+          </h1>
+          <p class="mt-8 text-lg text-black/75 leading-relaxed max-w-lg">
+            Original acrylic paintings on hand-built panels inspired by leaves, roots, stems, and memory.
+            Every Gem is custom and shaped by the meaning you want to bring into your home.
+          </p>
+          <a
+            href="/contact"
+            class="mt-10 inline-flex items-center gap-2 bg-[color:var(--color-gold)] text-[color:var(--color-ink)] px-8 py-4 text-sm tracking-wide hover:bg-[color:var(--color-ink)] hover:text-[color:var(--color-gold)] transition-colors"
+          >
+            Inquire About a Garden Gem
+            <span aria-hidden="true">&rarr;</span>
+          </a>
+        </div>
+      </div>
+    </div>
   </section>
 
-  <section class="max-w-7xl mx-auto px-6 lg:px-10 pb-24">
+  <section class="bg-[color:var(--color-accent-soft)]/40 border-y border-black/5">
+    <div class="max-w-5xl mx-auto px-6 lg:px-10 py-20 lg:py-24">
+      <div class="text-center max-w-3xl mx-auto">
+        <div class="text-xs uppercase tracking-[0.3em] text-[color:var(--color-gold)]">
+          From the Artist
+        </div>
+        <p class="mt-6 font-display text-2xl md:text-3xl leading-snug text-[color:var(--color-ink)]">
+          A Garden Gem is meant to feel alive in a room. I paint each panel so color, shape, and movement
+          echo the way plants hold both quiet and strength.
+        </p>
+      </div>
+
+      <div class="mt-16 lg:mt-20 grid grid-cols-1 md:grid-cols-3 gap-10 md:gap-12">
+        {processSteps.map((step) => (
+          <div>
+            <div class="text-xs uppercase tracking-[0.25em] text-[color:var(--color-gold)]">{step.eyebrow}</div>
+            <h3 class="mt-3 font-display text-xl md:text-2xl">{step.title}</h3>
+            <p class="mt-3 text-sm text-black/70 leading-relaxed">{step.body}</p>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <section class="max-w-7xl mx-auto px-6 lg:px-10 py-20 lg:py-24">
+    <div class="text-center max-w-2xl mx-auto mb-12">
+      <div class="text-xs uppercase tracking-[0.3em] text-[color:var(--color-gold)]">
+        Portfolio Highlights
+      </div>
+      <h2 class="mt-4 font-display text-3xl md:text-4xl">Recent Garden Gems</h2>
+    </div>
+
     <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 lg:gap-6">
-      {gems.map((g) => (
-        <ArtImage src={g.src} alt={g.alt} ratio="portrait" />
+      {gems.map((g, index) => (
+        <figure class="group bg-[color:var(--color-accent-soft)]/15 border border-black/5 rounded-lg p-3">
+          <ArtImage src={g.src} alt={g.alt} ratio="portrait" />
+          <figcaption class="pt-3 px-1 text-xs uppercase tracking-[0.18em] text-black/60 group-hover:text-[color:var(--color-ink)] transition-colors">
+            Piece {String(index + 1).padStart(2, '0')}
+          </figcaption>
+        </figure>
       ))}
     </div>
   </section>
 
-  <section class="bg-[color:var(--color-accent-soft)]/30">
-    <div class="max-w-3xl mx-auto px-6 lg:px-10 py-20 text-center">
-      <h2 class="font-display text-4xl">About the Series</h2>
-      <p class="mt-8 text-lg text-black/70 leading-relaxed">
-        Each Garden Gem begins with a conversation. What plant speaks to you? What root system,
-        what season, what memory? The piece grows from there, always with signature color,
-        texture, and Anna's hand-built panel.
-      </p>
-      <a href="/contact" class="mt-10 inline-flex items-center gap-2 bg-[color:var(--color-ink)] text-[color:var(--color-paper)] px-8 py-4 tracking-wide hover:bg-[color:var(--color-accent)] transition-colors">
-        Inquire About a Garden Gem
-        <span>&rarr;</span>
+  <section class="border-t border-black/10">
+    <div class="max-w-6xl mx-auto px-6 lg:px-10 py-20 lg:py-24">
+      <div class="grid grid-cols-1 lg:grid-cols-2 gap-10 lg:gap-14 items-center">
+        <div>
+          <img
+            src="/images/Iris-Gem-30x72-1.jpg"
+            alt="Iris Gem vertical panel in studio lighting"
+            width={1000}
+            height={2400}
+            loading="lazy"
+            decoding="async"
+            class="w-full rounded-lg object-cover aspect-[3/4] shadow-lg"
+          />
+        </div>
+        <article class="bg-[color:var(--color-accent-soft)]/20 border border-black/5 rounded-lg p-8 lg:p-10">
+          <div class="text-xs uppercase tracking-[0.25em] text-[color:var(--color-gold)]">Series Notes</div>
+          <h2 class="mt-3 font-display text-3xl md:text-4xl">Where each piece begins</h2>
+          <p class="mt-5 text-black/75 leading-relaxed">
+            Every commission starts with one question: what living form feels most like home to you right now?
+            Ferns for resilience. Fig leaves for abundance. Iris for renewal. That symbolism drives the shape,
+            palette, and texture decisions for your final panel.
+          </p>
+          <p class="mt-4 text-black/75 leading-relaxed">
+            The result is not a decorative print but an original painting designed for your wall, your light,
+            and your story.
+          </p>
+          <a
+            href="/contact"
+            class="mt-8 inline-flex items-center gap-2 bg-[color:var(--color-gold)] text-[color:var(--color-ink)] px-8 py-4 text-sm tracking-wide hover:bg-[color:var(--color-ink)] hover:text-[color:var(--color-gold)] transition-colors"
+          >
+            Start Your Garden Gem
+            <span aria-hidden="true">&rarr;</span>
+          </a>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <section class="border-t border-black/10 bg-[color:var(--color-accent-soft)]/25">
+    <div class="max-w-3xl mx-auto px-6 lg:px-10 py-16 lg:py-20 text-center">
+      <h2 class="font-display text-3xl md:text-4xl">Ready for a custom Garden Gem?</h2>
+      <p class="mt-4 text-black/70">Share your plant inspiration and space details, and Anna will guide the next step.</p>
+      <a
+        href="/contact"
+        class="mt-10 inline-flex items-center gap-2 bg-[color:var(--color-gold)] text-[color:var(--color-ink)] px-8 py-4 text-sm tracking-wide hover:bg-[color:var(--color-ink)] hover:text-[color:var(--color-gold)] transition-colors"
+      >
+        Contact Anna
+        <span aria-hidden="true">&rarr;</span>
       </a>
     </div>
   </section>

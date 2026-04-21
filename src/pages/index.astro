@@ -2,25 +2,100 @@
 import Layout from '../layouts/Layout.astro';
 import ArtImage from '../components/ArtImage.astro';
 import CustomerReviews from '../components/CustomerReviews.astro';
+
+const featuredWorks = [
+  {
+    href: '/restaurants',
+    title: 'Restaurant Art',
+    blurb:
+      'Commissioned mural systems and art collections for hospitality spaces that want atmosphere, story, and visual identity in one voice.',
+    img: 'Threefold-Bakery-Interior-Mural-by-Anna-Hileman-Courtesy1600.jpeg',
+    location: 'Breckenridge + Denver projects',
+  },
+  {
+    href: '/garden-gems',
+    title: 'Garden Gems',
+    blurb:
+      'Plant-inspired acrylic originals on hand-built panels. Each piece is custom and rooted in your symbolism, palette, and space.',
+    img: 'Johannas-Garden-Gem-Full-Edited.jpg',
+    location: 'Custom commissions',
+  },
+  {
+    href: '/murals',
+    title: 'School Murals',
+    blurb:
+      'Large-scale educational murals developed with schools to reflect values, mascots, and local identity for students and families.',
+    img: 'Dual-Immersion-Academy-School-Mural-8.jpg',
+    location: 'Grand Junction + Clifton',
+  },
+] as const;
+
+const faqSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'FAQPage',
+  mainEntity: [
+    {
+      '@type': 'Question',
+      name: 'What types of custom artwork does Anna Hileman create?',
+      acceptedAnswer: {
+        '@type': 'Answer',
+        text: 'Anna creates commissioned restaurant artwork, school murals, pet portraits, and custom botanical panel pieces known as Garden Gems.',
+      },
+    },
+    {
+      '@type': 'Question',
+      name: 'Where is Anna Hileman based?',
+      acceptedAnswer: {
+        '@type': 'Answer',
+        text: 'Anna is a Colorado muralist and commercial artist based in the Grand Junction area, serving clients across Colorado and beyond.',
+      },
+    },
+    {
+      '@type': 'Question',
+      name: 'How does the commission process work?',
+      acceptedAnswer: {
+        '@type': 'Answer',
+        text: 'Projects begin with a consultation, continue through concept development and mockups, and conclude with professional creation and installation or delivery.',
+      },
+    },
+  ],
+};
 ---
-<Layout title="Anna Hileman Art | Colorado Muralist & Commercial Artist">
-  <!-- Hero -->
-  <section class="relative">
+<Layout
+  title="Anna Hileman Art | Colorado Muralist, Restaurant & School Artist"
+  description="Custom murals, restaurant artwork, school murals, and botanical commissions by Colorado artist Anna Hileman. Explore case studies, process, and commission options."
+>
+  <section class="border-b border-black/5">
     <div class="max-w-7xl mx-auto px-6 lg:px-10 pt-16 pb-24 lg:pt-24 lg:pb-32">
       <div class="grid lg:grid-cols-12 gap-10 lg:gap-16 items-center">
-        <div class="lg:col-span-6">
-          <div class="text-xs uppercase tracking-[0.3em] text-[color:var(--color-accent)] mb-6">
+        <div class="lg:col-span-7 min-w-0">
+          <img
+            src="/images/Threefold-Bakery-Interior-Mural-by-Anna-Hileman-Courtesy1600.jpeg"
+            alt="Restaurant interior mural by Colorado artist Anna Hileman"
+            width={1600}
+            height={2000}
+            fetchpriority="high"
+            loading="eager"
+            decoding="async"
+            class="w-full rounded-lg shadow-xl object-cover aspect-[4/5]"
+          />
+        </div>
+        <div class="lg:col-span-5">
+          <div class="text-xs uppercase tracking-[0.3em] text-[color:var(--color-gold)] mb-6">
             Colorado Muralist &amp; Commercial Artist
           </div>
-          <h1 class="font-display text-5xl lg:text-7xl leading-[1.05]">
-            Custom artwork<br />
-            shaped by <em class="italic text-[color:var(--color-accent)]">place, meaning, and story</em>.
+          <h1 class="font-display text-5xl lg:text-6xl leading-[1.05] text-[color:var(--color-ink)]">
+            Custom artwork
+            <br />
+            <em class="italic text-[color:var(--color-gold)]">for places that want to be remembered.</em>
           </h1>
           <p class="mt-8 text-lg text-black/70 max-w-lg leading-relaxed">
-            Murals, pet portraits, and commissioned pieces for homes, restaurants, and schools across Colorado and beyond.
+            Anna Hileman creates story-driven murals and commissioned artwork for restaurants,
+            schools, and private collectors. Based in Colorado, she designs each piece to reflect identity,
+            atmosphere, and the people who live with it.
           </p>
           <div class="mt-10 flex flex-wrap gap-4">
-            <a href="/contact" class="inline-flex items-center gap-2 bg-[color:var(--color-ink)] text-[color:var(--color-paper)] px-6 py-3 text-sm tracking-wide hover:bg-[color:var(--color-accent)] transition-colors">
+            <a href="/contact" class="inline-flex items-center gap-2 bg-[color:var(--color-gold)] text-[color:var(--color-ink)] px-7 py-4 text-sm tracking-wide hover:bg-[color:var(--color-ink)] hover:text-[color:var(--color-gold)] transition-colors">
               Start a Commission
               <span>&rarr;</span>
             </a>
@@ -29,31 +104,62 @@ import CustomerReviews from '../components/CustomerReviews.astro';
             </a>
           </div>
         </div>
-        <div class="lg:col-span-6">
-          <ArtImage alt="Threefold Bakery Mural, Breckenridge" src="Threefold-Bakery-Interior-Mural-by-Anna-Hileman-Courtesy1600.jpeg" ratio="landscape" class="shadow-2xl" lightbox={false} />
+      </div>
+    </div>
+  </section>
+
+  <section class="bg-[color:var(--color-accent-soft)]/40 border-y border-black/5">
+    <div class="max-w-5xl mx-auto px-6 lg:px-10 py-20 lg:py-24">
+      <div class="text-center max-w-3xl mx-auto">
+        <div class="text-xs uppercase tracking-[0.3em] text-[color:var(--color-gold)]">From the Studio</div>
+        <p class="mt-6 font-display text-2xl md:text-3xl leading-snug text-[color:var(--color-ink)]">
+          Great art for a space does more than decorate. It gives people a feeling of belonging,
+          creates visual memory, and says something true about who you are.
+        </p>
+      </div>
+
+      <div class="mt-16 lg:mt-20 grid grid-cols-1 md:grid-cols-3 gap-10 md:gap-12">
+        <div>
+          <div class="text-xs uppercase tracking-[0.25em] text-[color:var(--color-gold)]">01 · Listen</div>
+          <h3 class="mt-3 font-display text-xl md:text-2xl">Your story comes first.</h3>
+          <p class="mt-3 text-sm text-black/70 leading-relaxed">
+            We start with your space, audience, and intention so the work feels native to where it lives.
+          </p>
+        </div>
+        <div>
+          <div class="text-xs uppercase tracking-[0.25em] text-[color:var(--color-gold)]">02 · Design</div>
+          <h3 class="mt-3 font-display text-xl md:text-2xl">Concepts with clear direction.</h3>
+          <p class="mt-3 text-sm text-black/70 leading-relaxed">
+            Mockups, palette planning, and composition are shaped around architecture and flow.
+          </p>
+        </div>
+        <div>
+          <div class="text-xs uppercase tracking-[0.25em] text-[color:var(--color-gold)]">03 · Create</div>
+          <h3 class="mt-3 font-display text-xl md:text-2xl">Built to last and felt daily.</h3>
+          <p class="mt-3 text-sm text-black/70 leading-relaxed">
+            Every piece is produced with craftsmanship, installed carefully, and made for long-term impact.
+          </p>
         </div>
       </div>
     </div>
   </section>
 
-  <!-- Work categories -->
   <section class="border-t border-black/10">
-    <div class="max-w-7xl mx-auto px-6 lg:px-10 py-20">
-      <div class="flex items-baseline justify-between mb-12">
-        <h2 class="font-display text-4xl">Bodies of Work</h2>
-        <div class="text-xs uppercase tracking-[0.2em] text-black/40 hidden md:block">Select a series</div>
+    <div class="max-w-7xl mx-auto px-6 lg:px-10 py-20 lg:py-24">
+      <div class="text-center max-w-2xl mx-auto mb-12">
+        <div class="text-xs uppercase tracking-[0.3em] text-[color:var(--color-gold)]">Featured Work</div>
+        <h2 class="mt-4 font-display text-3xl md:text-4xl">Explore Signature Collections</h2>
       </div>
       <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
-        {[
-          { href: '/restaurants', title: 'Restaurant Art', blurb: 'Custom collections for culinary destinations.', img: 'Threefold-Bakery-Interior-Mural-by-Anna-Hileman-Courtesy1600.jpeg' },
-          { href: '/garden-gems', title: 'Garden Gems', blurb: 'Plant-inspired acrylic panels, each rooted in meaning.', img: 'Johannas-Garden-Gem-Full-Edited.jpg' },
-          { href: '/murals', title: 'School Murals', blurb: 'Hallways turned into lasting stories—values, mascots, and pride for students and staff.', img: 'Dual-Immersion-Academy-School-Mural-8.jpg' },
-        ].map((item) => (
+        {featuredWorks.map((item) => (
           <a href={item.href} class="group block">
-            <ArtImage alt={item.title} src={item.img} ratio="portrait" class="group-hover:opacity-90 transition-opacity" lightbox={false} />
+            <article class="bg-[color:var(--color-accent-soft)]/10 border border-black/5 rounded-lg p-3 lg:p-4">
+              <ArtImage alt={item.title} src={item.img} ratio="portrait" class="group-hover:opacity-90 transition-opacity rounded-md" lightbox={false} />
+            </article>
             <div class="mt-4">
               <h3 class="font-display text-2xl group-hover:text-[color:var(--color-accent)] transition-colors">{item.title}</h3>
-              <p class="mt-2 text-sm text-black/60 leading-relaxed">{item.blurb}</p>
+              <p class="mt-2 text-xs uppercase tracking-[0.2em] text-black/50">{item.location}</p>
+              <p class="mt-3 text-sm text-black/65 leading-relaxed">{item.blurb}</p>
             </div>
           </a>
         ))}
@@ -63,29 +169,91 @@ import CustomerReviews from '../components/CustomerReviews.astro';
 
   <CustomerReviews />
 
-  <!-- About teaser -->
-  <section class="bg-[color:var(--color-accent-soft)]/30">
-    <div class="max-w-5xl mx-auto px-6 lg:px-10 py-24 text-center">
-      <h2 class="font-display text-4xl lg:text-5xl">About Anna</h2>
-      <p class="mt-8 text-lg text-black/70 leading-relaxed max-w-2xl mx-auto">
-        Colorado-based muralist and commercial artist creating custom, story-driven artwork
-        shaped by place, meaning, and the lives of her clients.
-      </p>
-      <a href="/about" class="mt-10 inline-block text-sm uppercase tracking-[0.2em] border-b border-[color:var(--color-ink)] pb-1 hover:text-[color:var(--color-accent)] hover:border-[color:var(--color-accent)] transition-colors">
-        Read her story
-      </a>
+  <section class="border-t border-black/10">
+    <div class="max-w-6xl mx-auto px-6 lg:px-10 py-20 lg:py-24">
+      <div class="grid grid-cols-1 lg:grid-cols-2 gap-10 lg:gap-14 items-center">
+        <div>
+          <img
+            src="/images/Anna-Hileman-Home-Image.jpeg"
+            alt="Artist Anna Hileman in studio setting"
+            width={1200}
+            height={1500}
+            loading="lazy"
+            decoding="async"
+            class="w-full rounded-lg object-cover aspect-[4/5] shadow-lg"
+          />
+        </div>
+        <article class="bg-[color:var(--color-accent-soft)]/20 border border-black/5 rounded-lg p-8 lg:p-10">
+          <div class="text-xs uppercase tracking-[0.25em] text-[color:var(--color-gold)]">About the Artist</div>
+          <h2 class="mt-3 font-display text-3xl md:text-4xl">Colorado-based, collaboration-driven</h2>
+          <p class="mt-5 text-black/75 leading-relaxed">
+            Anna Hileman is a Colorado muralist and commercial artist known for emotionally resonant, place-based commissions.
+            Her work spans restaurant interiors, school murals, private collections, and branded environments.
+          </p>
+          <p class="mt-4 text-black/75 leading-relaxed">
+            Each project is built through close collaboration with clients, translating narrative and identity into color, form, and scale.
+          </p>
+          <a href="/about" class="mt-8 inline-flex items-center gap-2 text-sm uppercase tracking-[0.18em] border-b border-[color:var(--color-ink)] pb-1 hover:text-[color:var(--color-accent)] hover:border-[color:var(--color-accent)] transition-colors">
+            Read Full Bio
+            <span aria-hidden="true">&rarr;</span>
+          </a>
+        </article>
+      </div>
     </div>
   </section>
 
-  <!-- CTA -->
-  <section class="max-w-5xl mx-auto px-6 lg:px-10 py-24 text-center">
+  <section class="bg-[color:var(--color-accent-soft)]/30 border-y border-black/5">
+    <div class="max-w-4xl mx-auto px-6 lg:px-10 py-16 lg:py-20">
+      <div class="text-center max-w-3xl mx-auto mb-12">
+        <div class="text-xs uppercase tracking-[0.3em] text-[color:var(--color-gold)]">FAQ</div>
+        <h2 class="mt-4 font-display text-3xl md:text-4xl">Frequently Asked Questions</h2>
+      </div>
+      <div class="space-y-4">
+        <details class="group bg-white/80 border border-black/10 rounded-lg p-5">
+          <summary class="cursor-pointer list-none font-display text-xl flex items-center justify-between gap-4">
+            What types of artwork can I commission?
+            <span class="text-black/40 group-open:rotate-45 transition-transform">+</span>
+          </summary>
+          <p class="mt-3 text-black/70 leading-relaxed text-sm md:text-base">
+            Commissions include restaurant artwork, school murals, Garden Gems botanical panels, and custom pet portraits.
+            If you have a different concept, you can still reach out to discuss feasibility and timeline.
+          </p>
+        </details>
+        <details class="group bg-white/80 border border-black/10 rounded-lg p-5">
+          <summary class="cursor-pointer list-none font-display text-xl flex items-center justify-between gap-4">
+            Do you only work in Colorado?
+            <span class="text-black/40 group-open:rotate-45 transition-transform">+</span>
+          </summary>
+          <p class="mt-3 text-black/70 leading-relaxed text-sm md:text-base">
+            Anna is based in Colorado and regularly serves clients throughout the state, including Grand Junction,
+            Denver, Breckenridge, and surrounding communities. Selected out-of-state projects are also considered.
+          </p>
+        </details>
+        <details class="group bg-white/80 border border-black/10 rounded-lg p-5">
+          <summary class="cursor-pointer list-none font-display text-xl flex items-center justify-between gap-4">
+            How do we start a project?
+            <span class="text-black/40 group-open:rotate-45 transition-transform">+</span>
+          </summary>
+          <p class="mt-3 text-black/70 leading-relaxed text-sm md:text-base">
+            Start by sharing your location, project type, timeline, and inspiration through the contact form.
+            From there, Anna will guide consultation, concepting, and next steps.
+          </p>
+        </details>
+      </div>
+    </div>
+  </section>
+
+  <section class="max-w-5xl mx-auto px-6 lg:px-10 py-20 lg:py-24 text-center">
     <h2 class="font-display text-4xl lg:text-5xl">Have a project in mind?</h2>
-    <p class="mt-6 text-lg text-black/70 max-w-xl mx-auto">
-      Anna is currently accepting commissions for murals, pet portraits, and custom commercial work.
+    <p class="mt-6 text-lg text-black/70 max-w-2xl mx-auto leading-relaxed">
+      Anna is currently accepting commissions for murals, hospitality art, botanical panel work,
+      and select portrait projects.
     </p>
-    <a href="/contact" class="mt-10 inline-flex items-center gap-2 bg-[color:var(--color-ink)] text-[color:var(--color-paper)] px-8 py-4 tracking-wide hover:bg-[color:var(--color-accent)] transition-colors">
+    <a href="/contact" class="mt-10 inline-flex items-center gap-2 bg-[color:var(--color-gold)] text-[color:var(--color-ink)] px-8 py-4 tracking-wide hover:bg-[color:var(--color-ink)] hover:text-[color:var(--color-gold)] transition-colors">
       Get in Touch
-      <span>&rarr;</span>
+      <span aria-hidden="true">&rarr;</span>
     </a>
   </section>
+
+  <script type="application/ld+json" set:html={JSON.stringify(faqSchema)}></script>
 </Layout>
