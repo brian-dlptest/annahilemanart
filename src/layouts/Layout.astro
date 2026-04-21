@@ -7,6 +7,9 @@ import LightboxRoot from '../components/LightboxRoot.astro';
 interface Props {
   title?: string;
   description?: string;
+  ogImage?: string;
+  ogImageAlt?: string;
+  ogType?: string;
 }
 
 const siteName = 'Anna Hileman Art';
@@ -14,7 +17,14 @@ const siteName = 'Anna Hileman Art';
 const {
   title = siteName,
   description = 'Custom murals, pet portraits, and commercial artwork by Colorado artist Anna Hileman.',
+  ogImage,
+  ogImageAlt,
+  ogType = 'website',
 } = Astro.props;
+
+const resolvedOgImage = ogImage
+  ? (ogImage.startsWith('http') ? ogImage : (Astro.site ? new URL(ogImage, Astro.site).href : ogImage))
+  : undefined;
 ---
 <!doctype html>
 <html lang="en">
@@ -28,8 +38,12 @@ const {
     <meta property="og:site_name" content={siteName} />
     <meta property="og:title" content={title} />
     <meta property="og:description" content={description} />
-    <meta property="og:type" content="website" />
-    <meta name="twitter:card" content="summary" />
+    <meta property="og:type" content={ogType} />
+    {resolvedOgImage && <meta property="og:image" content={resolvedOgImage} />}
+    {ogImageAlt && <meta property="og:image:alt" content={ogImageAlt} />}
+    <meta name="twitter:card" content={resolvedOgImage ? 'summary_large_image' : 'summary'} />
+    {resolvedOgImage && <meta name="twitter:image" content={resolvedOgImage} />}
+    {ogImageAlt && <meta name="twitter:image:alt" content={ogImageAlt} />}
     {Astro.site && (
       <link rel="canonical" href={new URL(Astro.url.pathname, Astro.site).href} />
     )}

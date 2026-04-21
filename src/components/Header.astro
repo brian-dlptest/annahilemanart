@@ -23,7 +23,7 @@ const pathToNavHref: Record<string, string> = {
 };
 
 const raw = normalizePath(Astro.url.pathname);
-const activeHref = pathToNavHref[raw] ?? raw;
+const activeHref = raw.startsWith('/news/') ? '/news' : (pathToNavHref[raw] ?? raw);
 
 const linkClass = (href: string) =>
   activeHref === href

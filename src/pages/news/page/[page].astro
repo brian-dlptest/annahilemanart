@@ -1,29 +1,44 @@
 ---
-import Layout from '../layouts/Layout.astro';
-
+import Layout from '../../../layouts/Layout.astro';
 import {
   buildNewsPageLink,
   formatNewsDate,
   getNewsPageCount,
   getPostsForNewsPage,
   getPublishedNewsPosts,
-} from '../data/news';
+} from '../../../data/news';
 
-const allPosts = await getPublishedNewsPosts();
-const currentPage = 1;
-const totalPages = getNewsPageCount(allPosts.length);
-const posts = getPostsForNewsPage(allPosts, currentPage);
+export async function getStaticPaths() {
+  const posts = await getPublishedNewsPosts();
+  const totalPages = getNewsPageCount(posts.length);
+
+  if (totalPages <= 1) return [];
+
+  return Array.from({ length: totalPages - 1 }, (_, i) => {
+    const pageNumber = i + 2;
+    return {
+      params: { page: String(pageNumber) },
+      props: {
+        pageNumber,
+        totalPages,
+        posts: getPostsForNewsPage(posts, pageNumber),
+      },
+    };
+  });
+}
+
+const { pageNumber, totalPages, posts } = Astro.props;
 ---
+
 <Layout
-  title="News & Updates | Anna Hileman Art"
-  description="Project announcements, press features, and behind-the-scenes updates from Colorado muralist and commercial artist Anna Hileman."
+  title={`News & Updates Page ${pageNumber} | Anna Hileman Art`}
+  description="Older project announcements, press features, and studio updates from Anna Hileman."
 >
   <section class="max-w-5xl mx-auto px-6 lg:px-10 py-20 lg:py-24">
-    <div class="text-xs uppercase tracking-[0.3em] text-[color:var(--color-gold)] mb-6">News</div>
-    <h1 class="font-display text-5xl lg:text-6xl">Recent News &amp; Updates</h1>
+    <div class="text-xs uppercase tracking-[0.3em] text-[color:var(--color-gold)] mb-6">News Archive</div>
+    <h1 class="font-display text-5xl lg:text-6xl">News &amp; Updates</h1>
     <p class="mt-8 text-lg text-black/70 max-w-2xl leading-relaxed">
-      Project announcements, press features, and behind-the-scenes from the studio.
-      Follow <a href="https://www.instagram.com/annahilemanart/" target="_blank" rel="noopener" class="underline">@annahilemanart on Instagram</a> for day-to-day updates.
+      Archive page {pageNumber} of {totalPages}.
     </p>
 
     <div class="mt-14 border-t border-black/10">
@@ -60,27 +75,25 @@ const posts = getPostsForNewsPage(allPosts, currentPage);
       ))}
     </div>
 
-    {totalPages > 1 && (
-      <nav class="mt-10 flex flex-wrap items-center justify-center gap-3" aria-label="News pagination">
-        {Array.from({ length: totalPages }).map((_, idx) => {
-          const page = idx + 1;
-          const isCurrent = page === currentPage;
-          return (
-            <a
-              href={buildNewsPageLink(page)}
-              aria-current={isCurrent ? 'page' : undefined}
-              class={`inline-flex h-10 min-w-10 items-center justify-center px-4 text-sm border transition-colors ${
-                isCurrent
-                  ? 'border-[color:var(--color-ink)] bg-[color:var(--color-ink)] text-[color:var(--color-paper)]'
-                  : 'border-black/20 text-black/70 hover:border-black/40 hover:text-black'
-              }`}
-            >
-              {page}
-            </a>
-          );
-        })}
-      </nav>
-    )}
+    <nav class="mt-10 flex flex-wrap items-center justify-center gap-3" aria-label="News pagination">
+      {Array.from({ length: totalPages }).map((_, idx) => {
+        const page = idx + 1;
+        const isCurrent = page === pageNumber;
+        return (
+          <a
+            href={buildNewsPageLink(page)}
+            aria-current={isCurrent ? 'page' : undefined}
+            class={`inline-flex h-10 min-w-10 items-center justify-center px-4 text-sm border transition-colors ${
+              isCurrent
+                ? 'border-[color:var(--color-ink)] bg-[color:var(--color-ink)] text-[color:var(--color-paper)]'
+                : 'border-black/20 text-black/70 hover:border-black/40 hover:text-black'
+            }`}
+          >
+            {page}
+          </a>
+        );
+      })}
+    </nav>
 
     <div class="mt-12 text-sm text-black/60 text-center">
       Prefer a feed reader? Subscribe via

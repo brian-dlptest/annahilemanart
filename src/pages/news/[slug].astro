@@ -1,0 +1,104 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import { getCollection, render } from 'astro:content';
+import { toAbsoluteSiteUrl } from '../../data/news';
+
+export async function getStaticPaths() {
+  const posts = await getCollection('news', ({ data }) => !data.draft);
+  return posts.map((post) => ({
+    params: { slug: post.slug },
+    props: { post },
+  }));
+}
+
+const { post } = Astro.props;
+const { Content } = await render(post);
+
+const dateFmt = new Intl.DateTimeFormat('en-US', {
+  year: 'numeric',
+  month: 'long',
+  day: 'numeric',
+});
+
+const pageTitle = post.data.seoTitle ?? `${post.data.title} | News & Updates`;
+const pageDescription = post.data.seoDescription ?? post.data.excerpt;
+const socialImage = post.data.featuredImage ? toAbsoluteSiteUrl(Astro.site, post.data.featuredImage) : undefined;
+
+const articleSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'Article',
+  headline: post.data.title,
+  description: pageDescription,
+  datePublished: post.data.publishDate.toISOString(),
+  dateModified: (post.data.updatedDate ?? post.data.publishDate).toISOString(),
+  author: {
+    '@type': 'Person',
+    name: 'Anna Hileman',
+  },
+  image: socialImage ? [socialImage] : undefined,
+};
+---
+
+<Layout
+  title={pageTitle}
+  description={pageDescription}
+  ogType="article"
+  ogImage={post.data.featuredImage}
+  ogImageAlt={post.data.featuredImageAlt ?? post.data.title}
+>
+  <article class="max-w-3xl mx-auto px-6 lg:px-10 py-16 lg:py-20">
+    <a
+      href="/news"
+      class="inline-flex items-center gap-2 text-xs uppercase tracking-[0.2em] text-black/55 hover:text-[color:var(--color-accent)] transition-colors"
+    >
+      <span aria-hidden="true">&larr;</span>
+      Back to News
+    </a>
+
+    <header class="mt-8 border-b border-black/10 pb-8">
+      <div class="text-xs uppercase tracking-[0.2em] text-black/45">
+        {post.data.category} · {dateFmt.format(post.data.publishDate)}
+      </div>
+      <h1 class="mt-4 font-display text-4xl md:text-5xl leading-[1.08]">{post.data.title}</h1>
+      <p class="mt-6 text-lg text-black/70 leading-relaxed">{post.data.excerpt}</p>
+      {post.data.featuredImage && (
+        <img
+          src={post.data.featuredImage}
+          alt={post.data.featuredImageAlt ?? post.data.title}
+          class="mt-8 w-full rounded-lg object-cover border border-black/5"
+          loading="eager"
+          decoding="async"
+        />
+      )}
+      {post.data.tags.length > 0 && (
+        <ul class="mt-6 flex flex-wrap gap-2" aria-label="Tags">
+          {post.data.tags.map((tag) => (
+            <li class="text-xs uppercase tracking-[0.14em] bg-[color:var(--color-accent-soft)]/40 px-2.5 py-1 rounded">
+              {tag}
+            </li>
+          ))}
+        </ul>
+      )}
+    </header>
+
+    <div class="prose prose-neutral mt-10 max-w-none prose-headings:font-display prose-a:text-[color:var(--color-accent)] prose-a:no-underline hover:prose-a:underline prose-p:text-black/80 prose-li:text-black/80">
+      <Content />
+    </div>
+
+    {post.data.sourceUrl && (
+      <section class="mt-12 border-t border-black/10 pt-8">
+        <a
+          href={post.data.sourceUrl}
+          target="_blank"
+          rel="noopener"
+          class="inline-flex items-center gap-2 text-sm uppercase tracking-wider border-b border-[color:var(--color-ink)] pb-0.5 hover:text-[color:var(--color-accent)] hover:border-[color:var(--color-accent)]"
+        >
+          {post.data.sourceLabel ?? 'View original source'}
+          <span aria-hidden="true">&rarr;</span>
+        </a>
+      </section>
+    )}
+  </article>
+
+  <script type="application/ld+json" set:html={JSON.stringify(articleSchema)}></script>
+</Layout>
