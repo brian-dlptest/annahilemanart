@@ -1,152 +1,33 @@
 ---
 import Layout from '../layouts/Layout.astro';
-import LightboxThumb from '../components/LightboxThumb.astro';
+import MuralHero from '../components/MuralHero.astro';
+import CaseStudy from '../components/CaseStudy.astro';
+import PoemsBlock from '../components/PoemsBlock.astro';
+import JsonLd from '../components/JsonLd.astro';
+import { buildServiceSchema, buildBreadcrumbs } from '../data/schemas';
 
-const videoEmbedSrc =
-  'https://www.youtube.com/embed/9pqetnJ3CJ4?autoplay=1&mute=1&controls=0&modestbranding=1&rel=0&playsinline=1&loop=1&playlist=9pqetnJ3CJ4&disablekb=1&fs=0';
+const schoolMuralsServiceSchema = buildServiceSchema(Astro.site, {
+  name: 'Custom School Murals',
+  slug: 'school-murals',
+  description:
+    'Hand-painted school murals across Colorado — collaborative design and classroom-ready installation for K-12 campuses.',
+  serviceType: 'Mural painting',
+  image: '/images/Dual-Immersion-Academy-School-Mural-1.jpg',
+});
+const schoolMuralsBreadcrumbs = buildBreadcrumbs(Astro.site, [
+  { name: 'Home', slug: '' },
+  { name: 'School Murals', slug: 'school-murals' },
+]);
 
-const includes = [
-  'A collaborative design process tailored to your school’s values and culture',
-  'A full-color mockup superimposed onto your actual space',
-  'Imagery that reflects your mascot, community, and student experience',
-  'Safe, professional installation with minimal disruption',
-  'A custom poem written to complement the mural',
-  'A clear protective finish for long-lasting vibrancy and durability',
-];
+const diaSummary =
+  "Each school mural is thoughtfully designed to reflect a school's values, mascot, and community. For Dual Immersion Academy in Grand Junction, the piece celebrates the school's bilingual identity, its bobcat mascot, and the way native flora and fauna ground students in place.";
 
-const diaMainImage =
-  'https://annahileman.com/wp-content/uploads/2026/01/Dual-Immersion-Academy-School-Mural-8.jpg';
-
-const diaGallery: { url: string }[] = [
-  { url: 'https://annahileman.com/wp-content/uploads/2026/01/Dual-Immersion-Academy-School-Mural-12.jpg' },
-  { url: 'https://annahileman.com/wp-content/uploads/2026/01/Dual-Immersion-Academy-School-Mural-10.jpg' },
-  { url: 'https://annahileman.com/wp-content/uploads/2026/01/Dual-Immersion-Academy-School-Mural-13.jpg' },
-  { url: 'https://annahileman.com/wp-content/uploads/2026/01/Dual-Immersion-Academy-School-Mural-1.jpg' },
-  { url: 'https://annahileman.com/wp-content/uploads/2026/01/Dual-Immersion-Academy-School-Mural-4.jpg' },
-  { url: 'https://annahileman.com/wp-content/uploads/2026/01/Dual-Immersion-Academy-School-Mural-2.jpg' },
-  { url: 'https://annahileman.com/wp-content/uploads/2026/01/Dual-Immersion-Academy-School-Mural-7.jpg' },
-];
-
-const wingateThumbs = ['Handprints-1.jpg', 'Handprints-2.jpg', 'Handprints-3.jpg', 'Handprints-4.jpg', 'DosRiosElementary.webp'];
-
-const rockyThumbs = ['Full-View-RM-Mural-from-Left.jpg', 'From-Right-View-RM-Mural.jpg', 'Flowers-RM-Mural.jpg'];
-
-const mesaThumbs = ['MV-Mural-Main-Pic.jpg', 'MV-Mural-Main-Pic-1.jpg', 'Mesa-View-Family-Photo.jpg', 'Dog-Prints-Mesa-View.jpg'];
----
-
-<Layout title="School Murals | Anna Hileman Art">
-  <!-- Full-bleed video: 500px tall, 16:9 cover crop, no interaction -->
-  <section
-    class="relative h-[500px] w-full overflow-hidden bg-black [container-type:inline-size]"
-    aria-label="School mural video highlight"
-  >
-    <iframe
-      title="School murals highlight video"
-      class="pointer-events-none absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 border-0"
-      style="width: max(100cqw, calc(500px * 16 / 9)); height: max(calc(100cqw * 9 / 16), 500px);"
-      src={videoEmbedSrc}
-      loading="eager"
-      allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-      referrerpolicy="strict-origin-when-cross-origin"
-    />
-  </section>
-
-  <section class="max-w-5xl mx-auto px-6 lg:px-10 pt-16 pb-12 lg:pt-20 text-center">
-    <h1 class="font-display text-4xl md:text-5xl lg:text-6xl text-balance">School Murals</h1>
-    <div
-      class="mx-auto mt-6 h-px w-16 bg-[#e8c547]"
-      aria-hidden="true"
-    />
-    <p class="mt-8 font-display text-xl md:text-2xl text-[color:var(--color-ink)] leading-snug font-normal max-w-3xl mx-auto">
-      These murals are designed to be lasting visual stories—reminding students every day that they are seen, supported, and capable of great things.
-    </p>
-  </section>
-
-  <section class="max-w-5xl mx-auto px-6 lg:px-10 pb-16 lg:pb-20">
-    <div class="grid gap-10 md:grid-cols-2 md:gap-12 md:items-start text-left">
-      <div class="space-y-4 text-lg text-black/80 leading-relaxed">
-        <p>
-          School murals transform hallways into places of inspiration, belonging, and pride. Each mural is thoughtfully designed to reflect a school’s values, mascot, and community—celebrating growth, curiosity, kindness, and the unique story of the students who walk its halls every day. Through vibrant color and meaningful imagery, these murals create welcoming environments that support learning and spark imagination.
-        </p>
-      </div>
-      <div>
-        <h2 class="font-display text-2xl md:text-3xl mb-6">Every school mural includes</h2>
-        <ul class="space-y-3 text-black/80">
-          {includes.map((item) => (
-            <li class="flex gap-3 items-start">
-              <span class="text-[color:var(--color-accent)] mt-0.5 shrink-0" aria-hidden="true">✓</span>
-              <span>{item}</span>
-            </li>
-          ))}
-        </ul>
-      </div>
-    </div>
-  </section>
-
-  <!-- Dual Immersion Academy -->
-  <section class="border-t border-black/10">
-    <div class="max-w-6xl mx-auto px-6 lg:px-10 py-16 lg:py-20">
-      <h2 class="font-display text-3xl md:text-4xl text-center">Dual Immersion Academy</h2>
-
-      <div class="mt-12 grid gap-12 lg:grid-cols-2 lg:gap-14 lg:items-start">
-        <div class="min-w-0 space-y-8">
-          <div>
-            <p class="text-base font-semibold tracking-wide text-[color:var(--color-ink)]">Grand Junction, Colorado</p>
-
-            <p class="mt-6 text-black/80 leading-relaxed">
-              Each school mural is accompanied by an original poem, written by Anna to inspire the imagery and deepen the story behind the artwork. This poem was provided in English and Spanish as both languages are taught at the Dual Immersion Academy.
-            </p>
-          </div>
-
-          <div class="overflow-hidden rounded-lg bg-black/5 ring-1 ring-black/5">
-            <img
-              src={diaMainImage}
-              alt="Dual Immersion Academy school mural on building exterior"
-              class="block h-auto w-full"
-              loading="lazy"
-              decoding="async"
-              width="1600"
-              height="900"
-            />
-          </div>
-
-          <details class="group rounded-lg ring-1 ring-black/10 overflow-hidden">
-            <summary
-              class="flex cursor-pointer list-none items-center justify-center gap-2 bg-[#f5d547] px-4 py-3 text-center text-sm font-semibold tracking-wide text-[color:var(--color-ink)] hover:bg-[#f0cf3a] [&::-webkit-details-marker]:hidden"
-            >
-              <span class="select-none font-mono tabular-nums w-4 text-center" aria-hidden="true">
-                <span class="group-open:hidden">+</span>
-                <span class="hidden group-open:inline">−</span>
-              </span>
-              <span>More images of creating the DIA mural</span>
-            </summary>
-            <div class="grid grid-cols-2 gap-2 bg-[color:var(--color-paper)] p-3 sm:grid-cols-4">
-              {diaGallery.map((item) => (
-                <LightboxThumb
-                  imageUrl={item.url}
-                  alt="Dual Immersion Academy school mural — process and detail"
-                  aspectClass="aspect-square"
-                />
-              ))}
-            </div>
-          </details>
-
-          <figure class="border-l-2 border-[color:var(--color-accent)] pl-6 py-1">
-            <blockquote class="text-black/80 italic leading-relaxed">
-              “I highly recommend Anna Hileman, who created a mural at our school. She was delightful to work with, understood the unique needs of the population we serve, and completed the project quickly and beautifully.”
-            </blockquote>
-            <figcaption class="mt-4 text-sm text-black/70 not-italic font-body">
-              <span class="font-semibold text-[color:var(--color-ink)]">Tyler McLaughlin</span>
-              <span class="block">Principal, Dual Immersion Academy</span>
-            </figcaption>
-          </figure>
-        </div>
-
-        <div class="min-w-0 space-y-8">
-          <div>
-            <h3 class="font-display text-xl mb-3">Beneath the Sun</h3>
-            <div class="text-black/80 leading-[1.65] whitespace-pre-line font-body text-sm">
-              {`Like bobcats bold beneath the sky, we lift our youth, their spirits high.
+const diaPoems = [
+  {
+    langCode: 'en',
+    langLabel: 'EN',
+    title: 'Beneath the Sun',
+    body: `Like bobcats bold beneath the sky, we lift our youth, their spirits high.
 With courage and hope, we show the way—
 to dream, to grow, to seize each day.
 English and Spanish, two voices, one song,
@@ -160,13 +41,13 @@ symbols of change, of hope, of light.
 Friendship blooms, and kindness takes wing,
 at DIA where every voice may sing.
 With hearts uplifted, our spirits fly,
-under the endless, ever-reaching sky.`}
-            </div>
-          </div>
-          <div>
-            <h3 class="font-display text-xl mb-3">Bajo el Sol</h3>
-            <div class="text-black/80 leading-[1.65] whitespace-pre-line font-body text-sm">
-              {`Como linces valientes bajo el cielo azul,
+under the endless, ever-reaching sky.`,
+  },
+  {
+    langCode: 'es',
+    langLabel: 'ES',
+    title: 'Bajo el Sol',
+    body: `Como linces valientes bajo el cielo azul,
 alzamos la niñez, su espíritu es luz.
 Con fe y esperanza marcamos la vía:
 soñar, crecer, vivir cada día.
@@ -181,114 +62,205 @@ símbolos de cambio, de luz, de soñar.
 Florece la amistad, la bondad se alza ya,
 en el DIA cada voz su canto dará.
 Con almas alegres nos ponemos a volar,
-bajo un cielo eterno que nos quiere abrazar.`}
-            </div>
-          </div>
+bajo un cielo eterno que nos quiere abrazar.`,
+  },
+];
+
+const diaThumbs = [
+  { src: 'Dual-Immersion-Academy-School-Mural-4.jpg', alt: 'DIA mural — sunflowers section detail' },
+  { src: 'Dual-Immersion-Academy-School-Mural-5.jpg', alt: 'DIA mural — butterflies in flight detail' },
+  { src: 'Dual-Immersion-Academy-School-Mural-6.jpg', alt: 'DIA mural — bobcat mascot panel' },
+  { src: 'Dual-Immersion-Academy-School-Mural-7.jpg', alt: 'DIA mural — hallway wide view' },
+  { src: 'Dual-Immersion-Academy-School-Mural-9.jpg', alt: 'DIA mural — installation progress' },
+];
+
+const wingateSummary =
+  "Beginning with Wingate's Explorers, Anna aimed to show the vast world ahead for students while weaving in the extraordinary features of the place they call home. Each student and staff member's handprint appears within a ROYGBIV spectrum, signifying their part in the Wingate community. The monarch butterfly anchors the composition as a symbol of transformation.";
+
+const wingateExtendedProse =
+  "Anna included local characteristics such as the monument, wild horse, dinosaur fossil, native wildflowers, petroglyphs, and bicycle tracks. The scorpion pays homage to Wingate's history, signifying the connection of past, present, and future, while the stars remind us all to reach for our dreams.\n\nThank you to the Wingate PTO, who planned, funded, and supported this art installation, and to Grand Junction Home Depot, Lowe's, and FCI for supplies and scaffolding.";
+
+const wingateThumbs = [
+  { src: 'Handprints-2.jpg', alt: 'Wingate mural — student handprints, orange spectrum' },
+  { src: 'Handprints-3.jpg', alt: 'Wingate mural — student handprints, green spectrum' },
+  { src: 'Handprints-4.jpg', alt: 'Wingate mural — student handprints, indigo spectrum' },
+  { src: 'DosRiosElementary.webp', alt: 'Wingate mural — wide installation view' },
+];
+
+const rockySummary =
+  "Spanning both exterior and interior walls of Rocky Mountain Elementary, this mural captures the school's core values of education, unity, and nurturing environment. A majestic eagle takes center stage outside, symbolizing strength and ambition, while an 80-foot ribbon inside moves from sunrise to night — a story of growth from protected nest to eagles soaring toward the stars.";
+
+const rockyExtendedProse =
+  "Adjacent to the soaring eagle stands a vigilant mother eagle, embodying protection and guidance — a reflection of the dedication of the school's faculty and staff. Beneath the eagle, its wing transforms into a flowing river, symbolizing both the local landscape and the continuous flow of knowledge and life. The Bookcliff mountain range and delicate peach blossoms celebrate the area's unique attributes and the natural beauty inherent in one's journey through life.\n\nInside, the mural continues through an 80-foot ribbon around the atrium that begins at sunrise and moves into night. Bright, vibrant colors energize the space while calming native flora and fauna ground the mural in place — surrounding students each day with reminders of support, movement, and reaching for their dreams.";
+
+const rockyThumbs = [
+  { src: 'From-Right-View-RM-Mural.jpg', alt: 'Rocky Mountain Elementary — right-side view of exterior mural' },
+  { src: 'Flowers-RM-Mural.jpg', alt: 'Rocky Mountain Elementary — peach blossom detail' },
+];
+
+const mesaSummary =
+  "Mesa View's mural takes into account the rich history of agriculture, Native Americans, and the geographical locations of Orchard Mesa. The hawk — the school's mascot — signifies the strength and determination carried by students, staff, and families of Mesa View Elementary.";
+
+const mesaExtendedProse =
+  "The bees were a last-minute addition after a very large swarm gently hovered over students and families while they placed their handprints on the wall. Thank you to Mesa View PTO, FCI, Orchard Mesa True Value, and Grand Junction Home Depot for supporting this installation.";
+
+const mesaThumbs = [
+  { src: 'MV-Mural-Main-Pic-1.jpg', alt: 'Mesa View Elementary — mural wide view' },
+  { src: 'Mesa-View-Family-Photo.jpg', alt: 'Mesa View Elementary — families gathered at unveiling' },
+  { src: 'Dog-Prints-Mesa-View.jpg', alt: 'Mesa View Elementary — paw-print detail in the mural' },
+];
+---
+<Layout
+  title="Custom School Murals in Colorado | Anna Hileman Art"
+  description="Custom school murals across Colorado by artist Anna Hileman. Collaborative design and hand-painted installations for K-12 campuses — from concept to classroom-ready finish."
+  ogImage="/images/Dual-Immersion-Academy-School-Mural-1.jpg"
+  ogImageAlt="Dual Immersion Academy school mural hand-painted by Anna Hileman"
+  preloadImage="/images/Dual-Immersion-Academy-School-Mural-1.jpg"
+>
+  <MuralHero
+    eyebrow="School Murals"
+    title="These hallways tell"
+    titleSuffix="our stories."
+    subhead="Lasting visual stories that remind students they are seen, supported, and capable of great things."
+    ctaHref="/contact"
+    ctaLabel="Commission a Mural"
+    image="Dual-Immersion-Academy-School-Mural-8.jpg"
+    imageAlt="Dual Immersion Academy hallway mural featuring sunflowers, butterflies, and bobcats"
+    imageWidth={2000}
+    imageHeight={1333}
+  />
+
+  <section class="bg-[color:var(--color-accent-soft)]/40 border-y border-black/5">
+    <div class="max-w-5xl mx-auto px-6 lg:px-10 py-20 lg:py-24">
+      <div class="text-center max-w-3xl mx-auto">
+        <div class="text-xs uppercase tracking-[0.3em] text-[color:var(--color-gold)]">
+          From the Artist
+        </div>
+        <p class="mt-6 font-display text-2xl md:text-3xl leading-snug text-[color:var(--color-ink)]">
+          A school mural isn&rsquo;t decoration&mdash;it&rsquo;s the backdrop to thousands of everyday moments. The walk to class. The quiet after recess. A daily, silent reminder that this is where you belong.
+        </p>
+      </div>
+
+      <div class="mt-16 lg:mt-20 grid grid-cols-1 md:grid-cols-3 gap-10 md:gap-12">
+        <div>
+          <div class="text-xs uppercase tracking-[0.25em] text-[color:var(--color-gold)]">01 &middot; Listen</div>
+          <h3 class="mt-3 font-display text-xl md:text-2xl">We start with a conversation.</h3>
+          <p class="mt-3 text-sm text-black/70 leading-relaxed">
+            Every school has a story&mdash;its values, its mascot, the students who fill its halls. Before anything is sketched, I want to understand yours.
+          </p>
+        </div>
+        <div>
+          <div class="text-xs uppercase tracking-[0.25em] text-[color:var(--color-gold)]">02 &middot; Design</div>
+          <h3 class="mt-3 font-display text-xl md:text-2xl">I return with a full-color mockup.</h3>
+          <p class="mt-3 text-sm text-black/70 leading-relaxed">
+            You&rsquo;ll see the design superimposed onto your actual space&mdash;mascot, imagery, and all&mdash;before a single brush touches the wall.
+          </p>
+        </div>
+        <div>
+          <div class="text-xs uppercase tracking-[0.25em] text-[color:var(--color-gold)]">03 &middot; Paint</div>
+          <h3 class="mt-3 font-display text-xl md:text-2xl">I install it myself.</h3>
+          <p class="mt-3 text-sm text-black/70 leading-relaxed">
+            Professional and insured, quietly out of the way of your school day. Each mural is finished with a clear protective coat and an original poem written to accompany the piece.
+          </p>
         </div>
       </div>
     </div>
   </section>
 
-  <!-- Wingate -->
-  <section class="border-t border-black/10">
-    <div class="max-w-4xl mx-auto px-6 lg:px-10 py-16 lg:py-20">
-      <h2 class="font-display text-3xl md:text-4xl">Wingate Elementary School Mural</h2>
-      <p class="mt-3 text-sm font-semibold tracking-wide text-black/70">Grand Junction, Colorado</p>
+  <CaseStudy
+    anchorId="dual-immersion"
+    location="Grand Junction, Colorado"
+    title="Dual Immersion Academy"
+    heroImage="Dual-Immersion-Academy-School-Mural-8.jpg"
+    heroAlt="Dual Immersion Academy mural — bobcats, sunflowers, and butterflies beneath a painted sun"
+    summary={diaSummary}
+    pullQuote={{
+      body: "I highly recommend Anna Hileman, who created a mural at our school. She was delightful to work with, understood the unique needs of the population we serve, and completed the project quickly and beautifully.",
+      attribution: "Tyler McLaughlin",
+      role: "Principal, Dual Immersion Academy",
+    }}
+    facts={[
+      { label: 'Languages', value: 'English · Español' },
+      { label: 'Mascot', value: 'Bobcat' },
+      { label: 'Location', value: 'Interior hallway' },
+    ]}
+    thumbs={diaThumbs}
+  >
+    <PoemsBlock
+      eyebrow="An Original Poem by the Artist"
+      leadSentence="Each school mural is accompanied by an original poem, written by Anna to deepen the story behind the artwork. For the Dual Immersion Academy, the poem was written in both English and Spanish, mirroring the languages taught at the school."
+      poems={diaPoems}
+    />
+  </CaseStudy>
 
-      <div class="mt-10 grid grid-cols-2 sm:grid-cols-3 gap-2">
-        {wingateThumbs.map((src) => (
-          <LightboxThumb src={src} alt="Wingate Elementary school mural" />
-        ))}
-      </div>
-
-      <div class="mt-10 space-y-4 text-black/80 leading-relaxed">
-        <p>
-          Beginning with our Wingate Explorers, artist Anna Hileman aimed to demonstrate the vast world ahead for our kids while integrating the extraordinary features of this place we call home, a stepping stone for the journey ahead. As no two butterflies are alike and each butterfly contains every color of the rainbow, each student and staff member’s hand print has been placed within a ROYGBIV (red, orange, yellow, green, blue, indigo, violet) spectrum, signifying their vital part and attribution to the Wingate community and the world. Additionally, students and staff chose a letter or shape to make their handprint even more distinctive. The final prints to be placed were from Trigger, Wingate’s adored therapy dog. The monarch butterfly was chosen for its locality to this area and as a symbol of the transformation, strength, and journey of Wingate’s students and families.
-        </p>
-        <p>
-          Furthermore, Anna included local characteristics such as the monument, wild horse, dinosaur fossil, native wildflowers, petroglyphs, and bicycle tracks. The scorpion pays homage to Wingate’s history, signifying the connection of our past, present, and future, while the stars remind us all to reach for our dreams.
-        </p>
-        <p class="text-sm text-black/60">
-          Thank you to the Wingate PTO, who planned, funded, and supported this art installation, and Grand Junction Home Depot, Lowe’s, and FCI for supplies and scaffolding.
-        </p>
-      </div>
+  <CaseStudy
+    anchorId="wingate"
+    location="Grand Junction, Colorado"
+    title="Wingate Elementary"
+    heroImage="Handprints-1.jpg"
+    heroAlt="Wingate Elementary mural — student handprints arranged in a monarch butterfly across the wall"
+    summary={wingateSummary}
+    facts={[
+      { label: 'Mascot', value: 'Explorers' },
+      { label: 'Scope', value: 'Interior wall + handprint installation' },
+    ]}
+    thumbs={wingateThumbs}
+  >
+    <div class="max-w-3xl mx-auto mt-12 text-black/80 leading-relaxed whitespace-pre-line text-[15px] md:text-base">
+      {wingateExtendedProse}
     </div>
-  </section>
+  </CaseStudy>
 
-  <!-- Rocky Mountain Exterior -->
-  <section class="border-t border-black/10">
-    <div class="max-w-4xl mx-auto px-6 lg:px-10 py-16 lg:py-20">
-      <h2 class="font-display text-3xl md:text-4xl">Rocky Mountain Elementary School Mural Exterior</h2>
-      <p class="mt-3 text-sm font-semibold tracking-wide text-black/70">Clifton, Colorado</p>
-
-      <div class="mt-10 grid grid-cols-2 md:grid-cols-3 gap-2">
-        {rockyThumbs.map((src) => (
-          <LightboxThumb src={src} alt="Rocky Mountain Elementary exterior mural" aspectClass="aspect-[4/3]" />
-        ))}
-      </div>
-
-      <div class="mt-10 space-y-4 text-black/80 leading-relaxed">
-        <p>
-          In this mural, I sought to capture the school’s core values of education, unity, and nurturing environment for students.
-        </p>
-        <p>
-          At the heart of the mural, a majestic eagle takes center stage, symbolizing strength, freedom, and ambition. With its wings spread wide, its symbolism encourages students to pursue their dreams and reach new heights.
-        </p>
-        <p>
-          Adjacent to the soaring eagle stands a vigilant mother eagle, embodying protection and guidance. This nurturing presence reflects the dedication of our school’s faculty and staff, who support students through their educational journey.
-        </p>
-        <p>
-          Beneath the eagle, its wing transforms into a flowing river, symbolizing both the local landscape and the continuous flow of knowledge and life.
-        </p>
-        <p>
-          Finally, the Bookcliff mountain range and delicate peach blossoms are depicted, celebrating the area’s unique attributes and reminding us of the natural beauty and growth inherent in one’s journey through life.
-        </p>
-      </div>
+  <CaseStudy
+    anchorId="rocky-mountain"
+    location="Clifton, Colorado"
+    title="Rocky Mountain Elementary"
+    heroImage="Full-View-RM-Mural-from-Left.jpg"
+    heroAlt="Rocky Mountain Elementary exterior mural — eagle, peach blossoms, and Bookcliff mountain range"
+    summary={rockySummary}
+    facts={[
+      { label: 'Mascot', value: 'Eagle' },
+      { label: 'Scope', value: 'Exterior + 80-ft interior ribbon' },
+    ]}
+    thumbs={rockyThumbs}
+  >
+    <div class="max-w-3xl mx-auto mt-12 text-black/80 leading-relaxed whitespace-pre-line text-[15px] md:text-base space-y-4">
+      {rockyExtendedProse}
     </div>
-  </section>
+  </CaseStudy>
 
-  <!-- Rocky Mountain Interior -->
-  <section class="border-t border-black/10">
-    <div class="max-w-4xl mx-auto px-6 lg:px-10 py-16 lg:py-20">
-      <h2 class="font-display text-3xl md:text-4xl">Rocky Mountain Elementary School Mural Interior</h2>
-      <p class="mt-3 text-sm font-semibold tracking-wide text-black/70">Clifton, Colorado</p>
-
-      <p class="mt-10 text-black/80 leading-relaxed">
-        The mural continues inside Rocky Mountain Elementary through an 80 foot ribbon around the atrium beginning at sunrise and moving into night, the imagery tells a story of growth and possibility – from a protected nest to eagles soaring towards the stars. Bright, vibrant colors energize the space while calming native flora and fauna ground the mural in place – surrounding students each day with reminders of support, movement, and reaching for their dreams.
-      </p>
+  <CaseStudy
+    anchorId="mesa-view"
+    location="Grand Junction, Colorado"
+    title="Mesa View Elementary"
+    heroImage="MV-Mural-Main-Pic.jpg"
+    heroAlt="Mesa View Elementary mural — hawk above Orchard Mesa landscape with bees and handprints"
+    summary={mesaSummary}
+    facts={[
+      { label: 'Mascot', value: 'Hawk' },
+      { label: 'Location', value: 'Orchard Mesa, Colorado' },
+    ]}
+    thumbs={mesaThumbs}
+  >
+    <div class="max-w-3xl mx-auto mt-12 text-black/80 leading-relaxed whitespace-pre-line text-[15px] md:text-base">
+      {mesaExtendedProse}
     </div>
-  </section>
+  </CaseStudy>
 
-  <!-- Mesa View -->
-  <section class="border-t border-black/10">
-    <div class="max-w-4xl mx-auto px-6 lg:px-10 py-16 lg:py-20">
-      <h2 class="font-display text-3xl md:text-4xl">Mesa View Elementary Mural</h2>
-      <p class="mt-3 text-sm font-semibold tracking-wide text-black/70">Grand Junction, Colorado</p>
-
-      <div class="mt-10 grid grid-cols-2 md:grid-cols-4 gap-2">
-        {mesaThumbs.map((src) => (
-          <LightboxThumb src={src} alt="Mesa View Elementary school mural" />
-        ))}
-      </div>
-
-      <p class="mt-10 text-black/80 leading-relaxed">
-        When creating the concept for this mural, Anna took into account the rich history of agriculture, Native Americans and geographical locations of Orchard Mesa. The bees were a last minute addition after a very large swarm gently hovered over the students and families while administering handprints. The hawk is Mesa View’s mascot and also signifies the strength and determination carried within the students, staff and families of Mesa View Elementary. Thank you Mesa View PTO, FCI, Orchard Mesa True Value and Grand Junction Home Depot for supporting this installation.
-      </p>
-    </div>
-  </section>
-
-  <!-- CTA -->
+  <!-- Final CTA -->
   <section class="border-t border-black/10 bg-[color:var(--color-accent-soft)]/25">
     <div class="max-w-3xl mx-auto px-6 lg:px-10 py-16 lg:py-20 text-center">
-      <h2 class="font-display text-3xl md:text-4xl">Are you ready for a custom mural for your school?</h2>
+      <h2 class="font-display text-3xl md:text-4xl">Ready for a custom mural for your school?</h2>
       <p class="mt-4 text-black/70">Get in touch with Anna using the button below.</p>
       <a
         href="/contact"
-        class="mt-10 inline-flex items-center gap-2 bg-[color:var(--color-ink)] text-[color:var(--color-paper)] px-8 py-4 text-sm tracking-wide hover:bg-[color:var(--color-accent)] transition-colors"
+        class="mt-10 inline-flex items-center gap-2 bg-[color:var(--color-gold)] text-[color:var(--color-ink)] px-8 py-4 text-sm tracking-wide hover:bg-[color:var(--color-ink)] hover:text-[color:var(--color-gold)] transition-colors"
       >
         Contact Anna
         <span aria-hidden="true">&rarr;</span>
       </a>
     </div>
   </section>
+  <JsonLd json={schoolMuralsServiceSchema} />
+  <JsonLd json={schoolMuralsBreadcrumbs} />
 </Layout>

@@ -1,0 +1,17 @@
+{
+  "name": "Anna Hileman Art",
+  "short_name": "Anna Hileman",
+  "description": "Custom murals, pet portraits, and commercial artwork by Colorado artist Anna Hileman.",
+  "start_url": "/",
+  "display": "minimal-ui",
+  "background_color": "#f6f0e6",
+  "theme_color": "#f6f0e6",
+  "icons": [
+    {
+      "src": "/images/cropped-Site-Icon.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any maskable"
+    }
+  ]
+}

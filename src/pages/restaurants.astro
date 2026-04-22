@@ -1,29 +1,40 @@
 ---
 import Layout from '../layouts/Layout.astro';
 import LightboxThumb from '../components/LightboxThumb.astro';
-import LightboxLargeImage from '../components/LightboxLargeImage.astro';
+import JsonLd from '../components/JsonLd.astro';
+import { buildServiceSchema, buildBreadcrumbs } from '../data/schemas';
+
+const restaurantsServiceSchema = buildServiceSchema(Astro.site, {
+  name: 'Custom Restaurant Artwork & Murals',
+  slug: 'restaurants',
+  description:
+    'Hand-painted murals and custom artwork for Denver and Colorado restaurants — featured at Threefold Bakery, Radicato, Quality Italian, and more.',
+  serviceType: 'Commercial mural commissions',
+  image: '/images/Threefold-Bakery-Interior-Mural-by-Anna-Hileman-Courtesy1600.jpeg',
+});
+const restaurantsBreadcrumbs = buildBreadcrumbs(Astro.site, [
+  { name: 'Home', slug: '' },
+  { name: 'Restaurant Art', slug: 'restaurants' },
+]);
 
 const processSteps = [
   {
-    n: 1,
-    title: 'Consultation & Concept',
+    eyebrow: '01 · Concept',
+    title: 'Story-first creative direction',
     body:
-      "The process begins with an overview of the restaurant's vibe, story, and key elements, leading to a cohesive theme and creative direction.",
-    icon: 'chat',
+      "We begin by understanding the restaurant's character, menu philosophy, and guest experience goals before defining the visual narrative.",
   },
   {
-    n: 2,
-    title: 'Measurement & Mockup',
+    eyebrow: '02 · Mockup',
+    title: 'Site-specific composition',
     body:
-      'The space is reviewed and measured, and a visual mockup is created and superimposed onto photos of the restaurant to show the proposed artwork in context.',
-    icon: 'grid',
+      'Measurements, wall conditions, and lighting are reviewed. Then artwork concepts are superimposed onto your space so you can approve with confidence.',
   },
   {
-    n: 3,
-    title: 'Creation & Installation',
+    eyebrow: '03 · Install',
+    title: 'Professional execution',
     body:
-      'The artwork is produced and installed with care, safety, and minimal disruption to daily operations.',
-    icon: 'pen',
+      'Artwork is produced and installed with care, clear communication, and minimal interruption to day-to-day restaurant operations.',
   },
 ] as const;
 
@@ -35,9 +46,8 @@ const threefoldThumbs = [
   'Threefold-Mural-Panel-1.jpg',
   'Threefold-Mural-Panel-2.jpg',
   'Threefold-Bakery-Mural-Mid-Panel.jpg',
-];
+] as const;
 
-/** Radicato gallery order (source: annahileman.com uploads). */
 const radicatoThumbs = [
   'IMG_9457.jpg',
   'IMG_5993.jpeg',
@@ -61,18 +71,6 @@ const radicatoThumbs = [
   'RenderedImage.jpg',
 ] as const;
 
-const radicatoMainImages = [
-  {
-    src: 'IMG_9457.jpg',
-    alt: 'Radicato, Breckenridge — commissioned restaurant artwork',
-  },
-  {
-    src: 'IMG_6126.jpeg',
-    alt: 'Radicato restaurant interior and artwork',
-  },
-] as const;
-
-/** Thumbnails: lions, doors, gold-leaf, exterior, ceiling process (distinct from main hero). */
 const qiThumbs = [
   'QI_Lion-Head.jpg',
   'PLASTER-AND-RESIN-LION-HEAD_QUALITY-ITALIAN_DENVER.jpg',
@@ -85,61 +83,92 @@ const qiThumbs = [
   '2016-11-16-00.06.01.jpg',
   '2016-12-01-23.09.48.jpg',
 ] as const;
-
-const qiMainImage = {
-  src: 'QI-Ceiling.jpg',
-  alt: 'Quality Italian Cherry Creek dining room with custom hand-painted ceiling',
-} as const;
 ---
 
-<Layout title="Restaurant Art | Anna Hileman Art">
-  <!-- Process -->
-  <section class="max-w-7xl mx-auto px-6 lg:px-10 pt-16 pb-12 lg:pt-20 lg:pb-16">
-    <h1 class="font-display text-3xl md:text-4xl text-center text-balance max-w-3xl mx-auto mb-12 lg:mb-16">
-      Custom Restaurant Art Creation
-    </h1>
-    <div class="grid md:grid-cols-3 gap-6 lg:gap-8">
-      {processSteps.map((step) => (
-        <div class="bg-white rounded-xl border border-black/10 p-6 lg:p-8 shadow-sm flex flex-col items-center text-center md:items-start md:text-left">
-          <div class="flex items-center gap-4 mb-5 w-full justify-center md:justify-start">
-            <span class="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-[color:var(--color-ink)] text-[color:var(--color-paper)] text-sm font-semibold tabular-nums">
-              {step.n}
-            </span>
-            {step.icon === 'chat' && (
-              <svg class="w-8 h-8 text-[color:var(--color-ink)]/80" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true">
-                <path stroke-linecap="round" stroke-linejoin="round" d="M8.625 12a.375.375 0 11-.75 0 .375.375 0 01.75 0zm0 0H8.25m4.125 0a.375.375 0 11-.75 0 .375.375 0 01.75 0zm0 0H12m4.125 0a.375.375 0 11-.75 0 .375.375 0 01.75 0zm0 0h-.375M21 12c0 4.556-4.03 8.25-9 8.25a9.764 9.764 0 01-2.555-.337L5.05 21l1.395-3.72C5.512 15.042 5 13.574 5 12c0-4.556 4.03-8.25 9-8.25s9 3.694 9 8.25z" />
-              </svg>
-            )}
-            {step.icon === 'grid' && (
-              <svg class="w-8 h-8 text-[color:var(--color-ink)]/80" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true">
-                <path stroke-linecap="round" stroke-linejoin="round" d="M3.75 6A2.25 2.25 0 016 3.75h2.25A2.25 2.25 0 0110.5 6v2.25a2.25 2.25 0 01-2.25 2.25H6a2.25 2.25 0 01-2.25-2.25V6zM3.75 15.75A2.25 2.25 0 016 13.5h2.25a2.25 2.25 0 012.25 2.25V18a2.25 2.25 0 01-2.25 2.25H6A2.25 2.25 0 013.75 18v-2.25zM13.5 6a2.25 2.25 0 012.25-2.25H18A2.25 2.25 0 0120.25 6v2.25A2.25 2.25 0 0118 10.5h-2.25a2.25 2.25 0 01-2.25-2.25V6zM13.5 15.75a2.25 2.25 0 012.25-2.25H18a2.25 2.25 0 012.25 2.25V18A2.25 2.25 0 0118 20.25h-2.25A2.25 2.25 0 0113.5 18v-2.25z" />
-              </svg>
-            )}
-            {step.icon === 'pen' && (
-              <svg class="w-8 h-8 text-[color:var(--color-ink)]/80" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true">
-                <path stroke-linecap="round" stroke-linejoin="round" d="M16.862 4.487l1.687-1.688a1.875 1.875 0 112.652 2.652L10.582 16.07a4.5 4.5 0 01-1.897 1.13L6 18l.8-2.685a4.5 4.5 0 011.13-1.897l8.932-8.931zm0 0L19.5 7.125M18 14v4.75A2.25 2.25 0 0115.75 21H5.25A2.25 2.25 0 013 18.75V8.25A2.25 2.25 0 015.25 6H10" />
-              </svg>
-            )}
-          </div>
-          <h2 class="font-display text-xl text-[color:var(--color-ink)] mb-3 w-full">{step.title}</h2>
-          <p class="text-sm text-black/70 leading-relaxed">{step.body}</p>
+<Layout
+  title="Custom Restaurant Artwork & Murals | Anna Hileman Art"
+  description="Hand-painted murals and custom artwork for Denver and Colorado restaurants by artist Anna Hileman. Featured installations at Threefold Bakery, Radicato, Quality Italian, and more."
+  ogImage="/images/Threefold-Bakery-Interior-Mural-by-Anna-Hileman-Courtesy1600.jpeg"
+  ogImageAlt="Threefold Bakery interior mural hand-painted by Anna Hileman"
+  preloadImage="/images/Threefold-Bakery-Interior-Mural-by-Anna-Hileman-Courtesy1600.jpeg"
+>
+  <section class="border-b border-black/5">
+    <div class="max-w-7xl mx-auto px-6 lg:px-10 py-16 lg:py-24">
+      <div class="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-16 items-center">
+        <div class="lg:col-span-7 min-w-0">
+          <img
+            src="/images/Threefold-Bakery-Interior-Mural-by-Anna-Hileman-Courtesy1600.jpeg"
+            alt="Threefold Bakery interior mural by Anna Hileman"
+            width={1600}
+            height={2000}
+            fetchpriority="high"
+            loading="eager"
+            decoding="async"
+            class="w-full rounded-lg shadow-xl object-cover aspect-[4/5]"
+          />
         </div>
-      ))}
+        <div class="lg:col-span-5">
+          <div class="text-xs uppercase tracking-[0.3em] text-[color:var(--color-gold)]">Hospitality Commissions</div>
+          <h1 class="mt-6 font-display text-4xl md:text-5xl lg:text-6xl leading-[1.05] text-[color:var(--color-ink)]">
+            Restaurant art that
+            <br />
+            <em class="italic text-[color:var(--color-gold)]">holds the room.</em>
+          </h1>
+          <p class="mt-8 text-lg text-black/75 leading-relaxed max-w-lg">
+            Site-specific murals and installations designed to deepen atmosphere, reflect brand identity,
+            and create memorable guest experiences.
+          </p>
+          <a
+            href="/contact"
+            class="mt-10 inline-flex items-center gap-2 bg-[color:var(--color-gold)] text-[color:var(--color-ink)] px-8 py-4 text-sm tracking-wide hover:bg-[color:var(--color-ink)] hover:text-[color:var(--color-gold)] transition-colors"
+          >
+            Start a Restaurant Project
+            <span aria-hidden="true">&rarr;</span>
+          </a>
+        </div>
+      </div>
     </div>
   </section>
 
-  <!-- Threefold Bakery -->
+  <section class="bg-[color:var(--color-accent-soft)]/40 border-y border-black/5">
+    <div class="max-w-5xl mx-auto px-6 lg:px-10 py-20 lg:py-24">
+      <div class="text-center max-w-3xl mx-auto">
+        <div class="text-xs uppercase tracking-[0.3em] text-[color:var(--color-gold)]">From the Artist</div>
+        <p class="mt-6 font-display text-2xl md:text-3xl leading-snug text-[color:var(--color-ink)]">
+          Restaurant artwork should feel like part of the service itself. It should guide energy, support the brand story,
+          and become part of what guests remember long after the meal.
+        </p>
+      </div>
+
+      <div class="mt-16 lg:mt-20 grid grid-cols-1 md:grid-cols-3 gap-10 md:gap-12">
+        {processSteps.map((step) => (
+          <div>
+            <div class="text-xs uppercase tracking-[0.25em] text-[color:var(--color-gold)]">{step.eyebrow}</div>
+            <h3 class="mt-3 font-display text-xl md:text-2xl">{step.title}</h3>
+            <p class="mt-3 text-sm text-black/70 leading-relaxed">{step.body}</p>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
   <section class="border-t border-black/10">
     <div class="max-w-7xl mx-auto px-6 lg:px-10 py-16 lg:py-20">
-      <div class="text-center mb-10 lg:mb-12">
-        <h2 class="font-display text-4xl lg:text-5xl">Threefold Bakery</h2>
+      <div class="text-center max-w-3xl mx-auto mb-10 lg:mb-12">
+        <div class="text-xs uppercase tracking-[0.3em] text-[color:var(--color-gold)]">Case Study</div>
+        <h2 class="mt-4 font-display text-4xl lg:text-5xl">Threefold Bakery</h2>
         <p class="mt-2 text-sm font-semibold tracking-wide text-black/80">Breckenridge, Colorado</p>
       </div>
       <div class="grid lg:grid-cols-2 gap-10 lg:gap-14 items-start">
-        <div class="order-2 space-y-8 min-w-0 lg:order-1">
-          <div class="text-black/80 leading-relaxed space-y-4 text-[15px] md:text-base">
+        <div class="space-y-8 min-w-0">
+          <div class="text-black/80 leading-relaxed text-[15px] md:text-base">
             <p>
-              The custom artwork at Threefold Bakery tells a story of origin, movement, and coming together. A sandhill crane flies from the ocean toward the mountains, symbolizing the journey of the three owners whose paths from California and Colorado converged to create the bakery. The grandeur of both sea and peaks anchors the composition, while bramble vines, hummingbirds, and fruiting forms represent growth, care, and abundance. Subtle touches of gold emerge throughout a bright, vintage rainbow palette, adding warmth and depth—reflecting the spirit of <em>indigen</em>: being deeply rooted in place, craft, and community.
+              This custom mural tells a story of origin, movement, and convergence. A sandhill crane travels from sea to mountain,
+              echoing the paths of the three owners whose lives in California and Colorado came together to build Threefold.
+            </p>
+            <p class="mt-4">
+              Bramble vines, hummingbirds, and fruiting forms represent growth, care, and abundance. Gold accents move through a bright,
+              vintage rainbow palette to reflect the spirit of indigen: being deeply rooted in place, craft, and community.
             </p>
           </div>
           <div class="grid grid-cols-3 gap-2">
@@ -148,32 +177,35 @@ const qiMainImage = {
             ))}
           </div>
         </div>
-        <div class="order-1 lg:sticky lg:top-28 lg:order-2">
-          <LightboxLargeImage
-            src="Threefold-Bakery-Interior-Mural-by-Anna-Hileman-Courtesy1600.jpeg"
+        <div class="lg:sticky lg:top-28">
+          <img
+            src="/images/Threefold-Bakery-Interior-Mural-by-Anna-Hileman-Courtesy1600.jpeg"
             alt="Threefold Bakery interior mural by Anna Hileman"
-            class="aspect-[3/4] lg:min-h-[min(85vh,52rem)]"
+            class="w-full rounded-lg shadow-xl object-cover aspect-[3/4] lg:min-h-[min(85vh,52rem)]"
+            loading="lazy"
           />
         </div>
       </div>
     </div>
   </section>
 
-  <!-- Radicato -->
   <section class="border-t border-black/10">
     <div class="max-w-7xl mx-auto px-6 lg:px-10 py-16 lg:py-20">
-      <div class="text-center mb-10 lg:mb-12">
-        <h2 class="font-display text-4xl lg:text-5xl">Radicato</h2>
+      <div class="text-center max-w-3xl mx-auto mb-10 lg:mb-12">
+        <div class="text-xs uppercase tracking-[0.3em] text-[color:var(--color-gold)]">Case Study</div>
+        <h2 class="mt-4 font-display text-4xl lg:text-5xl">Radicato</h2>
         <p class="mt-2 text-sm font-semibold tracking-wide text-black/80">Breckenridge, Colorado</p>
       </div>
       <div class="grid lg:grid-cols-2 gap-10 lg:gap-14 items-start">
-        <div class="order-2 space-y-8 min-w-0 lg:order-1">
-          <div class="text-black/80 leading-relaxed space-y-4 text-[15px] md:text-base">
+        <div class="space-y-8 min-w-0">
+          <div class="text-black/80 leading-relaxed text-[15px] md:text-base">
             <p>
-              Inside Radicato, a curated collection of custom-commissioned artworks enriches the dining experience, each created specifically for the space. The collection explores the idea of being <em>rooted</em>—a visual reflection of Radicato’s name and its connection to place, community, and craft.
+              Radicato features a curated collection of commissioned works created specifically for its interior. The collection explores what it
+              means to be rooted in place, process, and people.
             </p>
-            <p>
-              Using materials such as gold leaf, alcohol ink, acrylic paint, wire, and layered butcher paper, the artworks add rich texture and depth throughout the restaurant. Anchoring the collection is a 10-foot custom Garden Gem installation, Anna’s signature series inspired by plants, roots, and growth. Garden Gems are site-specific works that celebrate origin, nourishment, and what lies beneath the surface—serving as a visual centerpiece that embodies Radicato’s deeply rooted ethos.
+            <p class="mt-4">
+              Materials including gold leaf, alcohol ink, acrylic, wire, and layered butcher paper introduce depth and tactility. The collection is
+              anchored by a 10-foot Garden Gem installation that reflects origin, nourishment, and what lies beneath the surface.
             </p>
           </div>
           <div class="grid grid-cols-2 gap-2 sm:grid-cols-4">
@@ -182,27 +214,41 @@ const qiMainImage = {
             ))}
           </div>
         </div>
-        <div class="order-1 space-y-6 lg:sticky lg:top-28 lg:order-2">
-          {radicatoMainImages.map((img) => (
-            <LightboxLargeImage src={img.src} alt={img.alt} class="aspect-[3/4]" />
-          ))}
+        <div class="lg:sticky lg:top-28 space-y-6">
+          <img
+            src="/images/IMG_9457.jpg"
+            alt="Radicato, Breckenridge commissioned restaurant artwork"
+            class="w-full rounded-lg shadow-xl object-cover aspect-[3/4]"
+            loading="lazy"
+          />
+          <img
+            src="/images/IMG_6126.jpeg"
+            alt="Radicato restaurant interior and artwork"
+            class="w-full rounded-lg shadow-xl object-cover aspect-[3/4]"
+            loading="lazy"
+          />
         </div>
       </div>
     </div>
   </section>
 
-  <!-- Quality Italian -->
-  <section class="border-t border-black/10 pb-24">
+  <section class="border-t border-black/10 pb-20 lg:pb-24">
     <div class="max-w-7xl mx-auto px-6 lg:px-10 py-16 lg:py-20">
-      <div class="text-center mb-10 lg:mb-12">
-        <h2 class="font-display text-4xl lg:text-5xl">Quality Italian</h2>
+      <div class="text-center max-w-3xl mx-auto mb-10 lg:mb-12">
+        <div class="text-xs uppercase tracking-[0.3em] text-[color:var(--color-gold)]">Case Study</div>
+        <h2 class="mt-4 font-display text-4xl lg:text-5xl">Quality Italian</h2>
         <p class="mt-2 text-sm font-semibold tracking-wide text-black/80">Cherry Creek, Colorado</p>
       </div>
       <div class="grid lg:grid-cols-2 gap-10 lg:gap-14 items-start">
-        <div class="order-2 space-y-8 min-w-0 lg:order-1">
+        <div class="space-y-8 min-w-0">
           <div class="text-black/80 leading-relaxed text-[15px] md:text-base">
             <p>
-              Overhead, Anna hand-designed and hand-painted a custom ceiling spanning the dining area, composed of over one hundred individually painted components that were assembled on site to create an immersive visual experience. In addition to the ceiling, Anna applied gold leaf detailing to the glass windowed doors and created a custom lion artwork designed to resemble marble, bringing layered craftsmanship and artistic detail throughout the space.
+              For Quality Italian, Anna hand-designed and hand-painted a custom dining-room ceiling composed of over one hundred individual painted
+              components assembled on site into a cohesive immersive installation.
+            </p>
+            <p class="mt-4">
+              The project also included custom lion artwork with a marble-like finish and gold-leaf detailing on glass doors, extending the material
+              language and craftsmanship across the full guest environment.
             </p>
           </div>
           <div class="grid grid-cols-3 gap-2">
@@ -211,10 +257,31 @@ const qiMainImage = {
             ))}
           </div>
         </div>
-        <div class="order-1 lg:sticky lg:top-28 lg:order-2">
-          <LightboxLargeImage src={qiMainImage.src} alt={qiMainImage.alt} class="aspect-[3/4] lg:min-h-[min(85vh,52rem)]" />
+        <div class="lg:sticky lg:top-28">
+          <img
+            src="/images/QI-Ceiling.jpg"
+            alt="Quality Italian Cherry Creek dining room with custom hand-painted ceiling"
+            class="w-full rounded-lg shadow-xl object-cover aspect-[3/4] lg:min-h-[min(85vh,52rem)]"
+            loading="lazy"
+          />
         </div>
       </div>
     </div>
   </section>
+
+  <section class="border-t border-black/10 bg-[color:var(--color-accent-soft)]/25">
+    <div class="max-w-3xl mx-auto px-6 lg:px-10 py-16 lg:py-20 text-center">
+      <h2 class="font-display text-3xl md:text-4xl">Ready to commission restaurant artwork?</h2>
+      <p class="mt-4 text-black/70">Share your concept, timeline, and space details. Anna will help shape the direction.</p>
+      <a
+        href="/contact"
+        class="mt-10 inline-flex items-center gap-2 bg-[color:var(--color-gold)] text-[color:var(--color-ink)] px-8 py-4 text-sm tracking-wide hover:bg-[color:var(--color-ink)] hover:text-[color:var(--color-gold)] transition-colors"
+      >
+        Contact Anna
+        <span aria-hidden="true">&rarr;</span>
+      </a>
+    </div>
+  </section>
+  <JsonLd json={restaurantsServiceSchema} />
+  <JsonLd json={restaurantsBreadcrumbs} />
 </Layout>

@@ -1,72 +1,209 @@
 ---
 import Layout from '../layouts/Layout.astro';
-import ArtImage from '../components/ArtImage.astro';
+import LightboxThumb from '../components/LightboxThumb.astro';
+import JsonLd from '../components/JsonLd.astro';
+import { buildServiceSchema, buildBreadcrumbs } from '../data/schemas';
 
-const examples = [
-  'BINA-WEB.jpg', 'IMG_0341.jpg', 'IMG_0342.jpg', 'IMG_0344.jpg',
-  'IMG_0346.jpg', 'IMG_0333.jpg',
+const portraitsServiceSchema = buildServiceSchema(Astro.site, {
+  name: 'Custom Pet Portraits',
+  slug: 'portraits',
+  description:
+    'Commissioned pet portraits in acrylic and oil — heirloom hand-painted portraits from your photos by Colorado artist Anna Hileman.',
+  serviceType: 'Portrait commissions',
+  image: '/images/Pet-Portraiture-in-Oils.jpg',
+});
+const portraitsBreadcrumbs = buildBreadcrumbs(Astro.site, [
+  { name: 'Home', slug: '' },
+  { name: 'Pet Portraits', slug: 'portraits' },
+]);
+
+const galleryThumbs = [
+  { src: 'BINA-WEB.jpg', alt: 'Oil portrait of Bina, a long-haired dog in soft daylight' },
+  { src: 'IMG_0341.jpg', alt: 'Commissioned acrylic portrait of a black-and-white dog on aluminum' },
+  { src: 'IMG_0344.jpg', alt: 'Acrylic portrait of a spaniel mix with warm light on the face' },
+  { src: 'IMG_0346.jpg', alt: 'Oil portrait of a golden retriever in close composition' },
+  { src: 'IMG_0333.jpg', alt: 'Oil portrait of a cat resting in a painted interior setting' },
+  { src: 'FA-Dog.jpg', alt: 'Acrylic study of a terrier with luminous aluminum ground' },
+];
+
+const acrylicPrices = [
+  { size: '20" × 20"', price: '$600' },
+  { size: '24" × 24"', price: '$750' },
+  { size: '30" × 30"', price: '$850' },
+];
+
+const oilPrices = [
+  { size: '20" × 20"', price: '$500' },
+  { size: '20" × 24"', price: '$575' },
+  { size: '24" × 24"', price: '$750' },
+  { size: '24" × 36"', price: '$1,150' },
+  { size: '36" × 36"', price: '$1,350' },
 ];
 ---
-<Layout title="Pet & Animal Portraits | Anna Hileman Art">
-  <section class="max-w-7xl mx-auto px-6 lg:px-10 py-20">
-    <div class="text-xs uppercase tracking-[0.3em] text-[color:var(--color-accent)] mb-6">Commissioned Work</div>
-    <h1 class="font-display text-5xl lg:text-6xl max-w-3xl">Pet &amp; Animal Portraits by Anna Hileman</h1>
-    <p class="mt-8 text-lg text-black/70 max-w-2xl leading-relaxed">
-      I greatly enjoy capturing a beloved pet in an original painting its owners can enjoy forever.
-      I know from experience that the bond between a pet and its family is unmistakable, and I try
-      to bring that specific personality into every portrait.
-    </p>
-    <p class="mt-4 text-lg text-black/70 max-w-2xl leading-relaxed">
-      Below you will find information regarding pricing, styles and sizing. To best answer your
-      questions, fill out the order form on the <a href="/order-pet-portrait" class="underline">Order page</a>.
-    </p>
+<Layout
+  title="Custom Pet Portrait Paintings — Acrylic & Oil | Anna Hileman Art"
+  description="Commissioned pet portraits in acrylic and oil by Colorado artist Anna Hileman. Heirloom hand-painted portraits from your photos — dogs, cats, horses, and beyond."
+  ogImage="/images/Pet-Portraiture-in-Oils.jpg"
+  ogImageAlt="Hand-painted pet portrait in oil by Anna Hileman"
+  preloadImage="/images/Pet-Portraiture-in-Oils.jpg"
+>
+  <!-- Asymmetric hero: featured portrait on left, text on right -->
+  <section class="border-b border-black/5">
+    <div class="max-w-7xl mx-auto px-6 lg:px-10 py-16 lg:py-24">
+      <div class="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-16 items-center">
+        <div class="lg:col-span-7 min-w-0">
+          <img
+            src="/images/IMG_0342.jpg"
+            alt="Featured acrylic-on-aluminum pet portrait by Anna Hileman"
+            width={1024}
+            height={1013}
+            fetchpriority="high"
+            loading="eager"
+            decoding="async"
+            class="w-full rounded-lg shadow-xl object-cover aspect-square"
+          />
+        </div>
+        <div class="lg:col-span-5">
+          <div class="text-xs uppercase tracking-[0.3em] text-[color:var(--color-gold)]">
+            Commissioned Work
+          </div>
+          <h1 class="mt-6 font-display text-4xl md:text-5xl lg:text-6xl leading-[1.05] text-[color:var(--color-ink)]">
+            Paintings of the ones you
+            {' '}
+            <em class="italic text-[color:var(--color-gold)]">love.</em>
+          </h1>
+          <p class="mt-8 text-lg text-black/75 leading-relaxed max-w-lg">
+            Custom pet portraits in oil and acrylic. I work from the photos and stories you share, and paint something you can keep for the rest of their life&mdash;and long after.
+          </p>
+          <a
+            href="/order-pet-portrait"
+            class="mt-10 inline-flex items-center gap-2 bg-[color:var(--color-gold)] text-[color:var(--color-ink)] px-8 py-4 text-sm tracking-wide hover:bg-[color:var(--color-ink)] hover:text-[color:var(--color-gold)] transition-colors"
+          >
+            Start a Portrait
+            <span aria-hidden="true">&rarr;</span>
+          </a>
+        </div>
+      </div>
+    </div>
   </section>
 
-  <section class="max-w-7xl mx-auto px-6 lg:px-10 pb-24">
-    <div class="grid grid-cols-2 lg:grid-cols-3 gap-4 lg:gap-6">
-      {examples.map((src) => (
-        <ArtImage src={src} alt="Pet portrait" ratio="square" />
+  <!-- Artist statement + 3-step process -->
+  <section class="bg-[color:var(--color-accent-soft)]/40 border-y border-black/5">
+    <div class="max-w-5xl mx-auto px-6 lg:px-10 py-20 lg:py-24">
+      <div class="text-center max-w-3xl mx-auto">
+        <div class="text-xs uppercase tracking-[0.3em] text-[color:var(--color-gold)]">
+          From the Artist
+        </div>
+        <p class="mt-6 font-display text-2xl md:text-3xl leading-snug text-[color:var(--color-ink)]">
+          Pets know things about us that nobody else does. Painting them is a way to keep that knowing in the room&mdash;long after the leash is by the door and the bed is empty.
+        </p>
+      </div>
+
+      <div class="mt-16 lg:mt-20 grid grid-cols-1 md:grid-cols-3 gap-10 md:gap-12">
+        <div>
+          <div class="text-xs uppercase tracking-[0.25em] text-[color:var(--color-gold)]">01 &middot; Share</div>
+          <h3 class="mt-3 font-display text-xl md:text-2xl">Tell me about them.</h3>
+          <p class="mt-3 text-sm text-black/70 leading-relaxed">
+            Send me the photos you love and the small stories that matter. The way they sit. The look they give you. Everything shapes the painting.
+          </p>
+        </div>
+        <div>
+          <div class="text-xs uppercase tracking-[0.25em] text-[color:var(--color-gold)]">02 &middot; Paint</div>
+          <h3 class="mt-3 font-display text-xl md:text-2xl">I spend time with their likeness.</h3>
+          <p class="mt-3 text-sm text-black/70 leading-relaxed">
+            Oil on linen canvas for rich tone and setting, or acrylic on aluminum for a luminous, contemporary finish. Your choice&mdash;I&rsquo;ll help you think it through.
+          </p>
+        </div>
+        <div>
+          <div class="text-xs uppercase tracking-[0.25em] text-[color:var(--color-gold)]">03 &middot; Reveal</div>
+          <h3 class="mt-3 font-display text-xl md:text-2xl">You see it before it ships.</h3>
+          <p class="mt-3 text-sm text-black/70 leading-relaxed">
+            I share proof images before the piece leaves the studio. When it&rsquo;s right, it arrives at your door ready to hang.
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Gallery -->
+  <section class="max-w-7xl mx-auto px-6 lg:px-10 py-20 lg:py-24">
+    <div class="text-center max-w-2xl mx-auto mb-12">
+      <div class="text-xs uppercase tracking-[0.3em] text-[color:var(--color-gold)]">
+        Recent Portraits
+      </div>
+      <h2 class="mt-4 font-display text-3xl md:text-4xl">A few of the faces.</h2>
+    </div>
+    <div class="grid grid-cols-2 md:grid-cols-3 gap-4 lg:gap-6">
+      {galleryThumbs.map((t) => (
+        <LightboxThumb src={t.src} alt={t.alt} />
       ))}
     </div>
   </section>
 
-  <section class="bg-[color:var(--color-accent-soft)]/30">
-    <div class="max-w-5xl mx-auto px-6 lg:px-10 py-20">
-      <h2 class="font-display text-4xl mb-10">Styles &amp; Pricing</h2>
-      <div class="grid md:grid-cols-2 gap-10">
-        <div>
-          <h3 class="font-display text-2xl mb-3">Acrylic on Aluminum</h3>
-          <p class="text-black/70 leading-relaxed mb-4">
-            Multi-chromatic portraits without a background. The play of light between aluminum
-            and paint gives each piece a distinct, luminous quality.
-          </p>
-          <ul class="text-sm text-black/70 space-y-1">
-            <li>20" x 20" &mdash; $600</li>
-            <li>24" x 24" &mdash; $750</li>
-            <li>30" x 30" &mdash; $850</li>
-          </ul>
+  <!-- Pricing cards -->
+  <section class="border-t border-black/10">
+    <div class="max-w-6xl mx-auto px-6 lg:px-10 py-20 lg:py-24">
+      <div class="text-center max-w-2xl mx-auto mb-14">
+        <div class="text-xs uppercase tracking-[0.3em] text-[color:var(--color-gold)]">
+          Two Mediums
         </div>
-        <div>
-          <h3 class="font-display text-2xl mb-3">Oil on Linen Canvas</h3>
-          <p class="text-black/70 leading-relaxed mb-4">
-            A great choice if you want to include a specific setting or theme. Rich tones and
-            fine detail.
-          </p>
-          <ul class="text-sm text-black/70 space-y-1">
-            <li>20" x 20" &mdash; $500</li>
-            <li>20" x 24" &mdash; $575</li>
-            <li>24" x 24" &mdash; $750</li>
-            <li>24" x 36" &mdash; $1,150</li>
-            <li>36" x 36" &mdash; $1,350</li>
-          </ul>
-        </div>
+        <h2 class="mt-4 font-display text-3xl md:text-4xl">Styles &amp; Pricing</h2>
       </div>
-      <div class="mt-12 text-center">
-        <a href="/order-pet-portrait" class="inline-flex items-center gap-2 bg-[color:var(--color-ink)] text-[color:var(--color-paper)] px-8 py-4 tracking-wide hover:bg-[color:var(--color-accent)] transition-colors">
-          Start Your Pet Portrait
-          <span>&rarr;</span>
-        </a>
+
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-10">
+        <article class="bg-[color:var(--color-accent-soft)]/20 border border-black/5 rounded-lg p-8 lg:p-10">
+          <div class="text-xs uppercase tracking-[0.25em] text-[color:var(--color-gold)]">
+            Contemporary
+          </div>
+          <h3 class="mt-3 font-display text-2xl md:text-3xl">Acrylic on Aluminum</h3>
+          <p class="mt-4 text-black/70 leading-relaxed">
+            Multi-chromatic portraits without a background. The play of light between aluminum and paint gives each piece a distinct, luminous quality.
+          </p>
+          <dl class="mt-8 pt-6 border-t border-black/10 divide-y divide-black/5">
+            {acrylicPrices.map((p) => (
+              <div class="flex items-baseline justify-between py-3">
+                <dt class="text-sm text-black/70">{p.size}</dt>
+                <dd class="font-display text-lg text-[color:var(--color-ink)]">{p.price}</dd>
+              </div>
+            ))}
+          </dl>
+        </article>
+
+        <article class="bg-[color:var(--color-accent-soft)]/20 border border-black/5 rounded-lg p-8 lg:p-10">
+          <div class="text-xs uppercase tracking-[0.25em] text-[color:var(--color-gold)]">
+            Traditional
+          </div>
+          <h3 class="mt-3 font-display text-2xl md:text-3xl">Oil on Linen Canvas</h3>
+          <p class="mt-4 text-black/70 leading-relaxed">
+            A great choice if you want to include a specific setting or theme. Rich tones and fine detail, painted in the tradition of classical animal portraiture.
+          </p>
+          <dl class="mt-8 pt-6 border-t border-black/10 divide-y divide-black/5">
+            {oilPrices.map((p) => (
+              <div class="flex items-baseline justify-between py-3">
+                <dt class="text-sm text-black/70">{p.size}</dt>
+                <dd class="font-display text-lg text-[color:var(--color-ink)]">{p.price}</dd>
+              </div>
+            ))}
+          </dl>
+        </article>
       </div>
     </div>
   </section>
+
+  <!-- Final CTA -->
+  <section class="border-t border-black/10 bg-[color:var(--color-accent-soft)]/25">
+    <div class="max-w-3xl mx-auto px-6 lg:px-10 py-16 lg:py-20 text-center">
+      <h2 class="font-display text-3xl md:text-4xl">Ready to paint your pet?</h2>
+      <p class="mt-4 text-black/70">Start with a few photos and a short note about them.</p>
+      <a
+        href="/order-pet-portrait"
+        class="mt-10 inline-flex items-center gap-2 bg-[color:var(--color-gold)] text-[color:var(--color-ink)] px-8 py-4 text-sm tracking-wide hover:bg-[color:var(--color-ink)] hover:text-[color:var(--color-gold)] transition-colors"
+      >
+        Start a Portrait
+        <span aria-hidden="true">&rarr;</span>
+      </a>
+    </div>
+  </section>
+  <JsonLd json={portraitsServiceSchema} />
+  <JsonLd json={portraitsBreadcrumbs} />
 </Layout>

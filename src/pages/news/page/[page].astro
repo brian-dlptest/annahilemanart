@@ -1,0 +1,104 @@
+---
+import Layout from '../../../layouts/Layout.astro';
+import {
+  buildNewsPageLink,
+  formatNewsDate,
+  getNewsPageCount,
+  getPostsForNewsPage,
+  getPublishedNewsPosts,
+} from '../../../data/news';
+
+export async function getStaticPaths() {
+  const posts = await getPublishedNewsPosts();
+  const totalPages = getNewsPageCount(posts.length);
+
+  if (totalPages <= 1) return [];
+
+  return Array.from({ length: totalPages - 1 }, (_, i) => {
+    const pageNumber = i + 2;
+    return {
+      params: { page: String(pageNumber) },
+      props: {
+        pageNumber,
+        totalPages,
+        posts: getPostsForNewsPage(posts, pageNumber),
+      },
+    };
+  });
+}
+
+const { pageNumber, totalPages, posts } = Astro.props;
+---
+
+<Layout
+  title={`News & Updates Page ${pageNumber} | Anna Hileman Art`}
+  description="Older project announcements, press features, and studio updates from Anna Hileman."
+>
+  <section class="max-w-5xl mx-auto px-6 lg:px-10 py-20 lg:py-24">
+    <div class="text-xs uppercase tracking-[0.3em] text-[color:var(--color-gold)] mb-6">News Archive</div>
+    <h1 class="font-display text-5xl lg:text-6xl">News &amp; Updates</h1>
+    <p class="mt-8 text-lg text-black/70 max-w-2xl leading-relaxed">
+      Archive page {pageNumber} of {totalPages}.
+    </p>
+
+    <div class="mt-14 border-t border-black/10">
+      {posts.map((post) => (
+        <article class="border-b border-black/10 py-10">
+          <div class="text-xs uppercase tracking-[0.2em] text-black/40 mb-3">
+            {post.data.category} · {formatNewsDate(post.data.publishDate)}
+          </div>
+          {post.data.featuredImage && (
+            <a href={`/news/${post.slug}/`} class="block mb-5">
+              <img
+                src={post.data.featuredImage}
+                alt={post.data.featuredImageAlt ?? post.data.title}
+                class="w-full max-h-[28rem] rounded-lg object-cover border border-black/5"
+                loading="lazy"
+                decoding="async"
+              />
+            </a>
+          )}
+          <h2 class="font-display text-3xl mb-4">
+            <a href={`/news/${post.slug}/`} class="hover:text-[color:var(--color-accent)] transition-colors">
+              {post.data.title}
+            </a>
+          </h2>
+          <p class="text-black/70 leading-relaxed">{post.data.excerpt}</p>
+          <a
+            href={`/news/${post.slug}/`}
+            class="mt-5 inline-flex items-center gap-2 text-sm uppercase tracking-wider border-b border-[color:var(--color-ink)] pb-0.5 hover:text-[color:var(--color-accent)] hover:border-[color:var(--color-accent)]"
+          >
+            Read post
+            <span aria-hidden="true">&rarr;</span>
+          </a>
+        </article>
+      ))}
+    </div>
+
+    <nav class="mt-10 flex flex-wrap items-center justify-center gap-3" aria-label="News pagination">
+      {Array.from({ length: totalPages }).map((_, idx) => {
+        const page = idx + 1;
+        const isCurrent = page === pageNumber;
+        return (
+          <a
+            href={buildNewsPageLink(page)}
+            aria-current={isCurrent ? 'page' : undefined}
+            class={`inline-flex h-10 min-w-10 items-center justify-center px-4 text-sm border transition-colors ${
+              isCurrent
+                ? 'border-[color:var(--color-ink)] bg-[color:var(--color-ink)] text-[color:var(--color-paper)]'
+                : 'border-black/20 text-black/70 hover:border-black/40 hover:text-black'
+            }`}
+          >
+            {page}
+          </a>
+        );
+      })}
+    </nav>
+
+    <div class="mt-12 text-sm text-black/60 text-center">
+      Prefer a feed reader? Subscribe via
+      {' '}
+      <a href="/rss.xml" class="underline hover:text-[color:var(--color-accent)]">RSS</a>.
+    </div>
+  </section>
+</Layout>

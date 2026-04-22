@@ -1,34 +1,99 @@
 ---
 import Layout from '../layouts/Layout.astro';
+
+import {
+  buildNewsPageLink,
+  formatNewsDate,
+  getNewsPageCount,
+  getPostsForNewsPage,
+  getPublishedNewsPosts,
+} from '../data/news';
+
+const allPosts = await getPublishedNewsPosts();
+const currentPage = 1;
+const totalPages = getNewsPageCount(allPosts.length);
+const posts = getPostsForNewsPage(allPosts, currentPage);
 ---
-<Layout title="News & Updates | Anna Hileman Art">
-  <section class="max-w-4xl mx-auto px-6 lg:px-10 py-20">
-    <div class="text-xs uppercase tracking-[0.3em] text-[color:var(--color-accent)] mb-6">News</div>
+<Layout
+  title="News & Updates | Anna Hileman Art"
+  description="Project announcements, press features, and behind-the-scenes updates from Colorado muralist and commercial artist Anna Hileman."
+>
+  <section class="max-w-5xl mx-auto px-6 lg:px-10 py-20 lg:py-24">
+    <div class="text-xs uppercase tracking-[0.3em] text-[color:var(--color-gold)] mb-6">News</div>
     <h1 class="font-display text-5xl lg:text-6xl">Recent News &amp; Updates</h1>
     <p class="mt-8 text-lg text-black/70 max-w-2xl leading-relaxed">
       Project announcements, press features, and behind-the-scenes from the studio.
       Follow <a href="https://www.instagram.com/annahilemanart/" target="_blank" rel="noopener" class="underline">@annahilemanart on Instagram</a> for day-to-day updates.
     </p>
 
-    <article class="mt-16 border-t border-black/10 pt-10">
-      <div class="text-xs uppercase tracking-[0.2em] text-black/40 mb-3">February 2026</div>
-      <h2 class="font-display text-3xl mb-4">From Story to Surface: How Personal Narratives Shape Every Piece</h2>
-      <p class="text-black/70 leading-relaxed">
-        Every painting begins with a conversation. Whether it's a pet portrait, a mural, or a
-        Garden Gem, the story of the person it's made for always shapes the work.
-      </p>
-    </article>
+    <a
+      href="/rss.xml"
+      class="mt-6 inline-flex items-center gap-2 text-xs uppercase tracking-[0.2em] border-b border-[color:var(--color-ink)] pb-0.5 hover:text-[color:var(--color-accent)] hover:border-[color:var(--color-accent)] transition-colors"
+    >
+      <svg aria-hidden="true" width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M4 4a16 16 0 0 1 16 16h-3A13 13 0 0 0 4 7V4zm0 6a10 10 0 0 1 10 10h-3a7 7 0 0 0-7-7v-3zm2 7.5a2.5 2.5 0 1 1 0 5 2.5 2.5 0 0 1 0-5z"/></svg>
+      Subscribe via RSS
+    </a>
 
-    <article class="mt-10 border-t border-black/10 pt-10">
-      <div class="text-xs uppercase tracking-[0.2em] text-black/40 mb-3">Press, 5280 Magazine</div>
-      <h2 class="font-display text-3xl mb-4">Threefold Bakery Named Best Road-Trip Restaurant</h2>
-      <p class="text-black/70 leading-relaxed">
-        5280 Magazine featured Threefold Bakery in Breckenridge, including the custom interior
-        mural created for the space.
-      </p>
-      <a href="https://5280.com/threefold-bakery-in-breckenridge-named-the-best-road-trip-restaurant-by-5280-magazine/"
-         class="mt-4 inline-block text-sm uppercase tracking-wider border-b border-[color:var(--color-ink)] pb-0.5 hover:text-[color:var(--color-accent)] hover:border-[color:var(--color-accent)]"
-         target="_blank" rel="noopener">Read the article</a>
-    </article>
+    <div class="mt-14 border-t border-black/10">
+      {posts.map((post) => (
+        <article class="border-b border-black/10 py-10">
+          <div class="text-xs uppercase tracking-[0.2em] text-black/40 mb-3">
+            {post.data.category} · {formatNewsDate(post.data.publishDate)}
+          </div>
+          {post.data.featuredImage && (
+            <a href={`/news/${post.slug}/`} class="block mb-5">
+              <img
+                src={post.data.featuredImage}
+                alt={post.data.featuredImageAlt ?? post.data.title}
+                class="w-full max-h-[28rem] rounded-lg object-cover border border-black/5"
+                loading="lazy"
+                decoding="async"
+              />
+            </a>
+          )}
+          <h2 class="font-display text-3xl mb-4">
+            <a href={`/news/${post.slug}/`} class="hover:text-[color:var(--color-accent)] transition-colors">
+              {post.data.title}
+            </a>
+          </h2>
+          <p class="text-black/70 leading-relaxed">{post.data.excerpt}</p>
+          <a
+            href={`/news/${post.slug}/`}
+            class="mt-5 inline-flex items-center gap-2 text-sm uppercase tracking-wider border-b border-[color:var(--color-ink)] pb-0.5 hover:text-[color:var(--color-accent)] hover:border-[color:var(--color-accent)]"
+          >
+            Read post
+            <span aria-hidden="true">&rarr;</span>
+          </a>
+        </article>
+      ))}
+    </div>
+
+    {totalPages > 1 && (
+      <nav class="mt-10 flex flex-wrap items-center justify-center gap-3" aria-label="News pagination">
+        {Array.from({ length: totalPages }).map((_, idx) => {
+          const page = idx + 1;
+          const isCurrent = page === currentPage;
+          return (
+            <a
+              href={buildNewsPageLink(page)}
+              aria-current={isCurrent ? 'page' : undefined}
+              class={`inline-flex h-10 min-w-10 items-center justify-center px-4 text-sm border transition-colors ${
+                isCurrent
+                  ? 'border-[color:var(--color-ink)] bg-[color:var(--color-ink)] text-[color:var(--color-paper)]'
+                  : 'border-black/20 text-black/70 hover:border-black/40 hover:text-black'
+              }`}
+            >
+              {page}
+            </a>
+          );
+        })}
+      </nav>
+    )}
+
+    <div class="mt-12 text-sm text-black/60 text-center">
+      Prefer a feed reader? Subscribe via
+      {' '}
+      <a href="/rss.xml" class="underline hover:text-[color:var(--color-accent)]">RSS</a>.
+    </div>
   </section>
 </Layout>

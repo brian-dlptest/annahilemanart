@@ -1,0 +1,64 @@
+---
+import Layout from '../layouts/Layout.astro';
+---
+<Layout
+  title="Page Not Found | Anna Hileman Art"
+  description="The page you're looking for couldn't be found. Explore Anna Hileman's murals, pet portraits, and commissioned artwork."
+>
+  <section class="max-w-3xl mx-auto px-6 lg:px-10 py-24 lg:py-32 text-center">
+    <div class="text-xs uppercase tracking-[0.3em] text-[color:var(--color-gold)]">
+      Error 404
+    </div>
+    <h1 class="mt-6 font-display text-5xl md:text-6xl leading-[1.05]">
+      That page wandered off.
+    </h1>
+    <p class="mt-8 text-lg text-black/70 leading-relaxed">
+      The link may be outdated or the page has moved. Here are a few good places to land instead.
+    </p>
+
+    <ul class="mt-12 grid grid-cols-1 sm:grid-cols-2 gap-3 text-left">
+      <li>
+        <a href="/" class="block border border-black/10 rounded-lg px-5 py-4 hover:border-[color:var(--color-accent)] transition-colors">
+          <div class="text-xs uppercase tracking-[0.2em] text-black/50">Home</div>
+          <div class="mt-1 font-display text-lg">Anna Hileman Art</div>
+        </a>
+      </li>
+      <li>
+        <a href="/restaurants" class="block border border-black/10 rounded-lg px-5 py-4 hover:border-[color:var(--color-accent)] transition-colors">
+          <div class="text-xs uppercase tracking-[0.2em] text-black/50">Work</div>
+          <div class="mt-1 font-display text-lg">Restaurants</div>
+        </a>
+      </li>
+      <li>
+        <a href="/school-murals" class="block border border-black/10 rounded-lg px-5 py-4 hover:border-[color:var(--color-accent)] transition-colors">
+          <div class="text-xs uppercase tracking-[0.2em] text-black/50">Work</div>
+          <div class="mt-1 font-display text-lg">School Murals</div>
+        </a>
+      </li>
+      <li>
+        <a href="/portraits" class="block border border-black/10 rounded-lg px-5 py-4 hover:border-[color:var(--color-accent)] transition-colors">
+          <div class="text-xs uppercase tracking-[0.2em] text-black/50">Work</div>
+          <div class="mt-1 font-display text-lg">Pet Portraits</div>
+        </a>
+      </li>
+      <li>
+        <a href="/garden-gems" class="block border border-black/10 rounded-lg px-5 py-4 hover:border-[color:var(--color-accent)] transition-colors">
+          <div class="text-xs uppercase tracking-[0.2em] text-black/50">Work</div>
+          <div class="mt-1 font-display text-lg">Garden Gems</div>
+        </a>
+      </li>
+      <li>
+        <a href="/contact" class="block border border-black/10 rounded-lg px-5 py-4 hover:border-[color:var(--color-accent)] transition-colors">
+          <div class="text-xs uppercase tracking-[0.2em] text-black/50">Get in touch</div>
+          <div class="mt-1 font-display text-lg">Contact</div>
+        </a>
+      </li>
+    </ul>
+
+    <p class="mt-14 text-sm text-black/55">
+      Still stuck? Email
+      <a href="mailto:annahilemanart@gmail.com" class="underline hover:text-[color:var(--color-accent)]">annahilemanart@gmail.com</a>
+      or call <a href="tel:+19706182424" class="underline hover:text-[color:var(--color-accent)]">970.618.2424</a>.
+    </p>
+  </section>
+</Layout>

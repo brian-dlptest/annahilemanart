@@ -3,39 +3,190 @@ import '../styles/global.css';
 import Header from '../components/Header.astro';
 import Footer from '../components/Footer.astro';
 import LightboxRoot from '../components/LightboxRoot.astro';
+import JsonLd from '../components/JsonLd.astro';
+import { googleReviewStats, googleReviewsProfileUrl } from '../data/customer-reviews';
 
 interface Props {
   title?: string;
   description?: string;
+  ogImage?: string;
+  ogImageAlt?: string;
+  ogType?: string;
+  /** Optional hero image URL to preload for faster LCP. */
+  preloadImage?: string;
+  /** If true, suppress the site-wide LocalBusiness + Person schema (e.g. on article pages with their own primary schema). */
+  suppressOrgSchema?: boolean;
 }
 
 const siteName = 'Anna Hileman Art';
+const defaultOgImage = '/images/website-anna.jpg';
+const defaultOgImageAlt = 'Anna Hileman — Colorado mural artist and pet portrait painter in her studio';
 
 const {
   title = siteName,
-  description = 'Custom murals, pet portraits, and commercial artwork by Colorado artist Anna Hileman.',
+  description = 'Custom murals, pet portraits, and commercial artwork by Colorado artist Anna Hileman. Hand-painted work for restaurants, schools, and homes across Denver and the Front Range.',
+  ogImage,
+  ogImageAlt,
+  ogType = 'website',
+  preloadImage,
+  suppressOrgSchema = false,
 } = Astro.props;
+
+const ogImageToUse = ogImage ?? defaultOgImage;
+const ogImageAltToUse = ogImageAlt ?? defaultOgImageAlt;
+
+const resolvedOgImage = ogImageToUse
+  ? (ogImageToUse.startsWith('http')
+      ? ogImageToUse
+      : (Astro.site ? new URL(ogImageToUse, Astro.site).href : ogImageToUse))
+  : undefined;
+
+const canonicalUrl = Astro.site ? new URL(Astro.url.pathname, Astro.site).href : undefined;
+const siteOrigin = Astro.site ? Astro.site.origin : 'https://annahileman.com';
+const rssUrl = Astro.site ? new URL('/rss.xml', Astro.site).href : `${siteOrigin}/rss.xml`;
+
+// Entity / organization schema — gives search engines and LLMs a single, canonical
+// definition of Anna Hileman Art that can be cited across pages.
+const personSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'Person',
+  '@id': `${siteOrigin}/#person`,
+  name: 'Anna Hileman',
+  jobTitle: 'Artist',
+  description:
+    'Colorado-based artist specializing in hand-painted murals, commissioned pet portraits, and commercial artwork for restaurants, schools, and private collectors.',
+  url: `${siteOrigin}/about`,
+  image: `${siteOrigin}/images/website-anna.jpg`,
+  knowsAbout: [
+    'Mural painting',
+    'Pet portraiture',
+    'Oil painting',
+    'Acrylic painting',
+    'Commercial art installation',
+    'School murals',
+    'Restaurant murals',
+  ],
+  address: {
+    '@type': 'PostalAddress',
+    addressLocality: 'Grand Junction',
+    addressRegion: 'CO',
+    addressCountry: 'US',
+  },
+  areaServed: [
+    { '@type': 'State', name: 'Colorado' },
+    { '@type': 'City', name: 'Denver' },
+    { '@type': 'City', name: 'Boulder' },
+    { '@type': 'City', name: 'Fort Collins' },
+  ],
+};
+
+const orgSchema: Record<string, unknown> = {
+  '@context': 'https://schema.org',
+  '@type': ['LocalBusiness', 'ProfessionalService'],
+  '@id': `${siteOrigin}/#business`,
+  name: siteName,
+  alternateName: 'Anna Hileman',
+  description,
+  url: siteOrigin,
+  image: `${siteOrigin}/images/website-anna.jpg`,
+  logo: `${siteOrigin}/images/Anna-Hileman-Art-Site-Logo.png`,
+  founder: { '@id': `${siteOrigin}/#person` },
+  priceRange: '$$-$$$$',
+  telephone: '+1-970-618-2424',
+  email: 'annahilemanart@gmail.com',
+  address: {
+    '@type': 'PostalAddress',
+    addressLocality: 'Grand Junction',
+    addressRegion: 'CO',
+    addressCountry: 'US',
+  },
+  areaServed: [
+    { '@type': 'State', name: 'Colorado' },
+    { '@type': 'City', name: 'Denver' },
+    { '@type': 'City', name: 'Boulder' },
+    { '@type': 'City', name: 'Fort Collins' },
+    { '@type': 'City', name: 'Colorado Springs' },
+  ],
+  knowsAbout: [
+    'Custom murals',
+    'Pet portraits',
+    'Restaurant art installations',
+    'School murals',
+    'Commercial art commissions',
+    'Garden gems',
+  ],
+  makesOffer: [
+    { '@type': 'Offer', itemOffered: { '@type': 'Service', name: 'Custom Murals', serviceType: 'Mural painting' } },
+    { '@type': 'Offer', itemOffered: { '@type': 'Service', name: 'Pet Portraits', serviceType: 'Portrait commissions' } },
+    { '@type': 'Offer', itemOffered: { '@type': 'Service', name: 'Restaurant Art', serviceType: 'Commercial mural commissions' } },
+    { '@type': 'Offer', itemOffered: { '@type': 'Service', name: 'School Murals', serviceType: 'Educational mural commissions' } },
+    { '@type': 'Offer', itemOffered: { '@type': 'Service', name: 'Garden Gems', serviceType: 'Outdoor painted installations' } },
+  ],
+  sameAs: [googleReviewsProfileUrl].filter(Boolean),
+};
+
+if (googleReviewStats.totalReviewCount > 0) {
+  orgSchema.aggregateRating = {
+    '@type': 'AggregateRating',
+    ratingValue: googleReviewStats.starCount,
+    reviewCount: googleReviewStats.totalReviewCount,
+    bestRating: 5,
+    worstRating: 1,
+  };
+}
+
+const websiteSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'WebSite',
+  '@id': `${siteOrigin}/#website`,
+  url: siteOrigin,
+  name: siteName,
+  description,
+  publisher: { '@id': `${siteOrigin}/#business` },
+  inLanguage: 'en-US',
+};
 ---
 <!doctype html>
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <link rel="icon" type="image/png" href="/images/Anna-Hileman-Art-Site-Logo.png" />
-    <link rel="apple-touch-icon" href="/images/Anna-Hileman-Art-Site-Logo.png" />
+    <link rel="icon" type="image/png" sizes="512x512" href="/images/cropped-Site-Icon.png" />
+    <link rel="apple-touch-icon" sizes="180x180" href="/images/cropped-Site-Icon.png" />
+    <link rel="manifest" href="/site.webmanifest" />
+    <meta name="theme-color" content="#f6f0e6" />
     <title>{title}</title>
     <meta name="description" content={description} />
+    <meta name="robots" content="index,follow,max-image-preview:large,max-snippet:-1" />
     <meta property="og:site_name" content={siteName} />
     <meta property="og:title" content={title} />
     <meta property="og:description" content={description} />
-    <meta property="og:type" content="website" />
-    <meta name="twitter:card" content="summary" />
-    {Astro.site && (
-      <link rel="canonical" href={new URL(Astro.url.pathname, Astro.site).href} />
-    )}
+    <meta property="og:type" content={ogType} />
+    <meta property="og:locale" content="en_US" />
+    {canonicalUrl && <meta property="og:url" content={canonicalUrl} />}
+    {resolvedOgImage && <meta property="og:image" content={resolvedOgImage} />}
+    {ogImageAltToUse && <meta property="og:image:alt" content={ogImageAltToUse} />}
+    <meta name="twitter:card" content="summary_large_image" />
+    {resolvedOgImage && <meta name="twitter:image" content={resolvedOgImage} />}
+    {ogImageAltToUse && <meta name="twitter:image:alt" content={ogImageAltToUse} />}
+    <meta name="twitter:title" content={title} />
+    <meta name="twitter:description" content={description} />
+    {canonicalUrl && <link rel="canonical" href={canonicalUrl} />}
+    <link
+      rel="alternate"
+      type="application/rss+xml"
+      title={`${siteName} — News & Updates`}
+      href={rssUrl}
+    />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,300;9..144,400;9..144,500;9..144,600&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet" />
+    {preloadImage && (
+      <link rel="preload" as="image" href={preloadImage} fetchpriority="high" />
+    )}
+    {!suppressOrgSchema && (<JsonLd json={personSchema} />)}
+    {!suppressOrgSchema && (<JsonLd json={orgSchema} />)}
+    {!suppressOrgSchema && (<JsonLd json={websiteSchema} />)}
   </head>
   <body class="min-h-screen flex flex-col">
     <Header />
@@ -46,3 +197,4 @@ const {
     <LightboxRoot />
   </body>
 </html>
+---

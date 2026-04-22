@@ -1,0 +1,175 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import JsonLd from '../../components/JsonLd.astro';
+import { getCollection, render } from 'astro:content';
+import { toAbsoluteSiteUrl } from '../../data/news';
+import { buildBreadcrumbs } from '../../data/schemas';
+
+export async function getStaticPaths() {
+  const posts = await getCollection('news', ({ data }) => !data.draft);
+  return posts.map((post) => ({
+    params: { slug: post.slug },
+    props: { post },
+  }));
+}
+
+const { post } = Astro.props;
+const { Content } = await render(post);
+
+const dateFmt = new Intl.DateTimeFormat('en-US', {
+  year: 'numeric',
+  month: 'long',
+  day: 'numeric',
+});
+
+const pageTitle = post.data.seoTitle ?? `${post.data.title} | News & Updates`;
+const pageDescription = post.data.seoDescription ?? post.data.excerpt;
+const socialImage = post.data.featuredImage ? toAbsoluteSiteUrl(Astro.site, post.data.featuredImage) : undefined;
+const siteOrigin = Astro.site ? Astro.site.origin : 'https://annahileman.com';
+const canonicalUrl = Astro.site ? new URL(Astro.url.pathname, Astro.site).href : `${siteOrigin}/news/${post.slug}/`;
+
+const articleSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'Article',
+  headline: post.data.title,
+  description: pageDescription,
+  datePublished: post.data.publishDate.toISOString(),
+  dateModified: (post.data.updatedDate ?? post.data.publishDate).toISOString(),
+  mainEntityOfPage: { '@type': 'WebPage', '@id': canonicalUrl },
+  url: canonicalUrl,
+  author: {
+    '@type': 'Person',
+    '@id': `${siteOrigin}/#person`,
+    name: 'Anna Hileman',
+  },
+  publisher: { '@id': `${siteOrigin}/#business` },
+  image: socialImage ? [socialImage] : [`${siteOrigin}/images/website-anna.jpg`],
+  articleSection: post.data.category,
+  keywords: post.data.tags,
+  inLanguage: 'en-US',
+};
+
+const articleBreadcrumbs = buildBreadcrumbs(Astro.site, [
+  { name: 'Home', slug: '' },
+  { name: 'News & Updates', slug: 'news' },
+  { name: post.data.title, slug: `news/${post.slug}` },
+]);
+---
+
+<Layout
+  title={pageTitle}
+  description={pageDescription}
+  ogType="article"
+  ogImage={post.data.featuredImage}
+  ogImageAlt={post.data.featuredImageAlt ?? post.data.title}
+>
+  <article class="max-w-3xl mx-auto px-6 lg:px-10 py-16 lg:py-20">
+    <a
+      href="/news"
+      class="inline-flex items-center gap-2 text-xs uppercase tracking-[0.2em] text-black/55 hover:text-[color:var(--color-accent)] transition-colors"
+    >
+      <span aria-hidden="true">&larr;</span>
+      Back to News
+    </a>
+
+    <header class="mt-8 border-b border-black/10 pb-8">
+      <div class="text-xs uppercase tracking-[0.2em] text-black/45">
+        {post.data.category} · {dateFmt.format(post.data.publishDate)}
+      </div>
+      <h1 class="mt-4 font-display text-4xl md:text-5xl leading-[1.08]">{post.data.title}</h1>
+      <p class="mt-6 text-lg text-black/70 leading-relaxed">{post.data.excerpt}</p>
+      {post.data.featuredImage && (
+        <img
+          src={post.data.featuredImage}
+          alt={post.data.featuredImageAlt ?? post.data.title}
+          class="mt-8 w-full rounded-lg object-cover border border-black/5"
+          loading="eager"
+          decoding="async"
+        />
+      )}
+      {post.data.tags.length > 0 && (
+        <ul class="mt-6 flex flex-wrap gap-2" aria-label="Tags">
+          {post.data.tags.map((tag) => (
+            <li class="text-xs uppercase tracking-[0.14em] bg-[color:var(--color-accent-soft)]/40 px-2.5 py-1 rounded">
+              {tag}
+            </li>
+          ))}
+        </ul>
+      )}
+    </header>
+
+    <div class="prose prose-neutral mt-10 max-w-none prose-headings:font-display prose-a:text-[color:var(--color-accent)] prose-a:no-underline hover:prose-a:underline prose-p:text-black/80 prose-li:text-black/80">
+      <Content />
+    </div>
+
+    {post.data.sourceUrl && (
+      <section class="mt-12 border-t border-black/10 pt-8">
+        <a
+          href={post.data.sourceUrl}
+          target="_blank"
+          rel="noopener"
+          class="inline-flex items-center gap-2 text-sm uppercase tracking-wider border-b border-[color:var(--color-ink)] pb-0.5 hover:text-[color:var(--color-accent)] hover:border-[color:var(--color-accent)]"
+        >
+          {post.data.sourceLabel ?? 'View original source'}
+          <span aria-hidden="true">&rarr;</span>
+        </a>
+      </section>
+    )}
+
+    <section class="mt-12 border-t border-black/10 pt-8">
+      <div class="text-xs uppercase tracking-[0.25em] text-black/50 mb-4">Share</div>
+      <div class="flex flex-wrap items-center gap-3">
+        <a
+          href={`https://twitter.com/intent/tweet?url=${encodeURIComponent(canonicalUrl)}&text=${encodeURIComponent(post.data.title)}`}
+          target="_blank"
+          rel="noopener"
+          class="inline-flex items-center gap-2 border border-black/15 rounded-full px-4 py-2 text-xs uppercase tracking-[0.18em] hover:border-[color:var(--color-accent)] hover:text-[color:var(--color-accent)] transition-colors"
+        >
+          Share on X
+        </a>
+        <a
+          href={`https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(canonicalUrl)}`}
+          target="_blank"
+          rel="noopener"
+          class="inline-flex items-center gap-2 border border-black/15 rounded-full px-4 py-2 text-xs uppercase tracking-[0.18em] hover:border-[color:var(--color-accent)] hover:text-[color:var(--color-accent)] transition-colors"
+        >
+          Share on Facebook
+        </a>
+        <a
+          href={`mailto:?subject=${encodeURIComponent(post.data.title)}&body=${encodeURIComponent(canonicalUrl)}`}
+          class="inline-flex items-center gap-2 border border-black/15 rounded-full px-4 py-2 text-xs uppercase tracking-[0.18em] hover:border-[color:var(--color-accent)] hover:text-[color:var(--color-accent)] transition-colors"
+        >
+          Email link
+        </a>
+        <button
+          type="button"
+          data-copy-link={canonicalUrl}
+          class="inline-flex items-center gap-2 border border-black/15 rounded-full px-4 py-2 text-xs uppercase tracking-[0.18em] hover:border-[color:var(--color-accent)] hover:text-[color:var(--color-accent)] transition-colors"
+        >
+          <span data-copy-label>Copy link</span>
+        </button>
+      </div>
+    </section>
+  </article>
+
+  <script type="application/ld+json" set:html={JSON.stringify(articleSchema)}></script>
+  <JsonLd json={articleBreadcrumbs} />
+
+  <script is:inline>
+    document.querySelectorAll('[data-copy-link]').forEach((btn) => {
+      btn.addEventListener('click', async () => {
+        const url = btn.getAttribute('data-copy-link');
+        const label = btn.querySelector('[data-copy-label]');
+        if (!url || !label) return;
+        try {
+          await navigator.clipboard.writeText(url);
+          const prev = label.textContent;
+          label.textContent = 'Copied!';
+          setTimeout(() => { label.textContent = prev; }, 1800);
+        } catch (err) {
+          console.error('Copy failed', err);
+        }
+      });
+    });
+  </script>
+</Layout>

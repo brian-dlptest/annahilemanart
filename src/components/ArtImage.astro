@@ -6,15 +6,34 @@ interface Props {
   ratio?: 'square' | 'portrait' | 'landscape' | 'wide';
   /** When true, click opens a full-size view (same file). Default true. Set false for nav cards or non-gallery use. */
   lightbox?: boolean;
+  /** Responsive sizes attribute to pair with native browser lazy loading. */
+  sizes?: string;
 }
 
-const { src, alt, class: cls = '', ratio = 'square', lightbox = true } = Astro.props;
+const {
+  src,
+  alt,
+  class: cls = '',
+  ratio = 'square',
+  lightbox = true,
+  sizes = '(min-width: 1024px) 33vw, (min-width: 640px) 50vw, 100vw',
+} = Astro.props;
 
 const ratioClass = {
   square: 'aspect-square',
   portrait: 'aspect-[3/4]',
   landscape: 'aspect-[4/3]',
   wide: 'aspect-[16/9]',
+}[ratio];
+
+// Representative intrinsic dimensions so the browser can reserve space
+// before the image loads (prevents CLS). Actual pixel dimensions vary
+// but only the aspect ratio needs to match the CSS box.
+const dims = {
+  square: { width: 1000, height: 1000 },
+  portrait: { width: 900, height: 1200 },
+  landscape: { width: 1200, height: 900 },
+  wide: { width: 1600, height: 900 },
 }[ratio];
 
 // Use a real image if provided, otherwise placeholder
@@ -35,9 +54,13 @@ const triggerClass = `${shellClass} block w-full cursor-zoom-in border-0 p-0 tex
   >
     <img
       src={imageSrc}
-      alt=""
+      alt={alt}
+      width={dims.width}
+      height={dims.height}
+      sizes={sizes}
       class="pointer-events-none h-full w-full object-cover"
       loading="lazy"
+      decoding="async"
     />
   </button>
 ) : (
@@ -46,8 +69,12 @@ const triggerClass = `${shellClass} block w-full cursor-zoom-in border-0 p-0 tex
       <img
         src={imageSrc}
         alt={alt}
+        width={dims.width}
+        height={dims.height}
+        sizes={sizes}
         class="h-full w-full object-cover"
         loading="lazy"
+        decoding="async"
       />
     )}
     {!imageSrc && (
