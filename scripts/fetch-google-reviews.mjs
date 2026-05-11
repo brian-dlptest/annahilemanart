@@ -74,7 +74,7 @@ async function placeDetailsNew(placeId) {
     headers: {
       'X-Goog-Api-Key': key,
       'X-Goog-FieldMask':
-        'id,displayName,googleMapsUri,rating,userRatingCount,reviews,attributions',
+        'id,displayName,googleMapsUri,rating,userRatingCount,attributions,reviews.rating,reviews.text,reviews.relativePublishTimeDescription,reviews.authorAttribution,reviews.publishTime',
     },
   });
   const data = await res.json().catch(() => ({}));
@@ -90,6 +90,8 @@ async function placeDetailsNew(placeId) {
     const aa = r.authorAttribution;
     const author = aa && typeof aa === 'object' && typeof aa.displayName === 'string' ? aa.displayName : 'Anonymous';
     const photoUri = aa && typeof aa === 'object' && typeof aa.photoUri === 'string' ? aa.photoUri : null;
+    const publishedAt =
+      typeof r.publishTime === 'string' && r.publishTime.trim() ? r.publishTime.trim() : undefined;
     return {
       author_name: author,
       relative_time_description:
@@ -97,6 +99,7 @@ async function placeDetailsNew(placeId) {
       text,
       rating: typeof r.rating === 'number' ? r.rating : undefined,
       profile_photo_url: photoUri,
+      published_at: publishedAt,
     };
   });
 
@@ -173,6 +176,10 @@ async function placeDetailsLegacy(placeId) {
       text: r.text ?? '',
       rating: r.rating,
       profile_photo_url: r.profile_photo_url,
+      published_at:
+        typeof r.time === 'number' && Number.isFinite(r.time)
+          ? new Date(r.time * 1000).toISOString()
+          : undefined,
     })),
     rating: result.rating ?? null,
     user_ratings_total: result.user_ratings_total ?? null,

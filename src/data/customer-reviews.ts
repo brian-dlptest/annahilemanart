@@ -21,6 +21,8 @@ type FetchedReview = {
   text: string;
   rating?: number;
   profile_photo_url?: string | null;
+  /** ISO 8601 from Places API (`publishTime` or legacy `time`); used to sort newest first. */
+  published_at?: string | null;
 };
 
 type FetchedPayload = {
@@ -89,11 +91,66 @@ function mapFetched(r: FetchedReview): CustomerReview {
   };
 }
 
+/** Approximate review time for sorting when `published_at` is missing (older fetched JSON). */
+function approxPastTimeMs(relativeDescription: string, nowMs: number): number {
+  const s = relativeDescription.toLowerCase().trim();
+  if (!s || s === 'recently') return nowMs;
+  const dayMs = 86400000;
+  const re = /^(?:(\d+)\s+|a\s+|an\s+)(second|minute|hour|day|week|month|year)s?\s+ago$/;
+  const m = s.match(re);
+  if (!m) return 0;
+  const n = m[1] ? parseInt(m[1], 10) : 1;
+  const unit = m[2]!;
+  const days =
+    unit === 'second'
+      ? n / 86400
+      : unit === 'minute'
+        ? n / 1440
+        : unit === 'hour'
+          ? n / 24
+          : unit === 'day'
+            ? n
+            : unit === 'week'
+              ? n * 7
+              : unit === 'month'
+                ? n * 30
+                : n * 365;
+  return nowMs - days * dayMs;
+}
+
+function reviewNewestFirstKey(
+  published: string | null | undefined,
+  relative: string,
+  refMs: number,
+): number {
+  if (published && published.trim()) {
+    const t = Date.parse(published.trim());
+    if (Number.isFinite(t)) return t;
+  }
+  return approxPastTimeMs(relative, refMs);
+}
+
+function sortFetchedNewestFirst(reviews: FetchedReview[]): FetchedReview[] {
+  const refMs = Date.now();
+  return [...reviews].sort(
+    (a, b) =>
+      reviewNewestFirstKey(b.published_at, b.relative_time_description, refMs) -
+      reviewNewestFirstKey(a.published_at, a.relative_time_description, refMs),
+  );
+}
+
+function sortManualNewestFirst(reviews: CustomerReview[]): CustomerReview[] {
+  const refMs = Date.now();
+  return [...reviews].sort(
+    (a, b) => approxPastTimeMs(b.relativeTime, refMs) - approxPastTimeMs(a.relativeTime, refMs),
+  );
+}
+
 const useFetched = payload.reviews.length > 0;
 
 export const customerReviews: CustomerReview[] = useFetched
-  ? payload.reviews.map(mapFetched)
-  : manualReviews;
+  ? sortFetchedNewestFirst(payload.reviews).map(mapFetched)
+  : sortManualNewestFirst(manualReviews);
 
 /** Canonical listing link from Places `url` when fetched; else stable place_id link. */
 export const googleReviewsProfileUrl: string = (
