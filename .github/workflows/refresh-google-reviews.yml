@@ -2,19 +2,20 @@
 # if the file changed. Cloudflare Pages rebuilds from the new commit (same as a normal push).
 #
 # Repository secrets (Settings → Secrets and variables → Actions):
-#   GOOGLE_MAPS_API_KEY — Maps Platform key with Places API enabled
+#   GOOGLE_MAPS_API_KEY — Places-capable key (often shared with other tooling)
+#   GOOGLE_MAPS_SERVER_KEY — optional; use if GOOGLE_MAPS_API_KEY is HTTP-referrer restricted
+#                            (referrer keys fail on GitHub-hosted runners). Prefer a second key with
+#                            Application restrictions: None + API restrictions: Places API only.
 # Optional:
-#   GOOGLE_PLACE_ID — current Place ID for the business (preferred, stable)
-#   GOOGLE_PLACE_QUERY — fallback text query if place ID is not set (default in script: "Anna Hileman Art Colorado")
+#   GOOGLE_PLACE_ID — current Place ID (ChIJ…); avoids Find Place lookup
+#   GOOGLE_PLACE_QUERY — text query if GOOGLE_PLACE_ID not set (default in script: "Anna Hileman Art Colorado")
 #
-# Scheduled runs only fire from the repo default branch — merge this workflow into `main`
-# even if commits target `staging` (see checkout ref below).
+# Scheduled runs only fire from the repo default branch.
 
 name: Refresh Google reviews
 
 on:
   schedule:
-    # Daily 06:15 UTC (~11pm previous day US Mountain, varies with DST)
     - cron: '15 6 * * *'
   workflow_dispatch:
 
@@ -22,24 +23,25 @@ concurrency:
   group: refresh-google-reviews
   cancel-in-progress: false
 
-env:
-  # Use Node 24 runtime for JS-based actions (avoids Node 20 deprecation on the runner).
-  FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: true
-
 jobs:
   fetch-and-commit:
     runs-on: ubuntu-latest
     permissions:
       contents: write
+    env:
+      # Prefer dedicated server key so referrer-restricted browser keys still work elsewhere.
+      GOOGLE_MAPS_API_KEY: ${{ secrets.GOOGLE_MAPS_SERVER_KEY || secrets.GOOGLE_MAPS_API_KEY }}
+      GOOGLE_PLACE_ID: ${{ secrets.GOOGLE_PLACE_ID }}
+      GOOGLE_PLACE_QUERY: ${{ secrets.GOOGLE_PLACE_QUERY }}
     steps:
       - name: Checkout
-        uses: actions/checkout@v4
+        uses: actions/checkout@v5
         with:
           ref: staging
           fetch-depth: 0
 
       - name: Setup Node
-        uses: actions/setup-node@v4
+        uses: actions/setup-node@v5
         with:
           node-version: '22'
           cache: npm
@@ -48,17 +50,14 @@ jobs:
         run: npm ci
 
       - name: Require Google Maps secrets
-        env:
-          GOOGLE_MAPS_API_KEY: ${{ secrets.GOOGLE_MAPS_API_KEY }}
-          GOOGLE_PLACE_ID: ${{ secrets.GOOGLE_PLACE_ID }}
-          GOOGLE_PLACE_QUERY: ${{ secrets.GOOGLE_PLACE_QUERY }}
         run: |
           if [ -z "$GOOGLE_MAPS_API_KEY" ]; then
-            echo "::error::Add repository secret GOOGLE_MAPS_API_KEY (Settings → Secrets and variables → Actions)."
+            echo "::error::Add GOOGLE_MAPS_API_KEY (or GOOGLE_MAPS_SERVER_KEY) under Actions secrets."
             exit 1
           fi
+          echo "::notice::If Places fetch fails with REQUEST_DENIED, create GOOGLE_MAPS_SERVER_KEY: a Maps key with Application restrictions = None and API restrictions = Places API only. Referrer-restricted keys cannot call Places from GitHub runners."
           if [ -z "$GOOGLE_PLACE_ID" ] && [ -z "$GOOGLE_PLACE_QUERY" ]; then
-            echo "::warning::GOOGLE_PLACE_ID not set. Falling back to default query in script: 'Anna Hileman Art Colorado'. Set GOOGLE_PLACE_QUERY to override."
+            echo "::warning::GOOGLE_PLACE_ID not set. Script falls back to default query \"Anna Hileman Art Colorado\". Set GOOGLE_PLACE_QUERY to override."
           fi
           if [ -n "$GOOGLE_PLACE_ID" ]; then
             echo "Using GOOGLE_PLACE_ID from secrets."
@@ -69,10 +68,6 @@ jobs:
           fi
 
       - name: Fetch reviews from Google Places API
-        env:
-          GOOGLE_MAPS_API_KEY: ${{ secrets.GOOGLE_MAPS_API_KEY }}
-          GOOGLE_PLACE_ID: ${{ secrets.GOOGLE_PLACE_ID }}
-          GOOGLE_PLACE_QUERY: ${{ secrets.GOOGLE_PLACE_QUERY }}
         run: npm run reviews:fetch
 
       - name: Verify build
@@ -90,5 +85,4 @@ jobs:
             exit 0
           fi
           git commit -m "chore: refresh Google reviews from Places API"
-          # checkout@v4 often leaves detached HEAD; plain `git push` fails. Push commit to staging explicitly.
           git push origin "HEAD:refs/heads/${TARGET_BRANCH}"
