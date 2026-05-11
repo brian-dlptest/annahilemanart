@@ -7,7 +7,7 @@
  * Falls back to legacy Find Place + Place Details if the new API fails.
  *
  *   GOOGLE_MAPS_API_KEY=... GOOGLE_PLACE_ID=ChIJ... npm run reviews:fetch
- *   GOOGLE_MAPS_API_KEY=... GOOGLE_PLACE_QUERY="Anna Hileman Art Colorado" npm run reviews:fetch
+ *   GOOGLE_MAPS_API_KEY=... GOOGLE_PLACE_QUERY="Anna Hileman Art Grand Junction" npm run reviews:fetch
  *
  * @see https://developers.google.com/maps/documentation/places/web-service/place-details
  * @see https://developers.google.com/maps/documentation/places/web-service/text-search
@@ -22,7 +22,7 @@ const outFile = path.join(root, 'src/data/google-reviews-fetched.json');
 
 const key = process.env.GOOGLE_MAPS_API_KEY;
 const explicitPlaceId = process.env.GOOGLE_PLACE_ID?.trim();
-const placeQuery = process.env.GOOGLE_PLACE_QUERY?.trim() || 'Anna Hileman Art Colorado';
+const placeQuery = process.env.GOOGLE_PLACE_QUERY?.trim() || 'Anna Hileman Art Grand Junction';
 
 if (!key) {
   console.error('Missing GOOGLE_MAPS_API_KEY. Enable Places API on your key and try again.');
@@ -202,6 +202,11 @@ if (placeId) {
     const resolvedLegacy = await resolvePlaceIdLegacy(placeQuery);
     if (!resolvedLegacy) {
       console.error('Could not resolve place from query:', placeQuery);
+      console.error(
+        "Places text search only returns businesses/places in Google's Places index (usually a Google Business Profile). " +
+          'It is not the same as typing a phrase into maps.google.com — vague brand + state often returns no match. ' +
+          'Set GOOGLE_PLACE_ID to the Place ID from the exact Maps listing that shows your reviews (Share → link, or a Place ID tool).',
+      );
       process.exit(1);
     }
     placeId = resolvedLegacy.placeId;

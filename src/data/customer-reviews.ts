@@ -13,7 +13,7 @@ import fetched from './google-reviews-fetched.json';
 
 /** Fallback Maps search until a successful `reviews:fetch` provides `maps_url`. */
 const FALLBACK_MAPS_URL =
-  'https://www.google.com/maps/search/Anna%20Hileman%20Art%20Colorado';
+  'https://www.google.com/maps/search/Anna%20Hileman%20Art%20Grand%20Junction';
 
 type FetchedReview = {
   author_name: string;

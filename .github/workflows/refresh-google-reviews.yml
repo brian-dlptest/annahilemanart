@@ -9,7 +9,7 @@
 #   In Google Cloud, enable billing and enable "Places API (New)" (script uses places.googleapis.com first).
 # Optional:
 #   GOOGLE_PLACE_ID — current Place ID (ChIJ…); avoids Find Place lookup
-#   GOOGLE_PLACE_QUERY — text query if GOOGLE_PLACE_ID not set (default in script: "Anna Hileman Art Colorado")
+#   GOOGLE_PLACE_QUERY — text query if GOOGLE_PLACE_ID not set (default in script: "Anna Hileman Art Grand Junction")
 #
 # Scheduled runs only fire from the repo default branch.
 
@@ -58,7 +58,7 @@ jobs:
           fi
           echo "::notice::Use the same Maps Platform API key string as in Google Cloud (annahileman-website). If fetch fails, open the next step log: HTTP status + JSON explain billing vs key vs API enablement."
           if [ -z "$GOOGLE_PLACE_ID" ] && [ -z "$GOOGLE_PLACE_QUERY" ]; then
-            echo "::warning::GOOGLE_PLACE_ID not set. Script falls back to default query \"Anna Hileman Art Colorado\". Set GOOGLE_PLACE_QUERY to override."
+            echo "::warning::GOOGLE_PLACE_ID not set. Script falls back to default query \"Anna Hileman Art Grand Junction\". Set GOOGLE_PLACE_QUERY to override."
           fi
           if [ -n "$GOOGLE_PLACE_ID" ]; then
             echo "Using GOOGLE_PLACE_ID from secrets."
@@ -71,7 +71,7 @@ jobs:
       - name: Smoke-test Places API (New) — prints status + body (key masked by GitHub)
         run: |
           set -euo pipefail
-          Q="${GOOGLE_PLACE_QUERY:-Anna Hileman Art Colorado}"
+          Q="${GOOGLE_PLACE_QUERY:-Anna Hileman Art Grand Junction}"
           BODY=$(jq -n --arg q "$Q" '{textQuery:$q, regionCode:"US"}')
           code=$(curl -sS -o /tmp/places-smoke.json -w "%{http_code}" \
             -X POST 'https://places.googleapis.com/v1/places:searchText' \
