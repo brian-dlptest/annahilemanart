@@ -6,6 +6,7 @@
 #   GOOGLE_MAPS_SERVER_KEY — optional; use if GOOGLE_MAPS_API_KEY is HTTP-referrer restricted
 #                            (referrer keys fail on GitHub-hosted runners). Prefer a second key with
 #                            Application restrictions: None + API restrictions: Places API only.
+#   In Google Cloud, enable billing and enable "Places API (New)" (script uses places.googleapis.com first).
 # Optional:
 #   GOOGLE_PLACE_ID — current Place ID (ChIJ…); avoids Find Place lookup
 #   GOOGLE_PLACE_QUERY — text query if GOOGLE_PLACE_ID not set (default in script: "Anna Hileman Art Colorado")
