@@ -33,6 +33,12 @@ interface Props {
   pullQuote?: PullQuote;
   /** Optional facts rows (e.g. Mascot | Bobcat). */
   facts?: Fact[];
+  /** Extra body copy after facts, still in the right column (avoids a gap below a tall hero). */
+  detailProse?: string;
+  /** Optional YouTube video ID (from `youtube.com/watch?v=` or `youtu.be/`). Rendered full-width below thumbs. */
+  youTubeVideoId?: string;
+  /** Accessible title for the embedded player iframe. */
+  youTubeTitle?: string;
   /** Thumbnail list rendered below the split; each opens the lightbox. */
   thumbs: Thumb[];
 }
@@ -46,6 +52,9 @@ const {
   summary,
   pullQuote,
   facts,
+  detailProse,
+  youTubeVideoId,
+  youTubeTitle,
   thumbs,
 } = Astro.props;
 
@@ -100,6 +109,12 @@ const heroHref = `/images/${heroImage}`;
             ))}
           </dl>
         )}
+
+        {detailProse && (
+          <div class="mt-8 text-black/80 leading-relaxed whitespace-pre-line text-[15px] md:text-base">
+            {detailProse}
+          </div>
+        )}
       </div>
     </div>
 
@@ -108,6 +123,23 @@ const heroHref = `/images/${heroImage}`;
         {thumbs.map((t) => (
           <LightboxThumb src={t.src} alt={t.alt} />
         ))}
+      </div>
+    )}
+
+    {youTubeVideoId && (
+      <div class="mt-12 max-w-4xl">
+        <div class="text-xs uppercase tracking-[0.25em] text-[color:var(--color-gold)] mb-3">Video</div>
+        <div class="aspect-video w-full overflow-hidden rounded-lg shadow-lg ring-1 ring-black/10">
+          <iframe
+            class="h-full w-full"
+            src={`https://www.youtube-nocookie.com/embed/${youTubeVideoId}`}
+            title={youTubeTitle ?? `${title} — mural video`}
+            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+            referrerpolicy="strict-origin-when-cross-origin"
+            allowfullscreen
+            loading="lazy"
+          />
+        </div>
       </div>
     )}
 
