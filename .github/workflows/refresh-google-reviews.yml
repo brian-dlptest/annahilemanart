@@ -84,7 +84,11 @@ jobs:
           head -c 6000 /tmp/places-smoke.json || true
           echo ""
           if [ "$code" != "200" ]; then
-            echo "::error::Places API (New) returned HTTP ${code}. Fix key, API enablement (Places API New), or billing; then re-run."
+            if [ "$code" = "403" ] && grep -q 'API_KEY_SERVICE_BLOCKED' /tmp/places-smoke.json 2>/dev/null; then
+              echo "::warning::API_KEY_SERVICE_BLOCKED: this key cannot call Places API (New) SearchText. Edit the key in Google Cloud → Credentials → API restrictions and ensure **Places API (New)** is allowed (or temporarily *Don't restrict key* to verify). The fetch step will still try **legacy** Places if your key allows it."
+              exit 0
+            fi
+            echo "::error::Places API (New) returned HTTP ${code}. See JSON above (billing, invalid key, or API not enabled)."
             exit 1
           fi
           if jq -e '.error' /tmp/places-smoke.json >/dev/null 2>&1; then
