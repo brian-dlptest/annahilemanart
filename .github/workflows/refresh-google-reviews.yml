@@ -3,7 +3,9 @@
 #
 # Repository secrets (Settings → Secrets and variables → Actions):
 #   GOOGLE_MAPS_API_KEY — Maps Platform key with Places API enabled
-#   GOOGLE_PLACE_ID — current Place ID for the business (IDs can expire; refresh if API returns NOT_FOUND)
+# Optional:
+#   GOOGLE_PLACE_ID — current Place ID for the business (preferred, stable)
+#   GOOGLE_PLACE_QUERY — fallback text query if place ID is not set (default in script: "Anna Hileman Art Colorado")
 #
 # Scheduled runs only fire from the repo default branch — merge this workflow into `main`
 # even if commits target `staging` (see checkout ref below).
@@ -48,20 +50,28 @@ jobs:
         env:
           GOOGLE_MAPS_API_KEY: ${{ secrets.GOOGLE_MAPS_API_KEY }}
           GOOGLE_PLACE_ID: ${{ secrets.GOOGLE_PLACE_ID }}
+          GOOGLE_PLACE_QUERY: ${{ secrets.GOOGLE_PLACE_QUERY }}
         run: |
           if [ -z "$GOOGLE_MAPS_API_KEY" ]; then
             echo "::error::Add repository secret GOOGLE_MAPS_API_KEY (Settings → Secrets and variables → Actions)."
             exit 1
           fi
-          if [ -z "$GOOGLE_PLACE_ID" ]; then
-            echo "::error::Add repository secret GOOGLE_PLACE_ID. Google rotates Place IDs; get a current ID from Maps → your listing → Share, or https://developers.google.com/maps/documentation/javascript/examples/places-placeid-finder"
-            exit 1
+          if [ -z "$GOOGLE_PLACE_ID" ] && [ -z "$GOOGLE_PLACE_QUERY" ]; then
+            echo "::warning::GOOGLE_PLACE_ID not set. Falling back to default query in script: 'Anna Hileman Art Colorado'. Set GOOGLE_PLACE_QUERY to override."
+          fi
+          if [ -n "$GOOGLE_PLACE_ID" ]; then
+            echo "Using GOOGLE_PLACE_ID from secrets."
+          elif [ -n "$GOOGLE_PLACE_QUERY" ]; then
+            echo "Using GOOGLE_PLACE_QUERY from secrets."
+          else
+            echo "Using built-in query fallback in script."
           fi
 
       - name: Fetch reviews from Google Places API
         env:
           GOOGLE_MAPS_API_KEY: ${{ secrets.GOOGLE_MAPS_API_KEY }}
           GOOGLE_PLACE_ID: ${{ secrets.GOOGLE_PLACE_ID }}
+          GOOGLE_PLACE_QUERY: ${{ secrets.GOOGLE_PLACE_QUERY }}
         run: npm run reviews:fetch
 
       - name: Verify build

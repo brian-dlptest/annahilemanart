@@ -4,6 +4,7 @@
  * Set GOOGLE_MAPS_API_KEY with Places API enabled.
  *
  *   GOOGLE_MAPS_API_KEY=... GOOGLE_PLACE_ID=ChIJ... npm run reviews:fetch
+ *   GOOGLE_MAPS_API_KEY=... GOOGLE_PLACE_QUERY="Anna Hileman Art Colorado" npm run reviews:fetch
  *
  * @see https://developers.google.com/maps/documentation/places/web-service/place-details
  */
@@ -16,19 +17,36 @@ const root = path.join(__dirname, '..');
 const outFile = path.join(root, 'src/data/google-reviews-fetched.json');
 
 const key = process.env.GOOGLE_MAPS_API_KEY;
-const placeId = process.env.GOOGLE_PLACE_ID?.trim();
+const explicitPlaceId = process.env.GOOGLE_PLACE_ID?.trim();
+const placeQuery = process.env.GOOGLE_PLACE_QUERY?.trim() || 'Anna Hileman Art Colorado';
 
 if (!key) {
   console.error('Missing GOOGLE_MAPS_API_KEY. Enable Places API on your key and try again.');
   process.exit(1);
 }
+let placeId = explicitPlaceId;
 if (!placeId) {
-  console.error(
-    'Missing GOOGLE_PLACE_ID. Set the current Place ID for the business (GitHub secret or env).\n' +
-      'Find it: open Google Maps → your listing → Share → copy link, or use Google’s Place ID finder.\n' +
-      'Old IDs return NOT_FOUND — see https://developers.google.com/maps/documentation/places/web-service/place-id',
+  const findUrl = new URL('https://maps.googleapis.com/maps/api/place/findplacefromtext/json');
+  findUrl.searchParams.set('input', placeQuery);
+  findUrl.searchParams.set('inputtype', 'textquery');
+  findUrl.searchParams.set('fields', 'place_id,name,formatted_address');
+  findUrl.searchParams.set('key', key);
+
+  const findRes = await fetch(findUrl);
+  const findData = await findRes.json();
+
+  if (!findRes.ok || findData.status !== 'OK' || !Array.isArray(findData.candidates) || findData.candidates.length === 0) {
+    console.error('Could not resolve place from query:', placeQuery);
+    console.error('Find Place status:', findData.status ?? '(no status)', findData.error_message ?? '(no message)');
+    console.error(JSON.stringify(findData, null, 2));
+    process.exit(1);
+  }
+
+  placeId = findData.candidates[0].place_id;
+  console.log(
+    `Resolved place_id ${placeId} from query "${placeQuery}"` +
+      (findData.candidates[0].name ? ` (${findData.candidates[0].name})` : ''),
   );
-  process.exit(1);
 }
 
 const fullUrl = new URL('https://maps.googleapis.com/maps/api/place/details/json');
