@@ -30,6 +30,7 @@ if (!placeId) {
   findUrl.searchParams.set('input', placeQuery);
   findUrl.searchParams.set('inputtype', 'textquery');
   findUrl.searchParams.set('fields', 'place_id,name,formatted_address');
+  findUrl.searchParams.set('components', 'country:us');
   findUrl.searchParams.set('key', key);
 
   const findRes = await fetch(findUrl);
@@ -38,6 +39,18 @@ if (!placeId) {
   if (!findRes.ok || findData.status !== 'OK' || !Array.isArray(findData.candidates) || findData.candidates.length === 0) {
     console.error('Could not resolve place from query:', placeQuery);
     console.error('Find Place status:', findData.status ?? '(no status)', findData.error_message ?? '(no message)');
+    if (findData.status === 'REQUEST_DENIED') {
+      console.error(
+        'Hint: API key may be restricted (HTTP referrers block server-side calls). Use Application restrictions: None, ' +
+          'or restrict by IP only if you have fixed CI egress. Ensure Places API + billing are enabled for this key.',
+      );
+    }
+    if (findData.status === 'ZERO_RESULTS') {
+      console.error(
+        'Hint: Set GitHub secret GOOGLE_PLACE_QUERY to a tighter string (e.g. "Anna Hileman Art Grand Junction CO"), ' +
+          'or set GOOGLE_PLACE_ID to the exact ChIJ… id from Google Maps.',
+      );
+    }
     console.error(JSON.stringify(findData, null, 2));
     process.exit(1);
   }
@@ -67,6 +80,11 @@ if (data.status !== 'OK') {
   if (data.status === 'NOT_FOUND') {
     console.error(
       'This Place ID is invalid or was retired. Update GOOGLE_PLACE_ID with a fresh ID from Google Maps / Place ID finder.',
+    );
+  }
+  if (data.status === 'REQUEST_DENIED') {
+    console.error(
+      'Hint: Same as Find Place — referrer-restricted keys fail on GitHub Actions. Use Places API enabled key without website referrer restriction.',
     );
   }
   console.error(JSON.stringify(data, null, 2));
