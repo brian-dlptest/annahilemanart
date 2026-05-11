@@ -56,43 +56,43 @@ const processSteps = [
   ogImageAlt="Garden Gem hand-painted steel sculpture by Anna Hileman"
   preloadImage="/images/Johannas-Garden-Gem-Full-Edited.jpg"
 >
-  <!-- First on page: full panorama, scaled to width, centered — no crop -->
-  <section class="border-b border-black/5" aria-label="Featured Garden Gem artwork">
-    <div class="max-w-[1600px] mx-auto px-4 sm:px-6 lg:px-10 pt-8 pb-6 sm:pt-10 sm:pb-8 lg:pt-12 lg:pb-10">
-      <img
-        src="/images/Johannas-Garden-Gem-Full-Edited.jpg"
-        alt="Johanna's Garden Gem — hand-painted botanical steel panel"
-        width={1024}
-        height={424}
-        fetchpriority="high"
-        loading="eager"
-        decoding="async"
-        class="mx-auto block h-auto w-full max-w-full object-contain"
-      />
-    </div>
-  </section>
-
   <section class="border-b border-black/5">
-    <div class="max-w-3xl mx-auto px-6 lg:px-10 py-16 lg:py-24 text-center">
-      <div class="text-xs uppercase tracking-[0.3em] text-[color:var(--color-gold)]">
-        Botanical Commission Series
+    <div class="max-w-7xl mx-auto px-6 lg:px-10 py-16 lg:py-24">
+      <div class="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-16 items-center">
+        <div class="lg:col-span-7 min-w-0 flex justify-center lg:justify-start">
+          <img
+            src="/images/Johannas-Garden-Gem-Full-Edited.jpg"
+            alt="Johanna's Garden Gem — hand-painted botanical steel panel"
+            width={1024}
+            height={424}
+            fetchpriority="high"
+            loading="eager"
+            decoding="async"
+            class="h-auto w-full rounded-lg object-contain shadow-xl"
+          />
+        </div>
+        <div class="lg:col-span-5">
+          <div class="text-xs uppercase tracking-[0.3em] text-[color:var(--color-gold)]">
+            Botanical Commission Series
+          </div>
+          <h1 class="mt-6 font-display text-4xl md:text-5xl lg:text-6xl leading-[1.05] text-[color:var(--color-ink)] text-balance">
+            Garden Gems,
+            <br />
+            <em class="italic text-[color:var(--color-gold)]">painted to root your story.</em>
+          </h1>
+          <p class="mt-8 text-lg text-black/75 leading-relaxed max-w-lg">
+            Original acrylic paintings on hand-built panels inspired by leaves, roots, stems, and memory.
+            Every Gem is custom and shaped by the meaning you want to bring into your home.
+          </p>
+          <a
+            href="/contact"
+            class="mt-10 inline-flex items-center gap-2 bg-[color:var(--color-gold)] text-[color:var(--color-ink)] px-8 py-4 text-sm tracking-wide hover:bg-[color:var(--color-ink)] hover:text-[color:var(--color-gold)] transition-colors"
+          >
+            Inquire About a Garden Gem
+            <span aria-hidden="true">&rarr;</span>
+          </a>
+        </div>
       </div>
-      <h1 class="mt-6 font-display text-4xl md:text-5xl lg:text-6xl leading-[1.05] text-[color:var(--color-ink)] text-balance">
-        Garden Gems,
-        <br />
-        <em class="italic text-[color:var(--color-gold)]">painted to root your story.</em>
-      </h1>
-      <p class="mt-8 text-lg text-black/75 leading-relaxed">
-        Original acrylic paintings on hand-built panels inspired by leaves, roots, stems, and memory.
-        Every Gem is custom and shaped by the meaning you want to bring into your home.
-      </p>
-      <a
-        href="/contact"
-        class="mt-10 inline-flex items-center gap-2 bg-[color:var(--color-gold)] text-[color:var(--color-ink)] px-8 py-4 text-sm tracking-wide hover:bg-[color:var(--color-ink)] hover:text-[color:var(--color-gold)] transition-colors"
-      >
-        Inquire About a Garden Gem
-        <span aria-hidden="true">&rarr;</span>
-      </a>
     </div>
   </section>
 
