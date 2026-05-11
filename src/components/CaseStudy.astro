@@ -48,18 +48,28 @@ const {
   facts,
   thumbs,
 } = Astro.props;
+
+const heroHref = `/images/${heroImage}`;
 ---
 <section id={anchorId} class="border-t border-black/10">
   <div class="max-w-7xl mx-auto px-6 lg:px-10 py-16 lg:py-24">
     <div class="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-14 items-start">
       <div class="lg:col-span-7 min-w-0">
-        <img
-          src={`/images/${heroImage}`}
-          alt={heroAlt}
-          loading="lazy"
-          decoding="async"
-          class="w-full rounded-lg shadow-xl object-cover aspect-[4/5]"
-        />
+        <button
+          type="button"
+          class="group block w-full cursor-zoom-in overflow-hidden rounded-lg border-0 bg-transparent p-0 text-left shadow-xl focus:outline-none focus-visible:ring-2 focus-visible:ring-[color:var(--color-accent)] focus-visible:ring-offset-2 focus-visible:ring-offset-[color:var(--color-paper)]"
+          data-lightbox={heroHref}
+          data-lightbox-alt={heroAlt}
+          aria-label={heroAlt ? `View larger: ${heroAlt}` : 'View larger image'}
+        >
+          <img
+            src={heroHref}
+            alt=""
+            loading="lazy"
+            decoding="async"
+            class="pointer-events-none h-full w-full object-cover aspect-[4/5] transition-opacity group-hover:opacity-90"
+          />
+        </button>
       </div>
       <div class="lg:col-span-5 lg:sticky lg:top-28 lg:self-start">
         <div class="text-xs uppercase tracking-[0.3em] text-[color:var(--color-gold)]">
