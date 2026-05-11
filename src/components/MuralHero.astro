@@ -28,28 +28,18 @@ const {
   imageWidth,
   imageHeight,
 } = Astro.props;
-
-const heroHref = `/images/${image}`;
 ---
 <section class="relative overflow-hidden h-[50vh] md:h-[60vh] lg:h-[70vh]">
-  <button
-    type="button"
-    class="absolute inset-0 z-10 block h-full w-full cursor-zoom-in border-0 bg-transparent p-0 focus:outline-none focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-[color:var(--color-accent)]"
-    data-lightbox={heroHref}
-    data-lightbox-alt={imageAlt}
-    aria-label={imageAlt ? `View larger: ${imageAlt}` : 'View larger image'}
-  >
-    <img
-      src={heroHref}
-      alt=""
-      width={imageWidth}
-      height={imageHeight}
-      fetchpriority="high"
-      loading="eager"
-      decoding="async"
-      class="pointer-events-none h-full w-full object-cover object-[center_30%]"
-    />
-  </button>
+  <img
+    src={`/images/${image}`}
+    alt={imageAlt}
+    width={imageWidth}
+    height={imageHeight}
+    fetchpriority="high"
+    loading="eager"
+    decoding="async"
+    class="absolute inset-0 h-full w-full object-cover object-[center_30%]"
+  />
 </section>
 
 <section class="border-b border-black/5">
