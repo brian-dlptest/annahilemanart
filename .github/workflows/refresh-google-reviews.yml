@@ -56,7 +56,7 @@ jobs:
             echo "::error::Add GOOGLE_MAPS_API_KEY (or GOOGLE_MAPS_SERVER_KEY) under Actions secrets."
             exit 1
           fi
-          echo "::notice::If Places fetch fails with REQUEST_DENIED, create GOOGLE_MAPS_SERVER_KEY: a Maps key with Application restrictions = None and API restrictions = Places API only. Referrer-restricted keys cannot call Places from GitHub runners."
+          echo "::notice::Use the same Maps Platform API key string as in Google Cloud (annahileman-website). If fetch fails, open the next step log: HTTP status + JSON explain billing vs key vs API enablement."
           if [ -z "$GOOGLE_PLACE_ID" ] && [ -z "$GOOGLE_PLACE_QUERY" ]; then
             echo "::warning::GOOGLE_PLACE_ID not set. Script falls back to default query \"Anna Hileman Art Colorado\". Set GOOGLE_PLACE_QUERY to override."
           fi
@@ -66,6 +66,31 @@ jobs:
             echo "Using GOOGLE_PLACE_QUERY from secrets."
           else
             echo "Using built-in query fallback in script."
+          fi
+
+      - name: Smoke-test Places API (New) — prints status + body (key masked by GitHub)
+        run: |
+          set -euo pipefail
+          Q="${GOOGLE_PLACE_QUERY:-Anna Hileman Art Colorado}"
+          BODY=$(jq -n --arg q "$Q" '{textQuery:$q, regionCode:"US"}')
+          code=$(curl -sS -o /tmp/places-smoke.json -w "%{http_code}" \
+            -X POST 'https://places.googleapis.com/v1/places:searchText' \
+            -H 'Content-Type: application/json' \
+            -H "X-Goog-Api-Key: ${GOOGLE_MAPS_API_KEY}" \
+            -H 'X-Goog-FieldMask: places.id' \
+            -d "$BODY")
+          echo "---- places.googleapis.com/v1/places:searchText ----"
+          echo "HTTP ${code}"
+          head -c 6000 /tmp/places-smoke.json || true
+          echo ""
+          if [ "$code" != "200" ]; then
+            echo "::error::Places API (New) returned HTTP ${code}. Fix key, API enablement (Places API New), or billing; then re-run."
+            exit 1
+          fi
+          if jq -e '.error' /tmp/places-smoke.json >/dev/null 2>&1; then
+            echo "::error::Places API (New) returned an error object:"
+            cat /tmp/places-smoke.json
+            exit 1
           fi
 
       - name: Fetch reviews from Google Places API
