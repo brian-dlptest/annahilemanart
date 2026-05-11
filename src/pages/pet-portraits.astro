@@ -6,7 +6,7 @@ import { buildServiceSchema, buildBreadcrumbs } from '../data/schemas';
 
 const portraitsServiceSchema = buildServiceSchema(Astro.site, {
   name: 'Custom Pet Portraits',
-  slug: 'portraits',
+  slug: 'pet-portraits',
   description:
     'Commissioned pet portraits in acrylic and oil — heirloom hand-painted portraits from your photos by Colorado artist Anna Hileman.',
   serviceType: 'Portrait commissions',
@@ -14,16 +14,33 @@ const portraitsServiceSchema = buildServiceSchema(Astro.site, {
 });
 const portraitsBreadcrumbs = buildBreadcrumbs(Astro.site, [
   { name: 'Home', slug: '' },
-  { name: 'Pet Portraits', slug: 'portraits' },
+  { name: 'Pet Portraits', slug: 'pet-portraits' },
 ]);
 
 const galleryThumbs = [
-  { src: 'BINA-WEB.jpg', alt: 'Oil portrait of Bina, a long-haired dog in soft daylight' },
-  { src: 'IMG_0341.jpg', alt: 'Commissioned acrylic portrait of a black-and-white dog on aluminum' },
-  { src: 'IMG_0344.jpg', alt: 'Acrylic portrait of a spaniel mix with warm light on the face' },
-  { src: 'IMG_0346.jpg', alt: 'Oil portrait of a golden retriever in close composition' },
-  { src: 'IMG_0333.jpg', alt: 'Oil portrait of a cat resting in a painted interior setting' },
-  { src: 'FA-Dog.jpg', alt: 'Acrylic study of a terrier with luminous aluminum ground' },
+  { src: 'portraits/lani-cat-and-bird.png', alt: 'Oil-on-linen portrait of Lani, a long-haired tuxedo cat watching a small bird' },
+  { src: 'portraits/jackson-doberman.png', alt: 'Acrylic-on-aluminum portrait of Jackson, a black and tan Doberman' },
+  { src: 'portraits/gracie-corgi.png', alt: 'Oil portrait of Gracie, a tri-color corgi against a soft pink background' },
+  { src: 'portraits/chauncey-orange-tabby.png', alt: 'Acrylic-on-aluminum portrait of Chauncey, an orange tabby cat in profile' },
+  { src: 'portraits/zach-white-lab.png', alt: 'Oil portrait of Zach, a white Labrador in cool grey light' },
+  { src: 'portraits/kessy-beagle.png', alt: 'Oil portrait of Kessy, a beagle looking up against a teal background' },
+  { src: 'portraits/stanley-bulldog.png', alt: 'Acrylic-on-aluminum portrait of Stanley, an English bulldog' },
+  { src: 'portraits/mocha-yellow-lab.png', alt: 'Acrylic-on-aluminum portrait of Mocha, a yellow Labrador with mouth open' },
+  { src: 'portraits/doodle-mountaineers-bandana.png', alt: 'Acrylic portrait of a smiling doodle puppy wearing a West Virginia bandana' },
+  { src: 'portraits/tuxedo-cat-on-aluminum.png', alt: 'Acrylic-on-aluminum portrait of a black-and-white tuxedo cat in profile' },
+  { src: 'portraits/white-pit-bull-pair.png', alt: 'Acrylic-on-aluminum portrait of two white-and-black pit bulls together' },
+  { src: 'portraits/corgi-on-aluminum.png', alt: 'Acrylic-on-aluminum portrait of a tri-color corgi with mouth open' },
+  { src: 'portraits/great-dane-brindle.png', alt: 'Acrylic-on-aluminum portrait of a brindle Great Dane' },
+  { src: 'portraits/black-lab-headtilt.png', alt: 'Oil portrait of a black Labrador with a gentle head tilt' },
+  { src: 'portraits/yellow-lab-smiling.png', alt: 'Acrylic-on-aluminum portrait of a smiling yellow Labrador' },
+  { src: 'portraits/boxer-black-and-white.png', alt: 'Oil portrait of a black-and-white boxer against a sage green background' },
+  { src: 'portraits/tan-pit-bull-on-aluminum.png', alt: 'Acrylic-on-aluminum portrait of a tan pit bull mix with a black collar' },
+  { src: 'portraits/jack-russell-closeup.png', alt: 'Acrylic-on-aluminum close-up portrait of a red-and-white Jack Russell terrier' },
+  { src: 'portraits/terrier-mix-resting.png', alt: 'Acrylic-on-aluminum portrait of a tan-and-white terrier mix resting' },
+  { src: 'portraits/maltese-blue-collar.png', alt: 'Acrylic-on-aluminum portrait of a small white Maltese with a blue collar' },
+  { src: 'portraits/scruffy-terrier-on-aluminum.png', alt: 'Acrylic-on-aluminum portrait of a windswept scruffy terrier' },
+  { src: 'portraits/chihuahua-mix-blue-collar.png', alt: 'Oil portrait of a tan chihuahua mix with large ears against a blue background' },
+  { src: 'portraits/chihuahua-big-ears.png', alt: 'Acrylic portrait of a black-and-tan chihuahua with oversized ears against a yellow background' },
 ];
 
 const acrylicPrices = [
