@@ -36,6 +36,7 @@ jobs:
         uses: actions/checkout@v4
         with:
           ref: staging
+          fetch-depth: 0
 
       - name: Setup Node
         uses: actions/setup-node@v4
@@ -78,6 +79,8 @@ jobs:
         run: npm run build
 
       - name: Commit and push if changed
+        env:
+          TARGET_BRANCH: staging
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
@@ -87,4 +90,5 @@ jobs:
             exit 0
           fi
           git commit -m "chore: refresh Google reviews from Places API"
-          git push
+          # checkout@v4 often leaves detached HEAD; plain `git push` fails. Push commit to staging explicitly.
+          git push origin "HEAD:refs/heads/${TARGET_BRANCH}"
