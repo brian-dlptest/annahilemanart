@@ -111,41 +111,316 @@ const faqSchema = {
     </div>
   </section>
 
-  <section class="bg-[color:var(--color-accent-soft)]/40 border-y border-black/5">
-    <div class="max-w-5xl mx-auto px-6 lg:px-10 py-20 lg:py-24">
-      <div class="text-center max-w-3xl mx-auto">
-        <div class="text-xs uppercase tracking-[0.3em] text-[color:var(--color-gold)]">From the Studio</div>
-        <p class="mt-6 font-display text-2xl md:text-3xl leading-snug text-[color:var(--color-ink)]">
-          Great art for a space does more than decorate. It gives people a feeling of belonging,
-          creates visual memory, and says something true about who you are.
+  <section class="studio-section border-y border-black/5">
+    <div class="studio-section__inner">
+      <div class="studio-section__eyebrow">
+        <div class="studio-section__rule" aria-hidden="true"></div>
+        <div class="studio-section__kicker">From the studio</div>
+      </div>
+
+      <div class="studio-section__quote">
+        <p class="studio-section__quote-lead">Great art for a space does more than decorate.</p>
+        <p class="studio-section__quote-sub">
+          It creates belonging, visual memory, and says something true about who you are.
         </p>
       </div>
 
-      <div class="mt-16 lg:mt-20 grid grid-cols-1 md:grid-cols-3 gap-10 md:gap-12">
-        <div>
-          <div class="text-xs uppercase tracking-[0.25em] text-[color:var(--color-gold)]">01 · Listen</div>
-          <h3 class="mt-3 font-display text-xl md:text-2xl">Your story comes first.</h3>
-          <p class="mt-3 text-sm text-black/70 leading-relaxed">
-            We start with your space, audience, and intention so the work feels native to where it lives.
-          </p>
+      <div class="studio-process">
+        <div class="studio-process__grid">
+          <div class="studio-step">
+            <div class="studio-step__icon">
+              <svg
+                class="studio-step__icon-svg studio-step__icon-svg--line"
+                viewBox="0 0 24 24"
+                xmlns="http://www.w3.org/2000/svg"
+                aria-hidden="true"
+              >
+                <path
+                  d="M6 10a6 6 0 0 1 12 0c0 3-2 4-3 5s-1 2-1 3a2 2 0 0 1-4 0"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="1.5"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"></path>
+                <path
+                  d="M10 10a2 2 0 1 1 4 0c0 1.5-2 1.5-2 3"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="1.5"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"></path>
+              </svg>
+            </div>
+            <div class="studio-step__numeral" aria-hidden="true">01</div>
+            <div class="studio-step__label">Listen</div>
+            <h3 class="studio-step__title">Your story comes first.</h3>
+            <p class="studio-step__body">
+              We start with your space, audience, and intention so the work feels native to where it lives.
+            </p>
+          </div>
+
+          <div class="studio-step">
+            <div class="studio-step__icon">
+              <svg
+                class="studio-step__icon-svg studio-step__icon-svg--solid"
+                viewBox="0 0 24 24"
+                xmlns="http://www.w3.org/2000/svg"
+                aria-hidden="true"
+              >
+                <path fill="currentColor" d="M4 20h4l10-10-4-4L4 16v4z"></path>
+                <path
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="1.5"
+                  stroke-linecap="round"
+                  d="M14 6l4 4"></path>
+              </svg>
+            </div>
+            <div class="studio-step__numeral" aria-hidden="true">02</div>
+            <div class="studio-step__label">Design</div>
+            <h3 class="studio-step__title">Concepts with clear direction.</h3>
+            <p class="studio-step__body">
+              Mockups, palette planning, and composition shaped around architecture and flow.
+            </p>
+          </div>
+
+          <div class="studio-step">
+            <div class="studio-step__icon">
+              <svg
+                class="studio-step__icon-svg studio-step__icon-svg--solid"
+                viewBox="0 0 24 24"
+                xmlns="http://www.w3.org/2000/svg"
+                aria-hidden="true"
+              >
+                <path fill="currentColor" d="M14 4l6 6-9 9H5v-6l9-9z"></path>
+                <path
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="1.5"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  d="M5 19c-1 1-2 1-3 2 1-1 1-2 2-3"></path>
+              </svg>
+            </div>
+            <div class="studio-step__numeral" aria-hidden="true">03</div>
+            <div class="studio-step__label">Create</div>
+            <h3 class="studio-step__title">Built to last and felt daily.</h3>
+            <p class="studio-step__body">
+              Every piece is produced with craftsmanship, installed carefully, and made for long-term impact.
+            </p>
+          </div>
         </div>
-        <div>
-          <div class="text-xs uppercase tracking-[0.25em] text-[color:var(--color-gold)]">02 · Design</div>
-          <h3 class="mt-3 font-display text-xl md:text-2xl">Concepts with clear direction.</h3>
-          <p class="mt-3 text-sm text-black/70 leading-relaxed">
-            Mockups, palette planning, and composition are shaped around architecture and flow.
-          </p>
-        </div>
-        <div>
-          <div class="text-xs uppercase tracking-[0.25em] text-[color:var(--color-gold)]">03 · Create</div>
-          <h3 class="mt-3 font-display text-xl md:text-2xl">Built to last and felt daily.</h3>
-          <p class="mt-3 text-sm text-black/70 leading-relaxed">
-            Every piece is produced with craftsmanship, installed carefully, and made for long-term impact.
-          </p>
-        </div>
+      </div>
+
+      <div class="studio-section__cta">
+        <a href="/contact">Start a project</a>
       </div>
     </div>
   </section>
+
+  <style>
+    .studio-section {
+      background: color-mix(in srgb, var(--color-accent-soft) 58%, var(--color-paper) 42%);
+      padding: 6rem 2rem 5rem;
+      font-family: var(--font-display), Georgia, 'Times New Roman', serif;
+      color: var(--color-ink);
+      text-align: center;
+    }
+
+    .studio-section__inner {
+      max-width: 980px;
+      margin: 0 auto;
+    }
+
+    .studio-section__eyebrow {
+      margin-bottom: 2.5rem;
+    }
+
+    .studio-section__rule {
+      width: 40px;
+      height: 1px;
+      background: var(--color-gold);
+      margin: 0 auto 18px;
+    }
+
+    .studio-section__kicker {
+      font-size: 12px;
+      letter-spacing: 0.28em;
+      color: var(--color-gold);
+      text-transform: uppercase;
+      font-weight: 400;
+    }
+
+    .studio-section__quote {
+      max-width: 640px;
+      margin: 0 auto 4.5rem;
+    }
+
+    .studio-section__quote-lead {
+      font-size: clamp(28px, 3.4vw, 38px);
+      line-height: 1.35;
+      font-weight: 400;
+      margin: 0 0 18px;
+      color: var(--color-ink);
+    }
+
+    .studio-section__quote-sub {
+      font-size: clamp(16px, 1.5vw, 19px);
+      line-height: 1.6;
+      font-style: italic;
+      color: var(--color-accent);
+      margin: 0;
+      font-family: var(--font-display), Georgia, serif;
+    }
+
+    .studio-process {
+      position: relative;
+      max-width: 880px;
+      margin: 0 auto;
+    }
+
+    .studio-process::before {
+      content: '';
+      position: absolute;
+      top: 36px;
+      left: 16%;
+      right: 16%;
+      height: 1px;
+      background: var(--color-gold);
+      opacity: 0.35;
+      z-index: 0;
+    }
+
+    .studio-process__grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 40px;
+      position: relative;
+      z-index: 1;
+    }
+
+    .studio-step {
+      text-align: center;
+      padding: 0 8px;
+    }
+
+    .studio-step__icon {
+      width: 72px;
+      height: 72px;
+      border-radius: 50%;
+      background: color-mix(in srgb, var(--color-accent-soft) 58%, var(--color-paper) 42%);
+      border: 1px solid var(--color-gold);
+      margin: 0 auto 22px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--color-gold);
+    }
+
+    .studio-step__icon svg {
+      width: 30px;
+      height: 30px;
+      color: var(--color-gold);
+    }
+
+    .studio-step__icon-svg--line path {
+      fill: none;
+      stroke: currentColor;
+      stroke-width: 1.5;
+      stroke-linecap: round;
+      stroke-linejoin: round;
+    }
+
+    .studio-step__icon-svg--solid path[fill='currentColor'] {
+      fill: currentColor;
+    }
+
+    .studio-step__icon-svg--solid path[fill='none'] {
+      fill: none;
+      stroke: currentColor;
+      stroke-width: 1.5;
+      stroke-linecap: round;
+      stroke-linejoin: round;
+    }
+
+    .studio-step__numeral {
+      font-size: 56px;
+      font-weight: 400;
+      color: var(--color-gold);
+      opacity: 0.28;
+      line-height: 1;
+      margin-bottom: 6px;
+      font-family: var(--font-display), Georgia, serif;
+    }
+
+    .studio-step__label {
+      font-size: 11px;
+      letter-spacing: 0.22em;
+      color: var(--color-gold);
+      text-transform: uppercase;
+      margin-bottom: 14px;
+      font-family: var(--font-display), Georgia, serif;
+    }
+
+    .studio-step__title {
+      font-size: 20px;
+      font-weight: 500;
+      margin: 0 0 10px;
+      line-height: 1.3;
+      color: var(--color-ink);
+      font-family: var(--font-display), Georgia, serif;
+    }
+
+    .studio-step__body {
+      font-size: 15px;
+      line-height: 1.6;
+      color: var(--color-accent);
+      margin: 0;
+      max-width: 240px;
+      margin-left: auto;
+      margin-right: auto;
+      font-family: var(--font-body), system-ui, sans-serif;
+    }
+
+    .studio-section__cta {
+      margin-top: 4rem;
+    }
+
+    .studio-section__cta a {
+      display: inline-block;
+      padding: 14px 36px;
+      border: 1px solid var(--color-gold);
+      color: var(--color-gold);
+      font-size: 12px;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      text-decoration: none;
+      font-family: var(--font-display), Georgia, serif;
+      transition:
+        background 0.25s ease,
+        color 0.25s ease;
+    }
+
+    .studio-section__cta a:hover {
+      background: var(--color-gold);
+      color: var(--color-paper);
+    }
+
+    @media (max-width: 720px) {
+      .studio-section {
+        padding: 4rem 1.5rem 3.5rem;
+      }
+
+      .studio-process::before {
+        display: none;
+      }
+
+      .studio-process__grid {
+        grid-template-columns: 1fr;
+        gap: 48px;
+      }
+    }
+  </style>
 
   <section class="border-t border-black/10">
     <div class="max-w-7xl mx-auto px-6 lg:px-10 py-20 lg:py-24">
