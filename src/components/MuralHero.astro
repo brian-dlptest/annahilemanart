@@ -28,10 +28,44 @@ const {
   imageWidth,
   imageHeight,
 } = Astro.props;
+
+const heroHref = `/images/${image}`;
 ---
-<section class="relative isolate overflow-hidden min-h-[55vh] md:min-h-[65vh] lg:min-h-[80vh]">
+<!-- Headline + CTA on paper; full-bleed image follows (not overlaid). -->
+<section class="border-b border-black/5 bg-[color:var(--color-paper)]">
+  <div class="max-w-7xl mx-auto px-6 lg:px-10 py-16 lg:py-20">
+    <div class="text-xs uppercase tracking-[0.3em] text-[color:var(--color-gold)]">
+      {eyebrow}
+    </div>
+    <h1 class="mt-6 font-display text-4xl md:text-5xl lg:text-7xl leading-[1.05] text-[color:var(--color-ink)] max-w-5xl">
+      {title}
+      {titleSuffix && (
+        <>
+          {' '}
+          <em class="italic text-[color:var(--color-gold)]">{titleSuffix}</em>
+        </>
+      )}
+    </h1>
+    <div class="mt-10 lg:mt-14 grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-14 lg:items-end">
+      <p class="lg:col-span-7 text-lg lg:text-xl text-black/75 leading-relaxed max-w-2xl">
+        {subhead}
+      </p>
+      <div class="lg:col-span-5 lg:text-right">
+        <a
+          href={ctaHref}
+          class="inline-flex items-center gap-2 bg-[color:var(--color-gold)] text-[color:var(--color-ink)] px-8 py-4 text-sm tracking-wide hover:bg-[color:var(--color-ink)] hover:text-[color:var(--color-gold)] transition-colors"
+        >
+          {ctaLabel}
+          <span aria-hidden="true">&rarr;</span>
+        </a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="relative overflow-hidden h-[50vh] md:h-[60vh] lg:h-[70vh]">
   <img
-    src={`/images/${image}`}
+    src={heroHref}
     alt={imageAlt}
     width={imageWidth}
     height={imageHeight}
@@ -40,34 +74,4 @@ const {
     decoding="async"
     class="absolute inset-0 h-full w-full object-cover object-[center_30%]"
   />
-  <div
-    class="absolute inset-0 bg-gradient-to-t from-black/65 via-black/25 to-black/10"
-    aria-hidden="true"
-  />
-  <div class="absolute inset-0 flex items-end lg:items-center">
-    <div class="max-w-7xl mx-auto w-full px-6 lg:px-10 pb-16 lg:pb-0">
-      <div class="text-xs uppercase tracking-[0.3em] text-white/80 mb-6">
-        {eyebrow}
-      </div>
-      <h1 class="font-display text-4xl md:text-5xl lg:text-7xl leading-[1.05] text-white max-w-3xl">
-        {title}
-        {titleSuffix && (
-          <>
-            {' '}
-            <em class="italic text-[color:var(--color-accent-soft)]">{titleSuffix}</em>
-          </>
-        )}
-      </h1>
-      <p class="mt-6 max-w-xl text-lg lg:text-xl text-white/85 leading-relaxed">
-        {subhead}
-      </p>
-      <a
-        href={ctaHref}
-        class="mt-10 inline-flex items-center gap-2 bg-white text-[color:var(--color-ink)] px-8 py-4 text-sm tracking-wide hover:bg-[color:var(--color-accent-soft)] transition-colors"
-      >
-        {ctaLabel}
-        <span aria-hidden="true">&rarr;</span>
-      </a>
-    </div>
-  </div>
 </section>
