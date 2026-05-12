@@ -3,6 +3,7 @@ import Layout from '../layouts/Layout.astro';
 import MuralHero from '../components/MuralHero.astro';
 import CaseStudy from '../components/CaseStudy.astro';
 import PoemsBlock from '../components/PoemsBlock.astro';
+import RockyMountainMuralSection from '../components/RockyMountainMuralSection.astro';
 import JsonLd from '../components/JsonLd.astro';
 import { buildServiceSchema, buildBreadcrumbs } from '../data/schemas';
 
@@ -140,17 +141,6 @@ const wingateThumbs = [
     src: 'Wingate-Elementary-artist-ladder-painting.png',
     alt: 'Anna Hileman on a ladder filling in the Wingate Elementary mural beside the D51 academic growth banner',
   },
-];
-
-const rockySummary =
-  "Spanning both exterior and interior walls of Rocky Mountain Elementary, this mural captures the school's core values of education, unity, and nurturing environment. A majestic eagle takes center stage outside, symbolizing strength and ambition, while an 80-foot ribbon inside moves from sunrise to night — a story of growth from protected nest to eagles soaring toward the stars.";
-
-const rockyExtendedProse =
-  "Adjacent to the soaring eagle stands a vigilant mother eagle, embodying protection and guidance — a reflection of the dedication of the school's faculty and staff. Beneath the eagle, its wing transforms into a flowing river, symbolizing both the local landscape and the continuous flow of knowledge and life. The Bookcliff mountain range and delicate peach blossoms celebrate the area's unique attributes and the natural beauty inherent in one's journey through life.\n\nInside, the mural continues through an 80-foot ribbon around the atrium that begins at sunrise and moves into night. Bright, vibrant colors energize the space while calming native flora and fauna ground the mural in place — surrounding students each day with reminders of support, movement, and reaching for their dreams.";
-
-const rockyThumbs = [
-  { src: 'From-Right-View-RM-Mural.jpg', alt: 'Rocky Mountain Elementary — right-side view of exterior mural' },
-  { src: 'Flowers-RM-Mural.jpg', alt: 'Rocky Mountain Elementary — peach blossom detail' },
 ];
 
 const mesaSummary =
@@ -332,23 +322,7 @@ const mesaThumbs = [
     youTubeTitle="Wingate Elementary school mural by Anna Hileman"
   />
 
-  <CaseStudy
-    anchorId="rocky-mountain"
-    location="Clifton, Colorado"
-    title="Rocky Mountain Elementary"
-    heroImage="Full-View-RM-Mural-from-Left.jpg"
-    heroAlt="Rocky Mountain Elementary exterior mural — eagle, peach blossoms, and Bookcliff mountain range"
-    summary={rockySummary}
-    facts={[
-      { label: 'Mascot', value: 'Eagle' },
-      { label: 'Scope', value: 'Exterior + 80-ft interior ribbon' },
-    ]}
-    thumbs={rockyThumbs}
-  >
-    <div class="max-w-3xl mx-auto mt-12 text-black/80 leading-relaxed whitespace-pre-line text-[15px] md:text-base space-y-4">
-      {rockyExtendedProse}
-    </div>
-  </CaseStudy>
+  <RockyMountainMuralSection />
 
   <CaseStudy
     anchorId="mesa-view"

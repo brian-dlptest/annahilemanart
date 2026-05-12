@@ -1,0 +1,352 @@
+---
+import LightboxThumb from './LightboxThumb.astro';
+
+const exteriorHeroHref = '/images/RM-Mural-Exterior-Wide.jpg';
+const exteriorHeroAlt =
+  'Rocky Mountain Elementary exterior mural, wide view across the front of the school';
+
+const interiorHeroHref = '/images/RM-Interior-Ribbon-Hallway.jpg';
+const interiorHeroAlt =
+  'Rocky Mountain Elementary, interior ribbon mural curving around the atrium hallway with night sky on one wall and eagles on the other';
+
+const exteriorGallery = [
+  {
+    src: 'RM-Mural-Eagle-Head.jpg',
+    alt: 'Rocky Mountain Elementary mural, close-up of the colorful eagle head with peach blossoms',
+  },
+  {
+    src: 'RM-Mural-Eagles-Nest-Sunset.jpg',
+    alt: 'Rocky Mountain Elementary mural, silhouette of two eagles in a nest and a mother eagle perched on a branch at sunset',
+  },
+  {
+    src: 'RM-Mural-Peach-Blossoms.jpg',
+    alt: 'Rocky Mountain Elementary mural, peach blossom detail above a school entrance',
+  },
+  {
+    src: 'RM-Mural-Painting-Progress.jpg',
+    alt: 'Rocky Mountain Elementary mural, in-progress shot of the school name being painted with a roller',
+  },
+] as const;
+
+const interiorGallery = [
+  {
+    src: 'RM-Interior-Sunrise-Transition.jpg',
+    alt: 'Rocky Mountain interior ribbon, night sky transitioning to sunrise with feathers and native plants',
+  },
+  {
+    src: 'RM-Interior-Eagle-Daytime.jpg',
+    alt: 'Rocky Mountain interior ribbon, eagle soaring in daytime sky with leaves and pink butterflies',
+  },
+  {
+    src: 'RM-Interior-Office-Branches.jpg',
+    alt: 'Rocky Mountain interior ribbon, mural in the front office area with flowing tree branches',
+  },
+  {
+    src: 'RM-Interior-Eagle-Night-Flight.jpg',
+    alt: 'Rocky Mountain interior ribbon, eagle in flight against a deep night sky with stars',
+  },
+] as const;
+
+const exteriorVideoHref = 'https://www.youtube.com/watch?v=r5K4IPPDf1w';
+const interiorVideoHref = 'https://www.youtube.com/watch?v=9pqetnJ3CJ4';
+---
+
+<section id="rocky-mountain" class="rm-section border-t border-black/10">
+  <div class="rm-header">
+    <div class="rm-header__location">Clifton, Colorado</div>
+    <h2 class="rm-header__title">Rocky Mountain Elementary</h2>
+
+    <div class="rm-meta">
+      <div class="rm-meta__item">
+        <span class="rm-meta__label">Mascot</span>
+        <span class="rm-meta__value">Eagle</span>
+      </div>
+      <div class="rm-meta__divider" aria-hidden="true"></div>
+      <div class="rm-meta__item">
+        <span class="rm-meta__label">Scope</span>
+        <span class="rm-meta__value">Exterior + interior</span>
+      </div>
+      <div class="rm-meta__divider" aria-hidden="true"></div>
+      <div class="rm-meta__item">
+        <span class="rm-meta__label">Year</span>
+        <span class="rm-meta__value">2024</span>
+      </div>
+    </div>
+
+    <p class="rm-header__intro">
+      A single commission across two surfaces, capturing the school&rsquo;s core values of education, unity, and a
+      nurturing environment for students.
+    </p>
+  </div>
+
+  <div class="rm-chapter">
+    <div class="rm-chapter__label">
+      <span class="rm-chapter__rule" aria-hidden="true"></span>
+      <span class="rm-chapter__kicker">Chapter 01</span>
+      <span class="rm-chapter__rule" aria-hidden="true"></span>
+    </div>
+    <h3 class="rm-chapter__title">Exterior Mural</h3>
+
+    <figure class="rm-chapter__hero">
+      <button
+        type="button"
+        class="group block w-full cursor-zoom-in overflow-hidden rounded border-0 bg-transparent p-0 text-left shadow-lg ring-1 ring-black/10 focus:outline-none focus-visible:ring-2 focus-visible:ring-[color:var(--color-accent)] focus-visible:ring-offset-2 focus-visible:ring-offset-[color:var(--color-paper)]"
+        data-lightbox={exteriorHeroHref}
+        data-lightbox-alt={exteriorHeroAlt}
+        aria-label={`View larger: ${exteriorHeroAlt}`}
+      >
+        <img
+          src={exteriorHeroHref}
+          alt=""
+          loading="lazy"
+          decoding="async"
+          class="pointer-events-none h-full w-full object-cover transition-opacity group-hover:opacity-90"
+        />
+      </button>
+    </figure>
+
+    <div class="rm-chapter__body">
+      <p>
+        A majestic eagle takes center stage, symbolizing strength, freedom, and ambition. With its wings spread wide, it
+        encourages students to pursue their dreams and reach new heights.
+      </p>
+      <p>
+        Adjacent stands a vigilant mother eagle, embodying protection and guidance, a reflection of the dedication of the
+        school&rsquo;s faculty and staff. Beneath the eagle, its wing transforms into a flowing river, symbolizing the local
+        landscape and the continuous flow of knowledge and life.
+      </p>
+      <p>
+        The Bookcliff mountain range and delicate peach blossoms celebrate the area&rsquo;s unique attributes and the natural
+        beauty inherent in one&rsquo;s journey through life.
+      </p>
+    </div>
+
+    <div class="rm-chapter__gallery">
+      {exteriorGallery.map((item) => (
+        <LightboxThumb src={item.src} alt={item.alt} aspectClass="aspect-[4/3]" />
+      ))}
+    </div>
+
+    <a class="rm-chapter__video" href={exteriorVideoHref} target="_blank" rel="noopener noreferrer">
+      <span aria-hidden="true">&#9658;</span>
+      &nbsp; Watch the exterior come to life
+    </a>
+  </div>
+
+  <div class="rm-chapter">
+    <div class="rm-chapter__label">
+      <span class="rm-chapter__rule" aria-hidden="true"></span>
+      <span class="rm-chapter__kicker">Chapter 02</span>
+      <span class="rm-chapter__rule" aria-hidden="true"></span>
+    </div>
+    <h3 class="rm-chapter__title">Interior Atrium Ribbon</h3>
+    <p class="rm-chapter__subtitle">80 feet &middot; Sunrise to night</p>
+
+    <figure class="rm-chapter__hero">
+      <button
+        type="button"
+        class="group block w-full cursor-zoom-in overflow-hidden rounded border-0 bg-transparent p-0 text-left shadow-lg ring-1 ring-black/10 focus:outline-none focus-visible:ring-2 focus-visible:ring-[color:var(--color-accent)] focus-visible:ring-offset-2 focus-visible:ring-offset-[color:var(--color-paper)]"
+        data-lightbox={interiorHeroHref}
+        data-lightbox-alt={interiorHeroAlt}
+        aria-label={`View larger: ${interiorHeroAlt}`}
+      >
+        <img
+          src={interiorHeroHref}
+          alt=""
+          loading="lazy"
+          decoding="async"
+          class="pointer-events-none h-full w-full object-cover transition-opacity group-hover:opacity-90"
+        />
+      </button>
+    </figure>
+
+    <div class="rm-chapter__body">
+      <p>
+        Inside, the mural continues through an 80-foot ribbon around the atrium that begins at sunrise and moves into night.
+        The imagery tells a story of growth and possibility, from a protected nest to eagles soaring toward the stars.
+      </p>
+      <p>
+        Bright, vibrant colors energize the space while calming native flora and fauna ground the mural in place, surrounding
+        students each day with reminders of support, movement, and reaching for their dreams.
+      </p>
+    </div>
+
+    <div class="rm-chapter__gallery">
+      {interiorGallery.map((item) => (
+        <LightboxThumb src={item.src} alt={item.alt} aspectClass="aspect-[4/3]" />
+      ))}
+    </div>
+
+    <a class="rm-chapter__video" href={interiorVideoHref} target="_blank" rel="noopener noreferrer">
+      <span aria-hidden="true">&#9658;</span>
+      &nbsp; Watch the interior come to life
+    </a>
+  </div>
+</section>
+
+<style>
+  .rm-section {
+    --rm-muted: rgb(107 96 85 / 0.95);
+    background: #e8e1d3;
+    padding: 4rem 2rem 5rem;
+    font-family: var(--font-display), Georgia, 'Times New Roman', serif;
+    color: var(--color-ink);
+  }
+
+  .rm-header {
+    max-width: 720px;
+    margin: 0 auto 3rem;
+    text-align: center;
+  }
+  .rm-header__location {
+    font-size: 11px;
+    letter-spacing: 0.28em;
+    color: var(--color-gold);
+    text-transform: uppercase;
+    margin-bottom: 14px;
+  }
+  .rm-header__title {
+    font-size: clamp(30px, 5vw, 38px);
+    font-weight: 400;
+    line-height: 1.1;
+    margin: 0 0 22px;
+    color: var(--color-ink);
+  }
+  .rm-meta {
+    display: inline-flex;
+    align-items: center;
+    gap: 28px;
+    padding: 14px 28px;
+    border-top: 1px solid var(--color-gold);
+    border-bottom: 1px solid var(--color-gold);
+    margin: 0 0 28px;
+  }
+  .rm-meta__item {
+    text-align: center;
+  }
+  .rm-meta__label {
+    display: block;
+    font-size: 10px;
+    letter-spacing: 0.14em;
+    color: var(--color-gold);
+    text-transform: uppercase;
+    margin-bottom: 4px;
+  }
+  .rm-meta__value {
+    font-size: 14px;
+    color: var(--rm-muted);
+  }
+  .rm-meta__divider {
+    width: 1px;
+    height: 24px;
+    background: var(--color-gold);
+    opacity: 0.4;
+  }
+  .rm-header__intro {
+    font-size: clamp(17px, 1.6vw, 18px);
+    line-height: 1.6;
+    font-style: italic;
+    color: var(--rm-muted);
+    max-width: 560px;
+    margin: 0 auto;
+  }
+
+  .rm-chapter {
+    max-width: 720px;
+    margin: 0 auto 4rem;
+  }
+  .rm-chapter:last-child {
+    margin-bottom: 0;
+  }
+  .rm-chapter__label {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 18px;
+    margin-bottom: 1.25rem;
+  }
+  .rm-chapter__rule {
+    flex: 0 0 80px;
+    height: 1px;
+    background: var(--color-gold);
+    opacity: 0.4;
+  }
+  .rm-chapter__kicker {
+    font-size: 11px;
+    letter-spacing: 0.28em;
+    color: var(--color-gold);
+    text-transform: uppercase;
+  }
+  .rm-chapter__title {
+    font-size: clamp(24px, 3vw, 28px);
+    font-weight: 400;
+    text-align: center;
+    margin: 0 0 0.5rem;
+    color: var(--color-ink);
+  }
+  .rm-chapter__subtitle {
+    text-align: center;
+    font-size: 12px;
+    letter-spacing: 0.2em;
+    color: var(--color-gold);
+    text-transform: uppercase;
+    margin: 0 0 1.5rem;
+  }
+  .rm-chapter__hero {
+    margin: 0 0 1.5rem;
+  }
+  .rm-chapter__hero img {
+    width: 100%;
+    height: auto;
+    display: block;
+    border-radius: 4px;
+    aspect-ratio: 16 / 10;
+    object-fit: cover;
+  }
+  .rm-chapter__body p {
+    font-size: 16px;
+    line-height: 1.7;
+    color: var(--color-ink);
+    margin: 0 0 14px;
+  }
+  .rm-chapter__body p:last-child {
+    margin-bottom: 1.75rem;
+  }
+  .rm-chapter__gallery {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 10px;
+  }
+  .rm-chapter__video {
+    display: inline-block;
+    margin-top: 1.75rem;
+    font-size: 12px;
+    letter-spacing: 0.12em;
+    color: var(--color-gold);
+    text-transform: uppercase;
+    text-decoration: none;
+    border-bottom: 1px solid transparent;
+    transition: border-color 0.25s ease;
+  }
+  .rm-chapter__video:hover {
+    border-bottom-color: var(--color-gold);
+  }
+
+  @media (max-width: 640px) {
+    .rm-section {
+      padding: 3rem 1.25rem 3.5rem;
+    }
+    .rm-meta {
+      flex-direction: column;
+      gap: 14px;
+      padding: 14px 22px;
+    }
+    .rm-meta__divider {
+      width: 24px;
+      height: 1px;
+    }
+    .rm-chapter__rule {
+      flex: 0 0 40px;
+    }
+  }
+</style>
