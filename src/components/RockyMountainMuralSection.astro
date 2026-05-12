@@ -49,6 +49,11 @@ const interiorGallery = [
 
 const exteriorVideoHref = 'https://www.youtube.com/watch?v=r5K4IPPDf1w';
 const interiorVideoHref = 'https://www.youtube.com/watch?v=9pqetnJ3CJ4';
+
+const heroButtonClass =
+  'group block w-full cursor-zoom-in overflow-hidden rounded-lg border-0 bg-transparent p-0 text-left shadow-xl focus:outline-none focus-visible:ring-2 focus-visible:ring-[color:var(--color-accent)] focus-visible:ring-offset-2 focus-visible:ring-offset-[#e8e1d3]';
+const heroImgClass =
+  'pointer-events-none h-full w-full object-cover aspect-[4/5] transition-opacity group-hover:opacity-90';
 ---
 
 <section id="rocky-mountain" class="rm-section border-t border-black/10">
@@ -79,108 +84,113 @@ const interiorVideoHref = 'https://www.youtube.com/watch?v=9pqetnJ3CJ4';
     </p>
   </div>
 
+  <!-- Chapter 01 -->
   <div class="rm-chapter">
-    <div class="rm-chapter__label">
-      <span class="rm-chapter__rule" aria-hidden="true"></span>
-      <span class="rm-chapter__kicker">Chapter 01</span>
-      <span class="rm-chapter__rule" aria-hidden="true"></span>
-    </div>
-    <h3 class="rm-chapter__title">Exterior Mural</h3>
-
-    <figure class="rm-chapter__hero">
-      <button
-        type="button"
-        class="group block w-full cursor-zoom-in overflow-hidden rounded border-0 bg-transparent p-0 text-left shadow-lg ring-1 ring-black/10 focus:outline-none focus-visible:ring-2 focus-visible:ring-[color:var(--color-accent)] focus-visible:ring-offset-2 focus-visible:ring-offset-[color:var(--color-paper)]"
-        data-lightbox={exteriorHeroHref}
-        data-lightbox-alt={exteriorHeroAlt}
-        aria-label={`View larger: ${exteriorHeroAlt}`}
-      >
-        <img
-          src={exteriorHeroHref}
-          alt=""
-          loading="lazy"
-          decoding="async"
-          class="pointer-events-none h-full w-full object-cover transition-opacity group-hover:opacity-90"
-        />
-      </button>
-    </figure>
-
-    <div class="rm-chapter__body">
-      <p>
-        A majestic eagle takes center stage, symbolizing strength, freedom, and ambition. With its wings spread wide, it
-        encourages students to pursue their dreams and reach new heights.
-      </p>
-      <p>
-        Adjacent stands a vigilant mother eagle, embodying protection and guidance, a reflection of the dedication of the
-        school&rsquo;s faculty and staff. Beneath the eagle, its wing transforms into a flowing river, symbolizing the local
-        landscape and the continuous flow of knowledge and life.
-      </p>
-      <p>
-        The Bookcliff mountain range and delicate peach blossoms celebrate the area&rsquo;s unique attributes and the natural
-        beauty inherent in one&rsquo;s journey through life.
-      </p>
+    <div class="rm-chapter__heading">
+      <div class="rm-chapter__label">
+        <span class="rm-chapter__rule" aria-hidden="true"></span>
+        <span class="rm-chapter__kicker">Chapter 01</span>
+        <span class="rm-chapter__rule" aria-hidden="true"></span>
+      </div>
+      <h3 class="rm-chapter__title">Exterior Mural</h3>
     </div>
 
-    <div class="rm-chapter__gallery">
-      {exteriorGallery.map((item) => (
-        <LightboxThumb src={item.src} alt={item.alt} aspectClass="aspect-[4/3]" />
-      ))}
-    </div>
+    <div class="max-w-7xl mx-auto px-6 lg:px-10">
+      <div class="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-14 items-start">
+        <div class="lg:col-span-7 min-w-0">
+          <button
+            type="button"
+            class={heroButtonClass}
+            data-lightbox={exteriorHeroHref}
+            data-lightbox-alt={exteriorHeroAlt}
+            aria-label={`View larger: ${exteriorHeroAlt}`}
+          >
+            <img src={exteriorHeroHref} alt="" loading="lazy" decoding="async" class={heroImgClass} />
+          </button>
+        </div>
+        <div class="lg:col-span-5 lg:sticky lg:top-28 lg:self-start space-y-4 text-[15px] md:text-base text-black/80 leading-relaxed">
+          <p>
+            A majestic eagle takes center stage, symbolizing strength, freedom, and ambition. With its wings spread wide,
+            it encourages students to pursue their dreams and reach new heights.
+          </p>
+          <p>
+            Adjacent stands a vigilant mother eagle, embodying protection and guidance, a reflection of the dedication of
+            the school&rsquo;s faculty and staff. Beneath the eagle, its wing transforms into a flowing river, symbolizing the
+            local landscape and the continuous flow of knowledge and life.
+          </p>
+          <p>
+            The Bookcliff mountain range and delicate peach blossoms celebrate the area&rsquo;s unique attributes and the natural
+            beauty inherent in one&rsquo;s journey through life.
+          </p>
+        </div>
+      </div>
 
-    <a class="rm-chapter__video" href={exteriorVideoHref} target="_blank" rel="noopener noreferrer">
-      <span aria-hidden="true">&#9658;</span>
-      &nbsp; Watch the exterior come to life
-    </a>
+      <div class="mt-12 grid grid-cols-2 sm:grid-cols-4 gap-2">
+        {exteriorGallery.map((item) => (
+          <LightboxThumb src={item.src} alt={item.alt} aspectClass="aspect-square" />
+        ))}
+      </div>
+
+      <div class="mt-8">
+        <a class="rm-chapter__video" href={exteriorVideoHref} target="_blank" rel="noopener noreferrer">
+          <span aria-hidden="true">&#9658;</span>
+          &nbsp; Watch the exterior come to life
+        </a>
+      </div>
+    </div>
   </div>
 
-  <div class="rm-chapter">
-    <div class="rm-chapter__label">
-      <span class="rm-chapter__rule" aria-hidden="true"></span>
-      <span class="rm-chapter__kicker">Chapter 02</span>
-      <span class="rm-chapter__rule" aria-hidden="true"></span>
-    </div>
-    <h3 class="rm-chapter__title">Interior Atrium Ribbon</h3>
-    <p class="rm-chapter__subtitle">80 feet &middot; Sunrise to night</p>
-
-    <figure class="rm-chapter__hero">
-      <button
-        type="button"
-        class="group block w-full cursor-zoom-in overflow-hidden rounded border-0 bg-transparent p-0 text-left shadow-lg ring-1 ring-black/10 focus:outline-none focus-visible:ring-2 focus-visible:ring-[color:var(--color-accent)] focus-visible:ring-offset-2 focus-visible:ring-offset-[color:var(--color-paper)]"
-        data-lightbox={interiorHeroHref}
-        data-lightbox-alt={interiorHeroAlt}
-        aria-label={`View larger: ${interiorHeroAlt}`}
-      >
-        <img
-          src={interiorHeroHref}
-          alt=""
-          loading="lazy"
-          decoding="async"
-          class="pointer-events-none h-full w-full object-cover transition-opacity group-hover:opacity-90"
-        />
-      </button>
-    </figure>
-
-    <div class="rm-chapter__body">
-      <p>
-        Inside, the mural continues through an 80-foot ribbon around the atrium that begins at sunrise and moves into night.
-        The imagery tells a story of growth and possibility, from a protected nest to eagles soaring toward the stars.
-      </p>
-      <p>
-        Bright, vibrant colors energize the space while calming native flora and fauna ground the mural in place, surrounding
-        students each day with reminders of support, movement, and reaching for their dreams.
-      </p>
+  <!-- Chapter 02 -->
+  <div class="rm-chapter rm-chapter--spaced">
+    <div class="rm-chapter__heading">
+      <div class="rm-chapter__label">
+        <span class="rm-chapter__rule" aria-hidden="true"></span>
+        <span class="rm-chapter__kicker">Chapter 02</span>
+        <span class="rm-chapter__rule" aria-hidden="true"></span>
+      </div>
+      <h3 class="rm-chapter__title">Interior Atrium Ribbon</h3>
+      <p class="rm-chapter__subtitle">80 feet &middot; Sunrise to night</p>
     </div>
 
-    <div class="rm-chapter__gallery">
-      {interiorGallery.map((item) => (
-        <LightboxThumb src={item.src} alt={item.alt} aspectClass="aspect-[4/3]" />
-      ))}
-    </div>
+    <div class="max-w-7xl mx-auto px-6 lg:px-10">
+      <div class="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-14 items-start">
+        <div class="lg:col-span-7 min-w-0">
+          <button
+            type="button"
+            class={heroButtonClass}
+            data-lightbox={interiorHeroHref}
+            data-lightbox-alt={interiorHeroAlt}
+            aria-label={`View larger: ${interiorHeroAlt}`}
+          >
+            <img src={interiorHeroHref} alt="" loading="lazy" decoding="async" class={heroImgClass} />
+          </button>
+        </div>
+        <div class="lg:col-span-5 lg:sticky lg:top-28 lg:self-start space-y-4 text-[15px] md:text-base text-black/80 leading-relaxed">
+          <p>
+            Inside, the mural continues through an 80-foot ribbon around the atrium that begins at sunrise and moves into
+            night. The imagery tells a story of growth and possibility, from a protected nest to eagles soaring toward the
+            stars.
+          </p>
+          <p>
+            Bright, vibrant colors energize the space while calming native flora and fauna ground the mural in place,
+            surrounding students each day with reminders of support, movement, and reaching for their dreams.
+          </p>
+        </div>
+      </div>
 
-    <a class="rm-chapter__video" href={interiorVideoHref} target="_blank" rel="noopener noreferrer">
-      <span aria-hidden="true">&#9658;</span>
-      &nbsp; Watch the interior come to life
-    </a>
+      <div class="mt-12 grid grid-cols-2 sm:grid-cols-4 gap-2">
+        {interiorGallery.map((item) => (
+          <LightboxThumb src={item.src} alt={item.alt} aspectClass="aspect-square" />
+        ))}
+      </div>
+
+      <div class="mt-8">
+        <a class="rm-chapter__video" href={interiorVideoHref} target="_blank" rel="noopener noreferrer">
+          <span aria-hidden="true">&#9658;</span>
+          &nbsp; Watch the interior come to life
+        </a>
+      </div>
+    </div>
   </div>
 </section>
 
@@ -188,7 +198,7 @@ const interiorVideoHref = 'https://www.youtube.com/watch?v=9pqetnJ3CJ4';
   .rm-section {
     --rm-muted: rgb(107 96 85 / 0.95);
     background: #e8e1d3;
-    padding: 4rem 2rem 5rem;
+    padding: 4rem 0 5rem;
     font-family: var(--font-display), Georgia, 'Times New Roman', serif;
     color: var(--color-ink);
   }
@@ -196,6 +206,7 @@ const interiorVideoHref = 'https://www.youtube.com/watch?v=9pqetnJ3CJ4';
   .rm-header {
     max-width: 720px;
     margin: 0 auto 3rem;
+    padding: 0 1.25rem;
     text-align: center;
   }
   .rm-header__location {
@@ -251,12 +262,15 @@ const interiorVideoHref = 'https://www.youtube.com/watch?v=9pqetnJ3CJ4';
     margin: 0 auto;
   }
 
-  .rm-chapter {
-    max-width: 720px;
-    margin: 0 auto 4rem;
+  .rm-chapter__heading {
+    text-align: center;
+    margin-bottom: 2.5rem;
+    padding: 0 1.25rem;
   }
-  .rm-chapter:last-child {
-    margin-bottom: 0;
+  .rm-chapter--spaced {
+    margin-top: 3.5rem;
+    padding-top: 3rem;
+    border-top: 1px solid rgb(0 0 0 / 0.08);
   }
   .rm-chapter__label {
     display: flex;
@@ -280,46 +294,18 @@ const interiorVideoHref = 'https://www.youtube.com/watch?v=9pqetnJ3CJ4';
   .rm-chapter__title {
     font-size: clamp(24px, 3vw, 28px);
     font-weight: 400;
-    text-align: center;
     margin: 0 0 0.5rem;
     color: var(--color-ink);
   }
   .rm-chapter__subtitle {
-    text-align: center;
     font-size: 12px;
     letter-spacing: 0.2em;
     color: var(--color-gold);
     text-transform: uppercase;
-    margin: 0 0 1.5rem;
-  }
-  .rm-chapter__hero {
-    margin: 0 0 1.5rem;
-  }
-  .rm-chapter__hero img {
-    width: 100%;
-    height: auto;
-    display: block;
-    border-radius: 4px;
-    aspect-ratio: 16 / 10;
-    object-fit: cover;
-  }
-  .rm-chapter__body p {
-    font-size: 16px;
-    line-height: 1.7;
-    color: var(--color-ink);
-    margin: 0 0 14px;
-  }
-  .rm-chapter__body p:last-child {
-    margin-bottom: 1.75rem;
-  }
-  .rm-chapter__gallery {
-    display: grid;
-    grid-template-columns: repeat(2, 1fr);
-    gap: 10px;
+    margin: 0;
   }
   .rm-chapter__video {
     display: inline-block;
-    margin-top: 1.75rem;
     font-size: 12px;
     letter-spacing: 0.12em;
     color: var(--color-gold);
@@ -334,7 +320,7 @@ const interiorVideoHref = 'https://www.youtube.com/watch?v=9pqetnJ3CJ4';
 
   @media (max-width: 640px) {
     .rm-section {
-      padding: 3rem 1.25rem 3.5rem;
+      padding: 3rem 0 3.5rem;
     }
     .rm-meta {
       flex-direction: column;
