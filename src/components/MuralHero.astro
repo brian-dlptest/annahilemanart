@@ -31,7 +31,20 @@ const {
 
 const heroHref = `/images/${image}`;
 ---
-<!-- Headline + CTA on paper; full-bleed image follows (not overlaid). -->
+<!-- Full-bleed banner first; headline + CTA on paper below (not overlaid). -->
+<section class="relative overflow-hidden h-[50vh] md:h-[60vh] lg:h-[70vh] border-b border-black/5">
+  <img
+    src={heroHref}
+    alt={imageAlt}
+    width={imageWidth}
+    height={imageHeight}
+    fetchpriority="high"
+    loading="eager"
+    decoding="async"
+    class="absolute inset-0 h-full w-full object-cover object-[center_30%]"
+  />
+</section>
+
 <section class="border-b border-black/5 bg-[color:var(--color-paper)]">
   <div class="max-w-7xl mx-auto px-6 lg:px-10 py-16 lg:py-20">
     <div class="text-xs uppercase tracking-[0.3em] text-[color:var(--color-gold)]">
@@ -61,17 +74,4 @@ const heroHref = `/images/${image}`;
       </div>
     </div>
   </div>
-</section>
-
-<section class="relative overflow-hidden h-[50vh] md:h-[60vh] lg:h-[70vh]">
-  <img
-    src={heroHref}
-    alt={imageAlt}
-    width={imageWidth}
-    height={imageHeight}
-    fetchpriority="high"
-    loading="eager"
-    decoding="async"
-    class="absolute inset-0 h-full w-full object-cover object-[center_30%]"
-  />
 </section>
