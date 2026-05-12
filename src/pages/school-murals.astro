@@ -3,6 +3,7 @@ import Layout from '../layouts/Layout.astro';
 import MuralHero from '../components/MuralHero.astro';
 import CaseStudy from '../components/CaseStudy.astro';
 import PoemsBlock from '../components/PoemsBlock.astro';
+import RockyMountainTwoChapter from '../components/RockyMountainTwoChapter.astro';
 import JsonLd from '../components/JsonLd.astro';
 import { buildServiceSchema, buildBreadcrumbs } from '../data/schemas';
 
@@ -74,8 +75,36 @@ const diaThumbs = [
   { src: 'Dual-Immersion-Academy-School-Mural-4.jpg', alt: 'DIA mural — sunflowers section detail' },
   { src: 'Dual-Immersion-Academy-School-Mural-5.jpg', alt: 'DIA mural — butterflies in flight detail' },
   { src: 'Dual-Immersion-Academy-School-Mural-6.jpg', alt: 'DIA mural — bobcat mascot panel' },
+  { src: 'Dual-Immersion-Academy-School-Mural-7.jpg', alt: 'DIA mural — interior hallway with painted panels' },
   { src: 'Dual-Immersion-Academy-School-Mural-9.jpg', alt: 'DIA mural — painting in progress' },
 ];
+
+const whatsIncludedItems = [
+  {
+    text: "A collaborative design process tailored to your school's values and culture",
+    icon: 'message',
+  },
+  {
+    text: 'A full-color mockup superimposed onto your actual space',
+    icon: 'mockup',
+  },
+  {
+    text: 'Imagery that reflects your mascot, community, and student experience',
+    icon: 'mascot',
+  },
+  {
+    text: 'Safe, professional installation with minimal disruption',
+    icon: 'shield',
+  },
+  {
+    text: 'A custom poem written to complement the mural',
+    icon: 'feather',
+  },
+  {
+    text: 'A clear protective finish for long-lasting vibrancy and durability',
+    icon: 'droplet',
+  },
+] as const;
 
 const wingateSummary =
   "Beginning with our Wingate Explorers, artist Anna Hileman aimed to demonstrate the vast world ahead for our kids while integrating the extraordinary features of this place we call home, a stepping stone for the journey ahead. As no two butterflies are alike and each butterfly contains every color of the rainbow, each student and staff member's hand print has been placed within a ROYGBIV (red, orange, yellow, green, blue, indigo, violet) spectrum, signifying their vital part and attribution to the Wingate community and the world. Additionally, students and staff chose a letter or shape to make their handprint even more distinctive. The final prints to be placed were from Trigger, Wingate's adored therapy dog. The monarch butterfly was chosen for its locality to this area and as a symbol of the transformation, strength, and journey of Wingate's students and families.";
@@ -114,17 +143,6 @@ const wingateThumbs = [
   },
 ];
 
-const rockySummary =
-  "Spanning both exterior and interior walls of Rocky Mountain Elementary, this mural captures the school's core values of education, unity, and nurturing environment. A majestic eagle takes center stage outside, symbolizing strength and ambition, while an 80-foot ribbon inside moves from sunrise to night — a story of growth from protected nest to eagles soaring toward the stars.";
-
-const rockyExtendedProse =
-  "Adjacent to the soaring eagle stands a vigilant mother eagle, embodying protection and guidance — a reflection of the dedication of the school's faculty and staff. Beneath the eagle, its wing transforms into a flowing river, symbolizing both the local landscape and the continuous flow of knowledge and life. The Bookcliff mountain range and delicate peach blossoms celebrate the area's unique attributes and the natural beauty inherent in one's journey through life.\n\nInside, the mural continues through an 80-foot ribbon around the atrium that begins at sunrise and moves into night. Bright, vibrant colors energize the space while calming native flora and fauna ground the mural in place — surrounding students each day with reminders of support, movement, and reaching for their dreams.";
-
-const rockyThumbs = [
-  { src: 'From-Right-View-RM-Mural.jpg', alt: 'Rocky Mountain Elementary — right-side view of exterior mural' },
-  { src: 'Flowers-RM-Mural.jpg', alt: 'Rocky Mountain Elementary — peach blossom detail' },
-];
-
 const mesaSummary =
   "Mesa View's mural takes into account the rich history of agriculture, Native Americans, and the geographical locations of Orchard Mesa. The hawk — the school's mascot — signifies the strength and determination carried by students, staff, and families of Mesa View Elementary.";
 
@@ -161,6 +179,17 @@ const mesaThumbs = [
     imageHeight={1333}
   />
 
+  <section class="border-b border-black/10 bg-[color:var(--color-paper)]">
+    <div class="max-w-3xl mx-auto px-6 lg:px-10 py-12 lg:py-16 text-center">
+      <p class="font-display text-lg md:text-xl leading-relaxed text-black/85">
+        School murals transform hallways into places of inspiration, belonging, and pride. Each mural is thoughtfully
+        designed to reflect a school&rsquo;s values, mascot, and community, celebrating growth, curiosity, kindness, and
+        the unique story of the students who walk its halls every day. Through vibrant color and meaningful imagery,
+        these murals create welcoming environments that support learning and spark imagination.
+      </p>
+    </div>
+  </section>
+
   <section class="bg-[color:var(--color-accent-soft)]/40 border-y border-black/5">
     <div class="max-w-5xl mx-auto px-6 lg:px-10 py-20 lg:py-24">
       <div class="text-center max-w-3xl mx-auto">
@@ -195,6 +224,58 @@ const mesaThumbs = [
           </p>
         </div>
       </div>
+    </div>
+  </section>
+
+  <section class="border-b border-black/10 bg-[color:var(--color-accent-soft)]/25">
+    <div class="max-w-3xl mx-auto px-6 lg:px-10 py-14 lg:py-20 text-center">
+      <div class="w-10 h-px bg-[color:var(--color-gold)] mx-auto mb-3" aria-hidden="true"></div>
+      <div class="text-xs uppercase tracking-[0.3em] text-[color:var(--color-gold)]">What&rsquo;s included</div>
+      <h2 class="mt-4 font-display text-2xl md:text-3xl text-[color:var(--color-ink)]">Every school mural includes</h2>
+      <ul class="mt-10 text-left grid grid-cols-1 sm:grid-cols-2 gap-x-10 gap-y-5 max-w-2xl mx-auto">
+        {whatsIncludedItems.map((item) => (
+          <li class="flex gap-3 text-sm md:text-[15px] leading-snug text-black/85">
+            <span class="shrink-0 mt-0.5 text-[color:var(--color-gold)]" aria-hidden="true">
+              {item.icon === 'message' && (
+                <svg class="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                  <path d="M8 10h.01M12 10h.01M16 10h.01M9 16H5a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v8a2 2 0 01-2 2h-5l-5 5v-5z" stroke-linecap="round" stroke-linejoin="round" />
+                </svg>
+              )}
+              {item.icon === 'mockup' && (
+                <svg class="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                  <rect x="3" y="5" width="18" height="14" rx="2" stroke-linecap="round" stroke-linejoin="round" />
+                  <path d="M7 15h.01M11 12h4M11 9h6" stroke-linecap="round" />
+                </svg>
+              )}
+              {item.icon === 'mascot' && (
+                <svg class="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                  <ellipse cx="9" cy="16" rx="2.5" ry="3.5" />
+                  <ellipse cx="15" cy="16" rx="2.5" ry="3.5" />
+                  <ellipse cx="12" cy="10" rx="4" ry="5" />
+                  <path d="M10 7c-1-1-2-1-3 0M14 7c1-1 2-1 3 0" stroke-linecap="round" />
+                </svg>
+              )}
+              {item.icon === 'shield' && (
+                <svg class="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                  <path d="M12 3l8 4v6c0 5-3.5 9-8 10-4.5-1-8-5-8-10V7l8-4z" stroke-linecap="round" stroke-linejoin="round" />
+                  <path d="M9 12l2 2 4-4" stroke-linecap="round" stroke-linejoin="round" />
+                </svg>
+              )}
+              {item.icon === 'feather' && (
+                <svg class="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                  <path d="M4 20l4.5-4.5M16 4l-1 6 6-1-8 8-6 1 1-6-6 1 8-8z" stroke-linecap="round" stroke-linejoin="round" />
+                </svg>
+              )}
+              {item.icon === 'droplet' && (
+                <svg class="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                  <path d="M12 3c4 6 7 9 7 13a7 7 0 11-14 0c0-4 3-7 7-13z" stroke-linecap="round" stroke-linejoin="round" />
+                </svg>
+              )}
+            </span>
+            <span>{item.text}</span>
+          </li>
+        ))}
+      </ul>
     </div>
   </section>
 
@@ -241,23 +322,7 @@ const mesaThumbs = [
     youTubeTitle="Wingate Elementary school mural by Anna Hileman"
   />
 
-  <CaseStudy
-    anchorId="rocky-mountain"
-    location="Clifton, Colorado"
-    title="Rocky Mountain Elementary"
-    heroImage="Full-View-RM-Mural-from-Left.jpg"
-    heroAlt="Rocky Mountain Elementary exterior mural — eagle, peach blossoms, and Bookcliff mountain range"
-    summary={rockySummary}
-    facts={[
-      { label: 'Mascot', value: 'Eagle' },
-      { label: 'Scope', value: 'Exterior + 80-ft interior ribbon' },
-    ]}
-    thumbs={rockyThumbs}
-  >
-    <div class="max-w-3xl mx-auto mt-12 text-black/80 leading-relaxed whitespace-pre-line text-[15px] md:text-base space-y-4">
-      {rockyExtendedProse}
-    </div>
-  </CaseStudy>
+  <RockyMountainTwoChapter />
 
   <CaseStudy
     anchorId="mesa-view"

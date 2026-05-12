@@ -1,0 +1,208 @@
+---
+/**
+ * Rocky Mountain Elementary — exterior + interior chapters.
+ * Optional images (add under public/images/): Eagle-Close-Up-Pic.jpg;
+ * RM-Interior-Atrium-Wide.jpg, RM-Interior-Sunrise.jpg, RM-Interior-Midday.jpg, RM-Interior-Night.jpg.
+ * Optional env: PUBLIC_RM_INTERIOR_VIDEO_ID (YouTube video id only) shows the “Watch the interior” link.
+ */
+import fs from 'node:fs';
+import path from 'node:path';
+import LightboxThumb from './LightboxThumb.astro';
+
+const imgDir = path.join(process.cwd(), 'public', 'images');
+const hasImg = (name: string) => fs.existsSync(path.join(imgDir, name));
+
+const ch1Gallery = [
+  { src: 'From-Right-View-RM-Mural.jpg', alt: 'Rocky Mountain Elementary — exterior mural, right-side view' },
+  { src: 'Flowers-RM-Mural.jpg', alt: 'Rocky Mountain Elementary — peach blossom detail' },
+  ...(hasImg('Eagle-Close-Up-Pic.jpg')
+    ? [{ src: 'Eagle-Close-Up-Pic.jpg', alt: 'Rocky Mountain Elementary — eagle close up' } as const]
+    : []),
+];
+
+const interiorHero = hasImg('RM-Interior-Atrium-Wide.jpg')
+  ? { src: 'RM-Interior-Atrium-Wide.jpg', alt: 'Rocky Mountain Elementary — wide view of the 80-foot interior atrium ribbon mural' }
+  : null;
+
+const interiorGallery = [
+  { src: 'RM-Interior-Sunrise.jpg', alt: 'Rocky Mountain interior ribbon — sunrise section' },
+  { src: 'RM-Interior-Midday.jpg', alt: 'Rocky Mountain interior ribbon — midday section' },
+  { src: 'RM-Interior-Night.jpg', alt: 'Rocky Mountain interior ribbon — night section' },
+].filter((item) => hasImg(item.src));
+
+const interiorVideoId =
+  typeof import.meta.env.PUBLIC_RM_INTERIOR_VIDEO_ID === 'string' &&
+  import.meta.env.PUBLIC_RM_INTERIOR_VIDEO_ID.trim().length > 0
+    ? import.meta.env.PUBLIC_RM_INTERIOR_VIDEO_ID.trim()
+    : undefined;
+
+const exteriorHeroHref = '/images/Full-View-RM-Mural-from-Left.jpg';
+const exteriorHeroAlt =
+  'Rocky Mountain Elementary — full exterior mural view from the left, featuring eagles, river, and Bookcliff range';
+---
+
+<section id="rocky-mountain" class="border-t border-black/10">
+  <div class="max-w-7xl mx-auto px-6 lg:px-10 py-16 lg:py-24">
+    <header class="text-center max-w-2xl mx-auto mb-14 lg:mb-16">
+      <div class="text-xs uppercase tracking-[0.3em] text-[color:var(--color-gold)]">Clifton, Colorado</div>
+      <h2 class="mt-3 font-display text-3xl md:text-4xl lg:text-5xl text-[color:var(--color-ink)]">Rocky Mountain Elementary</h2>
+
+      <dl
+        class="mt-8 inline-flex flex-col sm:flex-row flex-wrap items-center justify-center gap-4 sm:gap-7 px-6 sm:px-8 py-4 border-y border-[color:var(--color-gold)]/50 text-center"
+      >
+        <div>
+          <dt class="text-[10px] uppercase tracking-[0.2em] text-[color:var(--color-gold)]">Mascot</dt>
+          <dd class="mt-1 text-sm text-black/80">Eagle</dd>
+        </div>
+        <div class="hidden sm:block w-px h-6 bg-[color:var(--color-gold)]/40" aria-hidden="true"></div>
+        <div>
+          <dt class="text-[10px] uppercase tracking-[0.2em] text-[color:var(--color-gold)]">Scope</dt>
+          <dd class="mt-1 text-sm text-black/80">Exterior + interior</dd>
+        </div>
+        <div class="hidden sm:block w-px h-6 bg-[color:var(--color-gold)]/40" aria-hidden="true"></div>
+        <div>
+          <dt class="text-[10px] uppercase tracking-[0.2em] text-[color:var(--color-gold)]">Year</dt>
+          <dd class="mt-1 text-sm text-black/80">2024</dd>
+        </div>
+      </dl>
+
+      <p class="mt-8 text-black/70 leading-relaxed italic text-[15px] md:text-base max-w-xl mx-auto">
+        A single commission across two surfaces, capturing the school&rsquo;s core values of education, unity, and a
+        nurturing environment for students.
+      </p>
+    </header>
+
+    <!-- Chapter 01: Exterior -->
+    <article class="max-w-4xl mx-auto mb-20 lg:mb-24">
+      <div class="flex items-center justify-center gap-4 mb-4">
+        <span class="flex-[0_0_3rem] sm:flex-[0_0_5rem] h-px bg-[color:var(--color-gold)]/40" aria-hidden="true"></span>
+        <span class="text-xs uppercase tracking-[0.3em] text-[color:var(--color-gold)]">Chapter 01</span>
+        <span class="flex-[0_0_3rem] sm:flex-[0_0_5rem] h-px bg-[color:var(--color-gold)]/40" aria-hidden="true"></span>
+      </div>
+      <h3 class="text-center font-display text-2xl md:text-3xl text-[color:var(--color-ink)]">Exterior Mural</h3>
+
+      <figure class="mt-8 mb-8">
+        <button
+          type="button"
+          class="group block w-full cursor-zoom-in overflow-hidden rounded-lg border-0 bg-transparent p-0 text-left shadow-xl focus:outline-none focus-visible:ring-2 focus-visible:ring-[color:var(--color-accent)] focus-visible:ring-offset-2 focus-visible:ring-offset-[color:var(--color-paper)]"
+          data-lightbox={exteriorHeroHref}
+          data-lightbox-alt={exteriorHeroAlt}
+          aria-label={`View larger: ${exteriorHeroAlt}`}
+        >
+          <img
+            src={exteriorHeroHref}
+            alt=""
+            loading="lazy"
+            decoding="async"
+            class="pointer-events-none w-full object-cover aspect-[4/3] sm:aspect-[16/10] transition-opacity group-hover:opacity-90"
+          />
+        </button>
+      </figure>
+
+      <div class="space-y-4 text-black/80 leading-relaxed text-[15px] md:text-base">
+        <p>
+          A majestic eagle takes center stage, symbolizing strength, freedom, and ambition. With its wings spread wide, it
+          encourages students to pursue their dreams and reach new heights.
+        </p>
+        <p>
+          Adjacent stands a vigilant mother eagle, embodying protection and guidance, a reflection of the dedication of the
+          school&rsquo;s faculty and staff. Beneath the eagle, its wing transforms into a flowing river, symbolizing the
+          local landscape and the continuous flow of knowledge and life.
+        </p>
+        <p>
+          The Bookcliff mountain range and delicate peach blossoms celebrate the area&rsquo;s unique attributes and the
+          natural beauty inherent in one&rsquo;s journey through life.
+        </p>
+      </div>
+
+      <div
+        class:list={[
+          'mt-10 grid gap-2',
+          ch1Gallery.length >= 3 ? 'grid-cols-2 sm:grid-cols-3' : 'grid-cols-2',
+        ]}
+      >
+        {ch1Gallery.map((t) => (
+          <LightboxThumb src={t.src} alt={t.alt} aspectClass="aspect-[4/3]" />
+        ))}
+      </div>
+    </article>
+
+    <!-- Chapter 02: Interior -->
+    <article class="max-w-4xl mx-auto">
+      <div class="flex items-center justify-center gap-4 mb-4">
+        <span class="flex-[0_0_3rem] sm:flex-[0_0_5rem] h-px bg-[color:var(--color-gold)]/40" aria-hidden="true"></span>
+        <span class="text-xs uppercase tracking-[0.3em] text-[color:var(--color-gold)]">Chapter 02</span>
+        <span class="flex-[0_0_3rem] sm:flex-[0_0_5rem] h-px bg-[color:var(--color-gold)]/40" aria-hidden="true"></span>
+      </div>
+      <h3 class="text-center font-display text-2xl md:text-3xl text-[color:var(--color-ink)]">Interior Atrium Ribbon</h3>
+      <p class="text-center text-xs uppercase tracking-[0.25em] text-[color:var(--color-gold)] mt-2 mb-8">
+        80 feet &middot; Sunrise to night
+      </p>
+
+      {interiorHero && (
+        <figure class="mb-8">
+          <button
+            type="button"
+            class="group block w-full cursor-zoom-in overflow-hidden rounded-lg border-0 bg-transparent p-0 text-left shadow-xl focus:outline-none focus-visible:ring-2 focus-visible:ring-[color:var(--color-accent)] focus-visible:ring-offset-2 focus-visible:ring-offset-[color:var(--color-paper)]"
+            data-lightbox={`/images/${interiorHero.src}`}
+            data-lightbox-alt={interiorHero.alt}
+            aria-label={`View larger: ${interiorHero.alt}`}
+          >
+            <img
+              src={`/images/${interiorHero.src}`}
+              alt=""
+              loading="lazy"
+              decoding="async"
+              class="pointer-events-none w-full object-cover aspect-[4/3] sm:aspect-[16/10] transition-opacity group-hover:opacity-90"
+            />
+          </button>
+        </figure>
+      )}
+
+      <div class="space-y-4 text-black/80 leading-relaxed text-[15px] md:text-base">
+        <p>
+          Inside, the mural continues through an 80-foot ribbon around the atrium that begins at sunrise and moves into
+          night. The imagery tells a story of growth and possibility, from a protected nest to eagles soaring toward the
+          stars.
+        </p>
+        <p>
+          Bright, vibrant colors energize the space while calming native flora and fauna ground the mural in place,
+          surrounding students each day with reminders of support, movement, and reaching for their dreams.
+        </p>
+      </div>
+
+      {interiorGallery.length > 0 && (
+        <div
+          class:list={[
+            'mt-10 grid gap-2',
+            interiorGallery.length >= 3 ? 'grid-cols-2 sm:grid-cols-3' : 'grid-cols-2',
+          ]}
+        >
+          {interiorGallery.map((t) => (
+            <LightboxThumb src={t.src} alt={t.alt} aspectClass="aspect-[4/3]" />
+          ))}
+        </div>
+      )}
+
+      {!interiorHero && interiorGallery.length === 0 && (
+        <p class="mt-8 text-sm text-black/60 text-center max-w-md mx-auto leading-relaxed">
+          Additional photos of the interior atrium ribbon will appear here once they are added to the site.
+        </p>
+      )}
+
+      {interiorVideoId && (
+        <div class="mt-10 text-center">
+          <a
+            class="inline-flex items-center gap-2 text-xs uppercase tracking-[0.2em] text-[color:var(--color-gold)] border-b border-transparent hover:border-[color:var(--color-gold)] transition-colors"
+            href={`https://www.youtube.com/watch?v=${interiorVideoId}`}
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            <span class="text-[10px]" aria-hidden="true">&#9658;</span>
+            Watch the interior come to life
+          </a>
+        </div>
+      )}
+    </article>
+  </div>
+</section>
