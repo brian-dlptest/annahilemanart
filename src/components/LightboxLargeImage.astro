@@ -1,16 +1,30 @@
 ---
 /**
- * Full-width hero image that opens the site lightbox at full resolution (same URL as src).
+ * Featured image that opens the site lightbox (same URL as displayed).
  */
 interface Props {
   /** Filename under public/images/ */
   src: string;
   alt: string;
-  /** Tailwind classes for the <img> (layout, aspect, min-height, etc.) */
+  /** Tailwind classes for the <img> — include object-cover or object-contain, aspect, max-h, etc. */
   class?: string;
+  loading?: 'eager' | 'lazy';
+  fetchpriority?: 'high' | 'low' | 'auto';
+  decoding?: 'auto' | 'async' | 'sync';
+  width?: number;
+  height?: number;
 }
 
-const { src, alt, class: imgClass = '' } = Astro.props;
+const {
+  src,
+  alt,
+  class: imgClass = 'object-cover',
+  loading = 'lazy',
+  fetchpriority,
+  decoding = 'async',
+  width,
+  height,
+} = Astro.props;
 const href = `/images/${src}`;
 ---
 <button
@@ -23,7 +37,11 @@ const href = `/images/${src}`;
   <img
     src={href}
     alt=""
-    class:list={['pointer-events-none w-full rounded-lg shadow-xl object-cover', imgClass]}
-    loading="lazy"
+    width={width}
+    height={height}
+    fetchpriority={fetchpriority}
+    loading={loading}
+    decoding={decoding}
+    class:list={['pointer-events-none w-full rounded-lg shadow-xl', imgClass]}
   />
 </button>

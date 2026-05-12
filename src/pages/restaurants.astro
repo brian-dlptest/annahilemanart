@@ -1,6 +1,7 @@
 ---
 import Layout from '../layouts/Layout.astro';
 import LightboxThumb from '../components/LightboxThumb.astro';
+import LightboxLargeImage from '../components/LightboxLargeImage.astro';
 import JsonLd from '../components/JsonLd.astro';
 import { buildServiceSchema, buildBreadcrumbs } from '../data/schemas';
 
@@ -94,20 +95,8 @@ const qiThumbs = [
 >
   <section class="border-b border-black/5">
     <div class="max-w-7xl mx-auto px-6 lg:px-10 py-16 lg:py-24">
-      <div class="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-16 items-center">
-        <div class="lg:col-span-7 min-w-0">
-          <img
-            src="/images/Threefold-Bakery-Interior-Mural-by-Anna-Hileman-Courtesy1600.jpeg"
-            alt="Threefold Bakery interior mural by Anna Hileman"
-            width={1600}
-            height={2000}
-            fetchpriority="high"
-            loading="eager"
-            decoding="async"
-            class="w-full rounded-lg shadow-xl object-cover aspect-[4/5]"
-          />
-        </div>
-        <div class="lg:col-span-5">
+      <div class="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-16 items-start lg:items-center">
+        <div class="order-2 lg:order-1 lg:col-span-5 min-w-0">
           <div class="text-xs uppercase tracking-[0.3em] text-[color:var(--color-gold)]">Hospitality Commissions</div>
           <h1 class="mt-6 font-display text-4xl md:text-5xl lg:text-6xl leading-[1.05] text-[color:var(--color-ink)]">
             Restaurant art that
@@ -125,6 +114,18 @@ const qiThumbs = [
             Start a Restaurant Project
             <span aria-hidden="true">&rarr;</span>
           </a>
+        </div>
+        <div class="order-1 lg:order-2 lg:col-span-7 min-w-0">
+          <LightboxLargeImage
+            src="Threefold-Bakery-Interior-Mural-by-Anna-Hileman-Courtesy1600.jpeg"
+            alt="Threefold Bakery interior mural by Anna Hileman"
+            width={1600}
+            height={2000}
+            fetchpriority="high"
+            loading="eager"
+            decoding="async"
+            class="h-auto max-h-[min(82vh,900px)] object-contain bg-black/[0.03] ring-1 ring-black/5"
+          />
         </div>
       </div>
     </div>
@@ -178,11 +179,12 @@ const qiThumbs = [
           </div>
         </div>
         <div class="lg:sticky lg:top-28">
-          <img
-            src="/images/Threefold-Bakery-Interior-Mural-by-Anna-Hileman-Courtesy1600.jpeg"
+          <LightboxLargeImage
+            src="Threefold-Bakery-Interior-Mural-by-Anna-Hileman-Courtesy1600.jpeg"
             alt="Threefold Bakery interior mural by Anna Hileman"
-            class="w-full rounded-lg shadow-xl object-cover aspect-[3/4] lg:min-h-[min(85vh,52rem)]"
-            loading="lazy"
+            width={1600}
+            height={2000}
+            class="h-auto max-h-[min(88vh,920px)] max-w-full object-contain bg-black/[0.03] ring-1 ring-black/5"
           />
         </div>
       </div>
@@ -215,17 +217,15 @@ const qiThumbs = [
           </div>
         </div>
         <div class="lg:sticky lg:top-28 space-y-6">
-          <img
-            src="/images/IMG_9457.jpg"
+          <LightboxLargeImage
+            src="IMG_9457.jpg"
             alt="Radicato, Breckenridge commissioned restaurant artwork"
-            class="w-full rounded-lg shadow-xl object-cover aspect-[3/4]"
-            loading="lazy"
+            class="aspect-[3/4] object-cover"
           />
-          <img
-            src="/images/IMG_6126.jpeg"
+          <LightboxLargeImage
+            src="IMG_6126.jpeg"
             alt="Radicato restaurant interior and artwork"
-            class="w-full rounded-lg shadow-xl object-cover aspect-[3/4]"
-            loading="lazy"
+            class="aspect-[3/4] object-cover"
           />
         </div>
       </div>
@@ -258,11 +258,10 @@ const qiThumbs = [
           </div>
         </div>
         <div class="lg:sticky lg:top-28">
-          <img
-            src="/images/QI-Ceiling.jpg"
+          <LightboxLargeImage
+            src="QI-Ceiling.jpg"
             alt="Quality Italian Cherry Creek dining room with custom hand-painted ceiling"
-            class="w-full rounded-lg shadow-xl object-cover aspect-[3/4] lg:min-h-[min(85vh,52rem)]"
-            loading="lazy"
+            class="aspect-[3/4] object-cover lg:min-h-[min(85vh,52rem)]"
           />
         </div>
       </div>
