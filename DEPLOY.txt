@@ -10,6 +10,13 @@ CONFIGURED IN CLOUDFLARE (account: Hileman8@hotmail.com)
 
   Build: npm run build  |  Output: dist  |  Env: NODE_VERSION=20, PUBLIC_SITE_URL set per project
 
+  Indexing / robots (see siteIndexing.mjs + src/pages/robots.txt.ts):
+  - Production project: set PUBLIC_SITE_URL to https://annahileman.com (or https://www.annahileman.com).
+    Builds emit indexable pages, robots.txt Allow + Sitemap: https://annahileman.com/sitemap-index.xml,
+    and @astrojs/sitemap output.
+  - Staging project: set PUBLIC_SITE_URL to https://staging.annahileman.com. Builds emit
+    noindex,nofollow, robots.txt Disallow: /, and no sitemap files (so crawlers are not pointed at staging).
+
   Latest successful deployments were triggered via API (branch staging / main).
 
 WHAT YOU MUST DO FOR CUSTOM HOSTNAMES

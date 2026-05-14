@@ -2,12 +2,14 @@
 import { defineConfig } from 'astro/config';
 import tailwindcss from '@tailwindcss/vite';
 import sitemap from '@astrojs/sitemap';
+import { isPrimaryProductionHostname } from './siteIndexing.mjs';
 
 /**
  * Set PUBLIC_SITE_URL in each Cloudflare Pages project:
  * - Staging project: https://staging.annahileman.com
  * - Production project: https://annahileman.com
- * If unset, CF_PAGES_URL is used on Cloudflare builds; local dev defaults to production URL.
+ * If unset, CF_PAGES_URL is used on Cloudflare builds (production project → annahileman.pages.dev).
+ * Prefer setting PUBLIC_SITE_URL on production to https://annahileman.com once DNS is live.
  */
 function resolveSite() {
   const explicit = process.env.PUBLIC_SITE_URL?.replace(/\/$/, '');
@@ -18,12 +20,16 @@ function resolveSite() {
   return 'https://annahileman.com';
 }
 
+const resolvedSite = resolveSite();
+const hostname = new URL(resolvedSite).hostname;
+const useProductionSitemap = isPrimaryProductionHostname(hostname);
+
 export default defineConfig({
-  site: resolveSite(),
+  site: resolvedSite,
   server: {
     port: 4322,
   },
-  integrations: [sitemap()],
+  integrations: [...(useProductionSitemap ? [sitemap()] : [])],
   vite: {
     plugins: [tailwindcss()],
   },

@@ -5,6 +5,7 @@ import Footer from '../components/Footer.astro';
 import LightboxRoot from '../components/LightboxRoot.astro';
 import JsonLd from '../components/JsonLd.astro';
 import { googleReviewStats, googleReviewsProfileUrl } from '../data/customer-reviews';
+import { isPrimaryProductionHostname } from '../../siteIndexing.mjs';
 
 interface Props {
   title?: string;
@@ -43,6 +44,7 @@ const resolvedOgImage = ogImageToUse
 
 const canonicalUrl = Astro.site ? new URL(Astro.url.pathname, Astro.site).href : undefined;
 const siteOrigin = Astro.site ? Astro.site.origin : 'https://annahileman.com';
+const allowSearchIndexing = isPrimaryProductionHostname(Astro.site?.hostname);
 const rssUrl = Astro.site ? new URL('/rss.xml', Astro.site).href : `${siteOrigin}/rss.xml`;
 
 // Entity / organization schema — gives search engines and LLMs a single, canonical
@@ -157,7 +159,11 @@ const websiteSchema = {
     <meta name="theme-color" content="#f6f0e6" />
     <title>{title}</title>
     <meta name="description" content={description} />
-    <meta name="robots" content="index,follow,max-image-preview:large,max-snippet:-1" />
+    {allowSearchIndexing ? (
+      <meta name="robots" content="index,follow,max-image-preview:large,max-snippet:-1" />
+    ) : (
+      <meta name="robots" content="noindex,nofollow" />
+    )}
     <meta property="og:site_name" content={siteName} />
     <meta property="og:title" content={title} />
     <meta property="og:description" content={description} />
