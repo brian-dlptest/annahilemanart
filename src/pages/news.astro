@@ -26,14 +26,6 @@ const posts = getPostsForNewsPage(allPosts, currentPage);
       Follow <a href="https://www.instagram.com/annahilemanart/" target="_blank" rel="noopener" class="underline">@annahilemanart on Instagram</a> for day-to-day updates.
     </p>
 
-    <a
-      href="/rss.xml"
-      class="mt-6 inline-flex items-center gap-2 text-xs uppercase tracking-[0.2em] border-b border-[color:var(--color-ink)] pb-0.5 hover:text-[color:var(--color-accent)] hover:border-[color:var(--color-accent)] transition-colors"
-    >
-      <svg aria-hidden="true" width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M4 4a16 16 0 0 1 16 16h-3A13 13 0 0 0 4 7V4zm0 6a10 10 0 0 1 10 10h-3a7 7 0 0 0-7-7v-3zm2 7.5a2.5 2.5 0 1 1 0 5 2.5 2.5 0 0 1 0-5z"/></svg>
-      Subscribe via RSS
-    </a>
-
     <div class="mt-14 border-t border-black/10">
       {posts.map((post) => (
         <article class="border-b border-black/10 py-10">
@@ -89,11 +81,5 @@ const posts = getPostsForNewsPage(allPosts, currentPage);
         })}
       </nav>
     )}
-
-    <div class="mt-12 text-sm text-black/60 text-center">
-      Prefer a feed reader? Subscribe via
-      {' '}
-      <a href="/rss.xml" class="underline hover:text-[color:var(--color-accent)]">RSS</a>.
-    </div>
   </section>
 </Layout>
