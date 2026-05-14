@@ -29,7 +29,26 @@ export default defineConfig({
   server: {
     port: 4322,
   },
-  integrations: [...(useProductionSitemap ? [sitemap()] : [])],
+  integrations: [
+    ...(useProductionSitemap
+      ? [
+          sitemap({
+            // /murals is a static redirect to /school-murals; omit from sitemap final URLs.
+            filter: (page) => {
+              try {
+                let pathname = new URL(page).pathname;
+                if (pathname !== '/' && pathname.endsWith('/')) {
+                  pathname = pathname.slice(0, -1);
+                }
+                return pathname !== '/murals';
+              } catch {
+                return true;
+              }
+            },
+          }),
+        ]
+      : []),
+  ],
   vite: {
     plugins: [tailwindcss()],
   },
