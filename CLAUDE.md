@@ -89,7 +89,7 @@ so history stays clean.
 - The image resolution utility used for data-driven image lookups
 - The `main` branch directly (always go through staging + PR)
 - DNS, Cloudflare Pages project settings, or build configuration
-- AGENTS.md or CLAUDE.md (ask Brian, not Anna)
+- `.claude/` directory or this CLAUDE.md file (ask Brian, not Anna)
 
 If Anna asks for something that requires touching any of the above, STOP and
 explain in plain English what would need to change and why, then wait for her
