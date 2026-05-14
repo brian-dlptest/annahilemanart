@@ -157,6 +157,7 @@ const websiteSchema = {
     <link rel="apple-touch-icon" sizes="180x180" href="/images/cropped-Site-Icon.png" />
     <link rel="manifest" href="/site.webmanifest" />
     <meta name="theme-color" content="#f6f0e6" />
+    <meta name="git-commit" content={import.meta.env.PUBLIC_GIT_COMMIT || 'dev'} />
     <title>{title}</title>
     <meta name="description" content={description} />
     {allowSearchIndexing ? (
