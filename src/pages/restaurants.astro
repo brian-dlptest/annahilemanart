@@ -1,17 +1,20 @@
 ---
 import Layout from '../layouts/Layout.astro';
+import { getImage } from 'astro:assets';
+import { resolveImage } from '../lib/images';
 import LightboxThumb from '../components/LightboxThumb.astro';
 import LightboxLargeImage from '../components/LightboxLargeImage.astro';
 import JsonLd from '../components/JsonLd.astro';
 import { buildServiceSchema, buildBreadcrumbs } from '../data/schemas';
 
+const threefoldHeroImg = await resolveImage('Threefold-Bakery-Interior-Mural-by-Anna-Hileman-Courtesy1600.jpeg');
 const restaurantsServiceSchema = buildServiceSchema(Astro.site, {
   name: 'Custom Restaurant Artwork & Murals',
   slug: 'restaurants',
   description:
     'Hand-painted murals and custom artwork for Denver and Colorado restaurants — featured at Threefold Bakery, Radicato, Quality Italian, and more.',
   serviceType: 'Commercial mural commissions',
-  image: '/images/Threefold-Bakery-Interior-Mural-by-Anna-Hileman-Courtesy1600.jpeg',
+  image: threefoldHeroImg.src,
 });
 const restaurantsBreadcrumbs = buildBreadcrumbs(Astro.site, [
   { name: 'Home', slug: '' },
@@ -84,14 +87,16 @@ const qiThumbs = [
   '2016-11-16-00.06.01.jpg',
   '2016-12-01-23.09.48.jpg',
 ] as const;
+
+const ogImg = await getImage({ src: threefoldHeroImg, width: 1200, format: 'jpeg' });
 ---
 
 <Layout
   title="Custom Restaurant Artwork & Murals | Anna Hileman Art"
   description="Hand-painted murals and custom artwork for Denver and Colorado restaurants by artist Anna Hileman. Featured installations at Threefold Bakery, Radicato, Quality Italian, and more."
-  ogImage="/images/Threefold-Bakery-Interior-Mural-by-Anna-Hileman-Courtesy1600.jpeg"
+  ogImage={ogImg.src}
   ogImageAlt="Threefold Bakery interior mural hand-painted by Anna Hileman"
-  preloadImage="/images/Threefold-Bakery-Interior-Mural-by-Anna-Hileman-Courtesy1600.jpeg"
+  preloadImage={threefoldHeroImg.src}
 >
   <section class="border-b border-black/5">
     <div class="max-w-7xl mx-auto px-6 lg:px-10 py-16 lg:py-24">

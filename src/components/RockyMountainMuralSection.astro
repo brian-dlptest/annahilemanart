@@ -1,11 +1,15 @@
 ---
+import { Image, getImage } from 'astro:assets';
+import { resolveImage } from '../lib/images';
 import LightboxThumb from './LightboxThumb.astro';
 
-const exteriorHeroHref = '/images/RM-Mural-Exterior-Wide.jpg';
+const exteriorHeroMeta = await resolveImage('RM-Mural-Exterior-Wide.jpg');
+const exteriorHeroFull = await getImage({ src: exteriorHeroMeta, width: Math.min(exteriorHeroMeta.width, 1800) });
 const exteriorHeroAlt =
   'Rocky Mountain Elementary exterior mural, wide view across the front of the school';
 
-const interiorHeroHref = '/images/RM-Interior-Ribbon-Hallway.jpg';
+const interiorHeroMeta = await resolveImage('RM-Interior-Ribbon-Hallway.jpg');
+const interiorHeroFull = await getImage({ src: interiorHeroMeta, width: Math.min(interiorHeroMeta.width, 1800) });
 const interiorHeroAlt =
   'Rocky Mountain Elementary, interior ribbon mural curving around the atrium hallway with night sky on one wall and eagles on the other';
 
@@ -52,8 +56,6 @@ const interiorVideoHref = 'https://www.youtube.com/watch?v=9pqetnJ3CJ4';
 
 const heroButtonClass =
   'group block w-full cursor-zoom-in overflow-hidden rounded-lg border-0 bg-transparent p-0 text-left shadow-xl focus:outline-none focus-visible:ring-2 focus-visible:ring-[color:var(--color-accent)] focus-visible:ring-offset-2 focus-visible:ring-offset-[#e8e1d3]';
-const heroImgClass =
-  'pointer-events-none h-full w-full object-cover aspect-[4/5] transition-opacity group-hover:opacity-90';
 ---
 
 <section id="rocky-mountain" class="rm-section border-t border-black/10">
@@ -101,11 +103,18 @@ const heroImgClass =
           <button
             type="button"
             class={heroButtonClass}
-            data-lightbox={exteriorHeroHref}
+            data-lightbox={exteriorHeroFull.src}
             data-lightbox-alt={exteriorHeroAlt}
             aria-label={`View larger: ${exteriorHeroAlt}`}
           >
-            <img src={exteriorHeroHref} alt="" loading="lazy" decoding="async" class={heroImgClass} />
+            <Image
+              src={exteriorHeroMeta}
+              alt=""
+              width={Math.min(exteriorHeroMeta.width, 1200)}
+              loading="lazy"
+              decoding="async"
+              class="pointer-events-none h-full w-full object-cover aspect-[4/5] transition-opacity group-hover:opacity-90"
+            />
           </button>
         </div>
         <div class="lg:col-span-5 lg:sticky lg:top-28 lg:self-start space-y-4 text-[15px] md:text-base text-black/80 leading-relaxed">
@@ -158,11 +167,18 @@ const heroImgClass =
           <button
             type="button"
             class={heroButtonClass}
-            data-lightbox={interiorHeroHref}
+            data-lightbox={interiorHeroFull.src}
             data-lightbox-alt={interiorHeroAlt}
             aria-label={`View larger: ${interiorHeroAlt}`}
           >
-            <img src={interiorHeroHref} alt="" loading="lazy" decoding="async" class={heroImgClass} />
+            <Image
+              src={interiorHeroMeta}
+              alt=""
+              width={Math.min(interiorHeroMeta.width, 1200)}
+              loading="lazy"
+              decoding="async"
+              class="pointer-events-none h-full w-full object-cover aspect-[4/5] transition-opacity group-hover:opacity-90"
+            />
           </button>
         </div>
         <div class="lg:col-span-5 lg:sticky lg:top-28 lg:self-start space-y-4 text-[15px] md:text-base text-black/80 leading-relaxed">

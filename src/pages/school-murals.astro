@@ -1,5 +1,7 @@
 ---
 import Layout from '../layouts/Layout.astro';
+import { getImage } from 'astro:assets';
+import { resolveImage } from '../lib/images';
 import MuralHero from '../components/MuralHero.astro';
 import CaseStudy from '../components/CaseStudy.astro';
 import PoemsBlock from '../components/PoemsBlock.astro';
@@ -7,13 +9,14 @@ import RockyMountainMuralSection from '../components/RockyMountainMuralSection.a
 import JsonLd from '../components/JsonLd.astro';
 import { buildServiceSchema, buildBreadcrumbs } from '../data/schemas';
 
+const diaHeroImg = await resolveImage('Dual-Immersion-Academy-School-Mural-1.jpg');
 const schoolMuralsServiceSchema = buildServiceSchema(Astro.site, {
   name: 'Custom School Murals',
   slug: 'school-murals',
   description:
     'Hand-painted school murals across Colorado — collaborative design and classroom-ready installation for K-12 campuses.',
   serviceType: 'Mural painting',
-  image: '/images/Dual-Immersion-Academy-School-Mural-1.jpg',
+  image: diaHeroImg.src,
 });
 const schoolMuralsBreadcrumbs = buildBreadcrumbs(Astro.site, [
   { name: 'Home', slug: '' },
@@ -158,13 +161,15 @@ const mesaThumbs = [
   { src: 'Handprints-3.jpg', alt: 'Mesa View Elementary mural — student handprints, green spectrum' },
   { src: 'Handprints-4.jpg', alt: 'Mesa View Elementary mural — student handprints, indigo spectrum' },
 ];
+
+const ogImg = await getImage({ src: diaHeroImg, width: 1200, format: 'jpeg' });
 ---
 <Layout
   title="Custom School Murals in Colorado | Anna Hileman Art"
   description="Custom school murals across Colorado by artist Anna Hileman. Collaborative design and hand-painted installations for K-12 campuses — from concept to classroom-ready finish."
-  ogImage="/images/Dual-Immersion-Academy-School-Mural-1.jpg"
+  ogImage={ogImg.src}
   ogImageAlt="Dual Immersion Academy school mural hand-painted by Anna Hileman"
-  preloadImage="/images/Dual-Immersion-Academy-School-Mural-1.jpg"
+  preloadImage={diaHeroImg.src}
 >
   <MuralHero
     eyebrow="School Murals"

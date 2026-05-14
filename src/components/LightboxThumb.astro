@@ -1,6 +1,9 @@
 ---
+import { Image, getImage } from 'astro:assets';
+import { resolveImage } from '../lib/images';
+
 interface Props {
-  /** Filename under /images/ (used when imageUrl is not set) */
+  /** Filename under src/assets/images/ (used when imageUrl is not set) */
   src?: string;
   /** Full image URL (e.g. CDN); takes precedence over src */
   imageUrl?: string;
@@ -10,16 +13,22 @@ interface Props {
 }
 
 const { src = '', imageUrl, alt = '', aspectClass = 'aspect-square' } = Astro.props;
-const href = imageUrl ?? `/images/${src}`;
+
+const imageMeta = !imageUrl && src ? await resolveImage(src) : null;
+const thumbHref = imageUrl ?? (imageMeta ? (await getImage({ src: imageMeta, width: Math.min(imageMeta.width, 1800) })).src : `/images/${src}`);
 ---
 <div class:list={[aspectClass, 'overflow-hidden rounded-md bg-black/5']}>
   <button
     type="button"
     class="block h-full w-full cursor-zoom-in border-0 bg-transparent p-0 text-left"
-    data-lightbox={href}
+    data-lightbox={thumbHref}
     data-lightbox-alt={alt}
     aria-label={alt ? `View larger: ${alt}` : 'View larger image'}
   >
-    <img src={href} alt={alt} class="pointer-events-none h-full w-full object-cover" loading="lazy" />
+    {imageMeta ? (
+      <Image src={imageMeta} alt={alt} width={400} class="pointer-events-none h-full w-full object-cover" loading="lazy" decoding="async" />
+    ) : (
+      <img src={thumbHref} alt={alt} class="pointer-events-none h-full w-full object-cover" loading="lazy" />
+    )}
   </button>
 </div>

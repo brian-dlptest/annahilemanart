@@ -1,4 +1,7 @@
 ---
+import { Image } from 'astro:assets';
+import { resolveImage } from '../lib/images';
+
 interface Props {
   eyebrow: string;
   title: string;
@@ -7,7 +10,7 @@ interface Props {
   subhead: string;
   ctaHref: string;
   ctaLabel: string;
-  /** Filename under /images/ */
+  /** Filename under src/assets/images/ */
   image: string;
   imageAlt: string;
   /** Intrinsic width of the source image, in px, for CLS prevention. */
@@ -29,19 +32,19 @@ const {
   imageHeight,
 } = Astro.props;
 
-const heroHref = `/images/${image}`;
+const imageMeta = await resolveImage(image);
 ---
 <!-- Full-bleed banner first; headline + CTA on paper below (not overlaid). -->
 <section class="relative overflow-hidden h-[50vh] md:h-[60vh] lg:h-[70vh] border-b border-black/5">
-  <img
-    src={heroHref}
+  <Image
+    src={imageMeta}
     alt={imageAlt}
     width={imageWidth}
     height={imageHeight}
-    fetchpriority="high"
     loading="eager"
     decoding="async"
     class="absolute inset-0 h-full w-full object-cover object-[center_30%]"
+    fetchpriority="high"
   />
 </section>
 

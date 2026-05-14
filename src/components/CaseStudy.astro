@@ -1,4 +1,6 @@
 ---
+import { Image, getImage } from 'astro:assets';
+import { resolveImage } from '../lib/images';
 import LightboxThumb from './LightboxThumb.astro';
 
 interface Thumb {
@@ -24,7 +26,7 @@ interface Props {
   location: string;
   /** School name. Rendered as the H2. */
   title: string;
-  /** Filename under /images/ for the hero image. */
+  /** Filename under src/assets/images/ for the hero image. */
   heroImage: string;
   heroAlt: string;
   /** Lede paragraph(s). Plain text; line breaks become <br>. */
@@ -58,7 +60,8 @@ const {
   thumbs,
 } = Astro.props;
 
-const heroHref = `/images/${heroImage}`;
+const heroMeta = await resolveImage(heroImage);
+const heroFull = await getImage({ src: heroMeta, width: Math.min(heroMeta.width, 1800) });
 ---
 <section id={anchorId} class="border-t border-black/10">
   <div class="max-w-7xl mx-auto px-6 lg:px-10 py-16 lg:py-24">
@@ -67,13 +70,14 @@ const heroHref = `/images/${heroImage}`;
         <button
           type="button"
           class="group block w-full cursor-zoom-in overflow-hidden rounded-lg border-0 bg-transparent p-0 text-left shadow-xl focus:outline-none focus-visible:ring-2 focus-visible:ring-[color:var(--color-accent)] focus-visible:ring-offset-2 focus-visible:ring-offset-[color:var(--color-paper)]"
-          data-lightbox={heroHref}
+          data-lightbox={heroFull.src}
           data-lightbox-alt={heroAlt}
           aria-label={heroAlt ? `View larger: ${heroAlt}` : 'View larger image'}
         >
-          <img
-            src={heroHref}
+          <Image
+            src={heroMeta}
             alt=""
+            width={Math.min(heroMeta.width, 1200)}
             loading="lazy"
             decoding="async"
             class="pointer-events-none h-full w-full object-cover aspect-[4/5] transition-opacity group-hover:opacity-90"

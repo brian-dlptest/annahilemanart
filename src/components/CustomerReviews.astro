@@ -257,6 +257,8 @@ const googleWordmarkSvg = `<svg class="h-7 w-auto" viewBox="0 0 74 24" xmlns="ht
     section.addEventListener('mouseleave', startAuto);
     section.addEventListener('focusin', stopAuto);
     section.addEventListener('focusout', startAuto);
+    scroller.addEventListener('touchstart', stopAuto, { passive: true });
+    scroller.addEventListener('touchend', function () { setTimeout(startAuto, 3000); }, { passive: true });
 
     section.querySelectorAll('[data-review-expandable]').forEach(function (wrap) {
       var textEl = wrap.querySelector('.customer-reviews__text');

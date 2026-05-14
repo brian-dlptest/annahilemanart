@@ -43,7 +43,7 @@ const linkClass = (href: string) =>
         </a>
       ))}
     </nav>
-    <details class="lg:hidden relative">
+    <details class="lg:hidden relative" id="mobile-nav">
       <summary class="list-none cursor-pointer p-2">
         <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
           <path stroke-linecap="round" d="M4 6h16M4 12h16M4 18h16"/>
@@ -62,3 +62,12 @@ const linkClass = (href: string) =>
     </details>
   </div>
 </header>
+<script is:inline>
+  (function () {
+    var details = document.getElementById('mobile-nav');
+    if (!details) return;
+    document.addEventListener('click', function (e) {
+      if (details.open && !details.contains(e.target)) details.open = false;
+    });
+  })();
+</script>

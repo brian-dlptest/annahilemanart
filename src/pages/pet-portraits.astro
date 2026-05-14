@@ -1,16 +1,20 @@
 ---
 import Layout from '../layouts/Layout.astro';
+import { Image } from 'astro:assets';
+import { getImage } from 'astro:assets';
+import { resolveImage } from '../lib/images';
 import LightboxThumb from '../components/LightboxThumb.astro';
 import JsonLd from '../components/JsonLd.astro';
 import { buildServiceSchema, buildBreadcrumbs } from '../data/schemas';
 
+const portraitOgSrcImg = await resolveImage('Pet-Portraiture-in-Oils.jpg');
 const portraitsServiceSchema = buildServiceSchema(Astro.site, {
   name: 'Custom Pet Portraits',
   slug: 'pet-portraits',
   description:
     'Commissioned pet portraits in acrylic and oil — heirloom hand-painted portraits from your photos by Colorado artist Anna Hileman.',
   serviceType: 'Portrait commissions',
-  image: '/images/Pet-Portraiture-in-Oils.jpg',
+  image: portraitOgSrcImg.src,
 });
 const portraitsBreadcrumbs = buildBreadcrumbs(Astro.site, [
   { name: 'Home', slug: '' },
@@ -56,24 +60,26 @@ const oilPrices = [
   { size: '24" × 36"', price: '$1,150' },
   { size: '36" × 36"', price: '$1,350' },
 ];
+
+const heroImg = await resolveImage('Pet-Portrait-Featured-Acrylic-on-Aluminum.jpg');
+const ogImg = await getImage({ src: portraitOgSrcImg, width: 1200, format: 'jpeg' });
 ---
 <Layout
   title="Custom Pet Portrait Paintings — Acrylic & Oil | Anna Hileman Art"
   description="Commissioned pet portraits in acrylic and oil by Colorado artist Anna Hileman. Heirloom hand-painted portraits from your photos — dogs, cats, horses, and beyond."
-  ogImage="/images/Pet-Portraiture-in-Oils.jpg"
+  ogImage={ogImg.src}
   ogImageAlt="Hand-painted pet portrait in oil by Anna Hileman"
-  preloadImage="/images/Pet-Portraiture-in-Oils.jpg"
+  preloadImage={portraitOgSrcImg.src}
 >
   <!-- Asymmetric hero: featured portrait on left, text on right -->
   <section class="border-b border-black/5">
     <div class="max-w-7xl mx-auto px-6 lg:px-10 py-16 lg:py-24">
       <div class="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-16 items-center">
         <div class="lg:col-span-7 min-w-0">
-          <img
-            src="/images/IMG_0342.jpg"
+          <Image
+            src={heroImg}
             alt="Featured acrylic-on-aluminum pet portrait by Anna Hileman"
             width={1024}
-            height={1013}
             fetchpriority="high"
             loading="eager"
             decoding="async"

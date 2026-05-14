@@ -1,10 +1,13 @@
 ---
+import { Image, getImage } from 'astro:assets';
+import { resolveImage } from '../lib/images';
+
 interface Props {
   src?: string;
   alt: string;
   class?: string;
   ratio?: 'square' | 'portrait' | 'landscape' | 'wide';
-  /** When true, click opens a full-size view (same file). Default true. Set false for nav cards or non-gallery use. */
+  /** When true, click opens a full-size view. Default true. Set false for nav cards or non-gallery use. */
   lightbox?: boolean;
   /** Responsive sizes attribute to pair with native browser lazy loading. */
   sizes?: string;
@@ -26,37 +29,38 @@ const ratioClass = {
   wide: 'aspect-[16/9]',
 }[ratio];
 
-// Representative intrinsic dimensions so the browser can reserve space
-// before the image loads (prevents CLS). Actual pixel dimensions vary
-// but only the aspect ratio needs to match the CSS box.
-const dims = {
-  square: { width: 1000, height: 1000 },
-  portrait: { width: 900, height: 1200 },
-  landscape: { width: 1200, height: 900 },
-  wide: { width: 1600, height: 900 },
+const displayWidth = {
+  square: 800,
+  portrait: 800,
+  landscape: 900,
+  wide: 1200,
 }[ratio];
 
-// Use a real image if provided, otherwise placeholder
-const imageSrc = src ? `/images/${src}` : null;
-const lightboxOn = Boolean(lightbox && imageSrc);
+const imageMeta = src ? await resolveImage(src) : null;
+const lightboxOn = Boolean(lightbox && imageMeta);
+
+let lightboxSrc: string | undefined;
+if (lightboxOn && imageMeta) {
+  const full = await getImage({ src: imageMeta, width: Math.min(imageMeta.width, 1800) });
+  lightboxSrc = full.src;
+}
 
 const shellClass = `${ratioClass} ${cls} overflow-hidden bg-[color:var(--color-accent-soft)] placeholder-art`;
 const triggerClass = `${shellClass} block w-full cursor-zoom-in border-0 p-0 text-left focus:outline-none focus-visible:ring-2 focus-visible:ring-[color:var(--color-accent)] focus-visible:ring-offset-2 focus-visible:ring-offset-[color:var(--color-paper)]`;
 ---
 
-{lightboxOn ? (
+{lightboxOn && imageMeta ? (
   <button
     type="button"
     class={triggerClass}
-    data-lightbox={imageSrc}
+    data-lightbox={lightboxSrc}
     data-lightbox-alt={alt}
     aria-label={`View larger: ${alt}`}
   >
-    <img
-      src={imageSrc}
+    <Image
+      src={imageMeta}
       alt={alt}
-      width={dims.width}
-      height={dims.height}
+      width={displayWidth}
       sizes={sizes}
       class="pointer-events-none h-full w-full object-cover"
       loading="lazy"
@@ -65,19 +69,18 @@ const triggerClass = `${shellClass} block w-full cursor-zoom-in border-0 p-0 tex
   </button>
 ) : (
   <div class={shellClass}>
-    {imageSrc && (
-      <img
-        src={imageSrc}
+    {imageMeta && (
+      <Image
+        src={imageMeta}
         alt={alt}
-        width={dims.width}
-        height={dims.height}
+        width={displayWidth}
         sizes={sizes}
         class="h-full w-full object-cover"
         loading="lazy"
         decoding="async"
       />
     )}
-    {!imageSrc && (
+    {!imageMeta && (
       <div class="relative z-10 flex h-full w-full items-center justify-center">
         <div class="relative z-10 px-4 text-center font-display text-[color:var(--color-accent)]/70">
           <div class="mb-2 text-xs uppercase tracking-[0.2em]">Artwork</div>

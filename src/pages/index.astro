@@ -1,7 +1,14 @@
 ---
 import Layout from '../layouts/Layout.astro';
+import { Image } from 'astro:assets';
+import { getImage } from 'astro:assets';
+import { resolveImage } from '../lib/images';
 import ArtImage from '../components/ArtImage.astro';
 import CustomerReviews from '../components/CustomerReviews.astro';
+
+const heroImg = await resolveImage('Threefold-Bakery-Interior-Mural-by-Anna-Hileman-Courtesy1600.jpeg');
+const annaImg = await resolveImage('website-anna.jpg');
+const ogImg = await getImage({ src: heroImg, width: 1200, format: 'jpeg' });
 
 const featuredWorks = [
   {
@@ -64,19 +71,18 @@ const faqSchema = {
 <Layout
   title="Anna Hileman Art | Colorado Muralist, Restaurant & School Artist"
   description="Custom murals, restaurant artwork, school murals, pet portraits, and botanical commissions by Colorado artist Anna Hileman. Serving Denver, Boulder, Breckenridge, Grand Junction, and the Front Range."
-  ogImage="/images/Threefold-Bakery-Interior-Mural-by-Anna-Hileman-Courtesy1600.jpeg"
+  ogImage={ogImg.src}
   ogImageAlt="Threefold Bakery interior mural in Breckenridge, Colorado, by Anna Hileman"
-  preloadImage="/images/Threefold-Bakery-Interior-Mural-by-Anna-Hileman-Courtesy1600.jpeg"
+  preloadImage={heroImg.src}
 >
   <section class="border-b border-black/5">
     <div class="max-w-7xl mx-auto px-6 lg:px-10 pt-16 pb-24 lg:pt-24 lg:pb-32">
       <div class="grid lg:grid-cols-12 gap-10 lg:gap-14 xl:gap-16 items-start lg:items-center">
         <div class="lg:col-span-7 min-w-0 flex justify-center lg:justify-start">
-          <img
-            src="/images/Threefold-Bakery-Interior-Mural-by-Anna-Hileman-Courtesy1600.jpeg"
+          <Image
+            src={heroImg}
             alt="Restaurant interior mural by Colorado artist Anna Hileman"
             width={1600}
-            height={1067}
             fetchpriority="high"
             loading="eager"
             decoding="async"
@@ -451,11 +457,10 @@ const faqSchema = {
     <div class="max-w-6xl mx-auto px-6 lg:px-10 py-20 lg:py-24">
       <div class="grid grid-cols-1 lg:grid-cols-2 gap-10 lg:gap-14 items-center">
         <div class="max-w-[320px] md:max-w-[380px] lg:max-w-[420px] mx-auto lg:mx-0">
-          <img
-            src="/images/website-anna.jpg"
+          <Image
+            src={annaImg}
             alt="Anna Hileman in her Colorado studio"
-            width={479}
-            height={720}
+            width={600}
             loading="lazy"
             decoding="async"
             class="w-full rounded-lg object-cover aspect-[3/4] shadow-lg"

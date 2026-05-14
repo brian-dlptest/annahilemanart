@@ -1,9 +1,9 @@
 ---
-/**
- * Featured image that opens the site lightbox (same URL as displayed).
- */
+import { Image, getImage } from 'astro:assets';
+import { resolveImage } from '../lib/images';
+
 interface Props {
-  /** Filename under public/images/ */
+  /** Filename under src/assets/images/ */
   src: string;
   alt: string;
   /** Tailwind classes for the <img> — include object-cover or object-contain, aspect, max-h, etc. */
@@ -25,23 +25,26 @@ const {
   width,
   height,
 } = Astro.props;
-const href = `/images/${src}`;
+
+const imageMeta = await resolveImage(src);
+const displayWidth = width ?? Math.min(imageMeta.width, 1200);
+const full = await getImage({ src: imageMeta, width: Math.min(imageMeta.width, 1800) });
 ---
 <button
   type="button"
   class="block w-full cursor-zoom-in border-0 bg-transparent p-0 text-left focus:outline-none focus-visible:ring-2 focus-visible:ring-[color:var(--color-accent)] focus-visible:ring-offset-2 focus-visible:ring-offset-[color:var(--color-paper)] rounded-lg"
-  data-lightbox={href}
+  data-lightbox={full.src}
   data-lightbox-alt={alt}
   aria-label={`View larger: ${alt}`}
 >
-  <img
-    src={href}
+  <Image
+    src={imageMeta}
     alt=""
-    width={width}
+    width={displayWidth}
     height={height}
-    fetchpriority={fetchpriority}
     loading={loading}
     decoding={decoding}
     class:list={['pointer-events-none w-full rounded-lg shadow-xl', imgClass]}
+    {...(fetchpriority ? { fetchpriority } : {})}
   />
 </button>

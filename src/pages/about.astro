@@ -1,5 +1,8 @@
 ---
 import Layout from '../layouts/Layout.astro';
+import { Image } from 'astro:assets';
+import { getImage } from 'astro:assets';
+import { resolveImage } from '../lib/images';
 import JsonLd from '../components/JsonLd.astro';
 import { buildBreadcrumbs } from '../data/schemas';
 
@@ -45,7 +48,7 @@ const bodyOfWork = [
   {
     title: 'Pet Portraits',
     tagline: 'Paintings of the ones you love.',
-    image: 'IMG_0342.jpg',
+    image: 'Pet-Portrait-Featured-Acrylic-on-Aluminum.jpg',
     href: '/pet-portraits',
   },
   {
@@ -55,24 +58,36 @@ const bodyOfWork = [
     href: '/garden-gems',
   },
 ];
+
+const annaHeroImg = await resolveImage('website-anna.jpg');
+const studioImg = await resolveImage('Studio.jpg');
+const magLogoImg = await resolveImage('5280-Mag-Logo.png');
+const threefoldPressImg = await resolveImage('Threefold-Bakery-Interior-Mural-by-Anna-Hileman-Courtesy1600.jpeg');
+const ogImg = await getImage({ src: await resolveImage('Anna-Hileman-Artist-Colorado.png'), width: 1200, format: 'jpeg' });
+
+const resolvedBodyOfWork = await Promise.all(
+  bodyOfWork.map(async (w) => ({
+    ...w,
+    resolvedImg: await resolveImage(w.image),
+  })),
+);
 ---
 <Layout
   title="About Anna Hileman — Colorado Muralist & Commercial Artist"
   description="Meet Anna Hileman, a Colorado-based artist creating hand-painted murals, pet portraits, and commercial artwork for restaurants, schools, and collectors across Denver and the Front Range."
-  ogImage="/images/Anna-Hileman-Artist-Colorado.png"
+  ogImage={ogImg.src}
   ogImageAlt="Portrait of Colorado artist Anna Hileman"
-  preloadImage="/images/website-anna.jpg"
+  preloadImage={annaHeroImg.src}
 >
   <!-- Editorial hero: large portrait photo + name block -->
   <section class="border-b border-black/5">
     <div class="max-w-7xl mx-auto px-6 lg:px-10 py-20 lg:py-28">
       <div class="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-16 items-center">
         <div class="lg:col-span-6 min-w-0">
-          <img
-            src="/images/website-anna.jpg"
+          <Image
+            src={annaHeroImg}
             alt="Anna Hileman in her Colorado studio"
-            width={479}
-            height={720}
+            width={1024}
             fetchpriority="high"
             loading="eager"
             decoding="async"
@@ -151,11 +166,10 @@ const bodyOfWork = [
         </div>
         <div class="lg:col-span-5">
           <figure>
-            <img
-              src="/images/Studio.jpg"
+            <Image
+              src={studioImg}
               alt="Anna Hileman's studio, with works in progress"
               width={1024}
-              height={768}
               loading="lazy"
               decoding="async"
               class="w-full rounded-lg shadow-xl object-cover aspect-[4/3]"
@@ -181,14 +195,15 @@ const bodyOfWork = [
       </p>
     </div>
     <div class="grid grid-cols-1 md:grid-cols-2 gap-6 lg:gap-10">
-      {bodyOfWork.map((w) => (
+      {resolvedBodyOfWork.map((w) => (
         <a
           href={w.href}
           class="group relative block overflow-hidden rounded-lg aspect-[4/3] bg-black/5"
         >
-          <img
-            src={`/images/${w.image}`}
+          <Image
+            src={w.resolvedImg}
             alt=""
+            width={1024}
             loading="lazy"
             decoding="async"
             class="absolute inset-0 h-full w-full object-cover transition-transform duration-500 group-hover:scale-105"
@@ -221,22 +236,20 @@ const bodyOfWork = [
 
       <article class="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-14 items-center">
         <div class="lg:col-span-7">
-          <img
-            src="/images/Threefold-Bakery-Interior-Mural-by-Anna-Hileman-Courtesy1600.jpeg"
+          <Image
+            src={threefoldPressImg}
             alt="Threefold Bakery interior mural in Breckenridge, Colorado, by Anna Hileman"
             width={1024}
-            height={577}
             loading="lazy"
             decoding="async"
             class="w-full rounded-lg shadow-xl object-cover aspect-[16/9]"
           />
         </div>
         <div class="lg:col-span-5">
-          <img
-            src="/images/5280-Mag-Logo.png"
+          <Image
+            src={magLogoImg}
             alt="5280 Magazine"
             width={200}
-            height={80}
             loading="lazy"
             class="h-10 w-auto mb-6"
           />
