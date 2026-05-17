@@ -31,14 +31,14 @@ const linkClass = (href: string) =>
     : 'text-[color:var(--color-ink)]/60 hover:text-[color:var(--color-ink)] border-b-2 border-transparent pb-0.5';
 ---
 <header class="sticky top-0 z-40 bg-[color:var(--color-paper)]/90 backdrop-blur border-b border-black/5 [will-change:backdrop-filter] [transform:translateZ(0)]">
-  <div class="max-w-7xl mx-auto px-6 lg:px-10 flex items-center justify-between h-20">
+  <div class="max-w-7xl mx-auto px-6 lg:px-10 flex items-center justify-between h-24">
     <a href="/" class="flex items-baseline gap-2">
-      <span class="font-display text-2xl tracking-tight">Anna Hileman</span>
-      <span class="text-xs uppercase tracking-[0.2em] text-[color:var(--color-accent)]">Art</span>
+      <span class="font-display text-3xl tracking-tight">Anna Hileman</span>
+      <span class="text-sm uppercase tracking-[0.2em] text-[color:var(--color-accent)]">Art</span>
     </a>
     <nav class="hidden lg:flex items-center gap-5 xl:gap-7 flex-wrap justify-end">
       {links.map((link) => (
-        <a href={link.href} class={`text-sm tracking-wide transition-colors ${linkClass(link.href)}`}>
+        <a href={link.href} class={`text-base tracking-wide transition-colors ${linkClass(link.href)}`}>
           {link.label}
         </a>
       ))}
@@ -53,7 +53,7 @@ const linkClass = (href: string) =>
         {links.map((link) => (
           <a
             href={link.href}
-            class={`block px-4 py-2 text-sm hover:bg-black/5 ${activeHref === link.href ? 'bg-black/[0.08] text-[color:var(--color-ink)] font-medium' : 'text-[color:var(--color-ink)]/80'}`}
+            class={`block px-4 py-2 text-base hover:bg-black/5 ${activeHref === link.href ? 'bg-black/[0.08] text-[color:var(--color-ink)] font-medium' : 'text-[color:var(--color-ink)]/80'}`}
           >
             {link.label}
           </a>
