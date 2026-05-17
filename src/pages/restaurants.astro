@@ -138,15 +138,7 @@ const ogImg = await getImage({ src: threefoldHeroImg, width: 1200, format: 'jpeg
 
   <section class="bg-[color:var(--color-accent-soft)]/40 border-y border-black/5">
     <div class="max-w-5xl mx-auto px-6 lg:px-10 py-20 lg:py-24">
-      <div class="text-center max-w-3xl mx-auto">
-        <div class="text-xs uppercase tracking-[0.3em] text-[color:var(--color-gold)]">From the Artist</div>
-        <p class="mt-6 font-display text-2xl md:text-3xl leading-snug text-[color:var(--color-ink)]">
-          Restaurant artwork should feel like part of the service itself. It should guide energy, support the brand story,
-          and become part of what guests remember long after the meal.
-        </p>
-      </div>
-
-      <div class="mt-16 lg:mt-20 grid grid-cols-1 md:grid-cols-3 gap-10 md:gap-12">
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-10 md:gap-12">
         {processSteps.map((step) => (
           <div>
             <div class="text-xs uppercase tracking-[0.25em] text-[color:var(--color-gold)]">{step.eyebrow}</div>
