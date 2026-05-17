@@ -13,6 +13,7 @@ interface Props {
   /** Filename under src/assets/images/ */
   image: string;
   imageAlt: string;
+  imagePositionClass?: string;
   /** Intrinsic width of the source image, in px, for CLS prevention. */
   imageWidth: number;
   /** Intrinsic height of the source image, in px. */
@@ -28,6 +29,7 @@ const {
   ctaLabel,
   image,
   imageAlt,
+  imagePositionClass = 'object-[center_30%]',
   imageWidth,
   imageHeight,
 } = Astro.props;
@@ -43,7 +45,7 @@ const imageMeta = await resolveImage(image);
     height={imageHeight}
     loading="eager"
     decoding="async"
-    class="absolute inset-0 h-full w-full object-cover object-[center_30%]"
+    class:list={['absolute inset-0 h-full w-full object-cover', imagePositionClass]}
     fetchpriority="high"
   />
 </section>
