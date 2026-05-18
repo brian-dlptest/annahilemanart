@@ -9,7 +9,7 @@ import RockyMountainMuralSection from '../components/RockyMountainMuralSection.a
 import JsonLd from '../components/JsonLd.astro';
 import { buildServiceSchema, buildBreadcrumbs } from '../data/schemas';
 
-const diaHeroImg = await resolveImage('Dual-Immersion-Academy-School-Mural-1.jpg');
+const diaHeroImg = await resolveImage('school-murals-about-card.jpg');
 const schoolMuralsServiceSchema = buildServiceSchema(Astro.site, {
   name: 'Custom School Murals',
   slug: 'school-murals',
@@ -178,11 +178,11 @@ const ogImg = await getImage({ src: diaHeroImg, width: 1200, format: 'jpeg' });
     subhead="Lasting visual stories that remind students they are seen, supported, and capable of great things."
     ctaHref="/contact"
     ctaLabel="Commission a Mural"
-    image="Dual-Immersion-Academy-School-Mural-8.jpg"
-    imageAlt="Dual Immersion Academy exterior brick mural featuring sunflowers, butterflies, and bobcats"
-    imagePositionClass="object-[center_65%]"
-    imageWidth={2000}
-    imageHeight={1333}
+    image="school-murals-about-card.jpg"
+    imageAlt="Dual Immersion Academy exterior brick mural featuring sunflowers, daisies, bobcats, and butterflies"
+    imagePositionClass="object-[center_60%]"
+    imageWidth={1650}
+    imageHeight={2200}
   />
 
   <section class="bg-[color:var(--color-accent-soft)]/40 border-y border-black/5">
