@@ -10,11 +10,12 @@ interface Props {
   alt?: string;
   /** Optional visible lightbox caption. Pass an empty string to hide the caption while keeping alt text. */
   caption?: string;
+  hideCaption?: boolean;
   /** Tailwind aspect class, e.g. aspect-square, aspect-[4/3] */
   aspectClass?: string;
 }
 
-const { src = '', imageUrl, alt = '', caption, aspectClass = 'aspect-square' } = Astro.props;
+const { src = '', imageUrl, alt = '', caption, hideCaption = false, aspectClass = 'aspect-square' } = Astro.props;
 
 const imageMeta = !imageUrl && src ? await resolveImage(src) : null;
 const thumbHref = imageUrl ?? (imageMeta ? (await getImage({ src: imageMeta, width: Math.min(imageMeta.width, 1800) })).src : `/images/${src}`);
@@ -26,6 +27,7 @@ const thumbHref = imageUrl ?? (imageMeta ? (await getImage({ src: imageMeta, wid
     data-lightbox={thumbHref}
     data-lightbox-alt={alt}
     data-lightbox-caption={caption}
+    data-lightbox-caption-hidden={hideCaption ? 'true' : undefined}
     aria-label={alt ? `View larger: ${alt}` : 'View larger image'}
   >
     {imageMeta ? (

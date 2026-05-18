@@ -50,7 +50,9 @@
         if (!src || !imgEl) return;
         e.preventDefault();
         var altText = trigger.getAttribute('data-lightbox-alt') || '';
-        var captionText = trigger.hasAttribute('data-lightbox-caption')
+        var captionText = trigger.getAttribute('data-lightbox-caption-hidden') === 'true'
+          ? ''
+          : trigger.hasAttribute('data-lightbox-caption')
           ? (trigger.getAttribute('data-lightbox-caption') || '')
           : altText;
         imgEl.src = src;
