@@ -26,7 +26,7 @@ const gems = [
   { src: 'Cali-Fig-24x36-1.jpg', alt: 'Cali Fig - 24" x 36"' },
   { src: 'Drippy-Fig-24x36-1.jpg', alt: 'Drippy Fig - 24" x 36"' },
   { src: 'Drippy-Fig-Installed-24x36-1.jpg', alt: 'Drippy Fig -' },
-  { src: 'Iris-Fig-Mock-Up.jpg', alt: 'Iris Gem - 36" x 72"' },
+  { src: 'garden-gems-about-card.jpg', alt: 'Iris Gem - 36" x 72"', ratio: 'wide' },
   { src: 'Iris-Gem-30x72-1.jpg', alt: 'Iris Gem Detail' },
   { src: 'Iris-Gem-Detail-1.jpg', alt: 'Iris Gem detail — brush texture and layered color' },
   { src: 'Iris-Gem-Detail-2.jpg', alt: 'Iris Gem Detail' },
@@ -138,7 +138,7 @@ const ogImg = await getImage({ src: heroImg, width: 1200, format: 'jpeg' });
     <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 lg:gap-6">
       {gems.map((g) => (
         <figure class="group bg-[color:var(--color-accent-soft)]/15 border border-black/5 rounded-lg p-3">
-          <ArtImage src={g.src} alt={g.alt} ratio="portrait" />
+          <ArtImage src={g.src} alt={g.alt} ratio={g.ratio ?? 'portrait'} />
           <figcaption class="pt-3 px-1 text-xs uppercase tracking-[0.18em] text-black/60 group-hover:text-[color:var(--color-ink)] transition-colors">
             {g.alt}
           </figcaption>
