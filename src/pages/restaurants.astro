@@ -7,14 +7,14 @@ import LightboxLargeImage from '../components/LightboxLargeImage.astro';
 import JsonLd from '../components/JsonLd.astro';
 import { buildServiceSchema, buildBreadcrumbs } from '../data/schemas';
 
-const threefoldHeroImg = await resolveImage('Threefold-Bakery-Interior-Mural-by-Anna-Hileman-Courtesy1600.jpeg');
+const restaurantHeroImg = await resolveImage('IMG_9457.jpg');
 const restaurantsServiceSchema = buildServiceSchema(Astro.site, {
   name: 'Custom Restaurant Artwork & Murals',
   slug: 'restaurants',
   description:
     'Hand-painted murals and custom artwork for Denver and Colorado restaurants — featured at Threefold Bakery, Radicato, Quality Italian, and more.',
   serviceType: 'Commercial mural commissions',
-  image: threefoldHeroImg.src,
+  image: restaurantHeroImg.src,
 });
 const restaurantsBreadcrumbs = buildBreadcrumbs(Astro.site, [
   { name: 'Home', slug: '' },
@@ -89,15 +89,15 @@ const qiThumbs = [
   '2016-12-01-23.09.48.jpg',
 ] as const;
 
-const ogImg = await getImage({ src: threefoldHeroImg, width: 1200, format: 'jpeg' });
+const ogImg = await getImage({ src: restaurantHeroImg, width: 1200, format: 'jpeg' });
 ---
 
 <Layout
   title="Custom Restaurant Artwork & Murals | Anna Hileman Art"
   description="Hand-painted murals and custom artwork for Denver and Colorado restaurants by artist Anna Hileman. Featured installations at Threefold Bakery, Radicato, Quality Italian, and more."
   ogImage={ogImg.src}
-  ogImageAlt="Threefold Bakery interior mural hand-painted by Anna Hileman"
-  preloadImage={threefoldHeroImg.src}
+  ogImageAlt="Radicato restaurant mural hand-painted by Anna Hileman"
+  preloadImage={restaurantHeroImg.src}
 >
   <section class="border-b border-black/5">
     <div class="max-w-7xl mx-auto px-6 lg:px-10 py-16 lg:py-24">
@@ -123,8 +123,8 @@ const ogImg = await getImage({ src: threefoldHeroImg, width: 1200, format: 'jpeg
         </div>
         <div class="order-1 lg:order-2 lg:col-span-7 min-w-0">
           <LightboxLargeImage
-            src="Threefold-Bakery-Interior-Mural-by-Anna-Hileman-Courtesy1600.jpeg"
-            alt="Threefold Bakery interior mural by Anna Hileman"
+            src="IMG_9457.jpg"
+            alt="Radicato restaurant mural above a dining booth by Anna Hileman"
             width={1600}
             height={2000}
             fetchpriority="high"
