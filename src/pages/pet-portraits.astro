@@ -7,7 +7,7 @@ import LightboxThumb from '../components/LightboxThumb.astro';
 import JsonLd from '../components/JsonLd.astro';
 import { buildServiceSchema, buildBreadcrumbs } from '../data/schemas';
 
-const portraitOgSrcImg = await resolveImage('Pet-Portraiture-in-Oils.jpg');
+const portraitOgSrcImg = await resolveImage('portraits/zach-white-lab.png');
 const portraitsServiceSchema = buildServiceSchema(Astro.site, {
   name: 'Custom Pet Portraits',
   slug: 'pet-portraits',
@@ -61,7 +61,7 @@ const oilPrices = [
   { size: '36" × 36"', price: '$1,350' },
 ];
 
-const heroImg = await resolveImage('Pet-Portrait-Featured-Acrylic-on-Aluminum.jpg');
+const heroImg = portraitOgSrcImg;
 const ogImg = await getImage({ src: portraitOgSrcImg, width: 1200, format: 'jpeg' });
 ---
 <Layout
@@ -69,7 +69,7 @@ const ogImg = await getImage({ src: portraitOgSrcImg, width: 1200, format: 'jpeg
   description="Commissioned pet portraits in acrylic and oil by Colorado artist Anna Hileman. Heirloom hand-painted portraits from your photos — dogs, cats, horses, and beyond."
   ogImage={ogImg.src}
   ogImageAlt="Hand-painted pet portrait in oil by Anna Hileman"
-  preloadImage={portraitOgSrcImg.src}
+  preloadImage={heroImg.src}
 >
   <!-- Asymmetric hero: featured portrait on left, text on right -->
   <section class="border-b border-black/5">
@@ -78,7 +78,7 @@ const ogImg = await getImage({ src: portraitOgSrcImg, width: 1200, format: 'jpeg
         <div class="lg:col-span-7 min-w-0">
           <Image
             src={heroImg}
-            alt="Featured acrylic-on-aluminum pet portrait by Anna Hileman"
+            alt="Oil portrait of Zach, a white Labrador in cool grey light"
             width={1024}
             fetchpriority="high"
             loading="eager"
