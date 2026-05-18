@@ -50,10 +50,13 @@
         if (!src || !imgEl) return;
         e.preventDefault();
         var altText = trigger.getAttribute('data-lightbox-alt') || '';
+        var captionText = trigger.hasAttribute('data-lightbox-caption')
+          ? (trigger.getAttribute('data-lightbox-caption') || '')
+          : altText;
         imgEl.src = src;
         imgEl.alt = altText;
         if (captionEl) {
-          captionEl.textContent = altText;
+          captionEl.textContent = captionText;
         }
         if (typeof dialog.showModal === 'function') {
           dialog.showModal();
