@@ -6,7 +6,7 @@ const formspreeFormId = (import.meta.env.PUBLIC_FORMSPREE_FORM_ID || '').trim() 
 const formAction = `https://formspree.io/f/${formspreeFormId}`;
 
 const pageDescription =
-  'Contact Anna Hileman for commissions, studio questions, or inquiries—email, Instagram, or the on-site message form.';
+  'Contact Anna Hileman for commissions, studio questions, or inquiries through the on-site message form.';
 
 const introLead =
   'Use the form to reach out about a commission, a question, or just to say hello. Please be as descriptive as possible.';
@@ -15,13 +15,13 @@ const faqs = [
   {
     q: 'Do you take commissions?',
     a:
-      'Yes, I am currently taking commissions. Email annahilemanart@gmail.com or send a message using the form on this page.',
+      'Yes, I am currently taking commissions. Send a message using the form on this page.',
   },
   { q: 'How can I be the first to know about new paintings?', a: 'Follow @annahilemanart on Instagram for the fastest updates. A newsletter sign-up may be added here; for now Instagram is the primary channel for new work.' },
   { q: 'What medium do you use?', a: 'I work across many different mediums. It varies with the subject—including acrylic and oil, gold leaf, and custom 3-D art for commercial spaces. Most commissioned work is acrylic or oil on aluminum or linen canvas.' },
   { q: 'How can I purchase a painting or print?', a: 'Available work is listed on this site. Sold pieces are marked below each image. Prints are available in limited supply when noted. Each painting is an original and will not be duplicated; contact me about a commission in a similar style if a piece has sold.' },
   { q: 'What payment methods do you accept?', a: 'Cash, check, PayPal, and Venmo are accepted. There is a 10% upcharge for PayPal/Venmo to cover processing fees. A 50% deposit is typically required to begin a commissioned painting, with the remainder due upon completion.' },
-  { q: 'What is your return or exchange policy?', a: 'All paintings, prints, and products are final sale. Please email annahilemanart@gmail.com with any questions about a purchase.' },
+  { q: 'What is your return or exchange policy?', a: 'All paintings, prints, and products are final sale. Please use the contact form with any questions about a purchase.' },
 ];
 ---
 <Layout title="Contact | Anna Hileman Art" description={pageDescription}>
@@ -34,10 +34,6 @@ const faqs = [
           {introLead}
         </p>
         <div class="space-y-4 text-sm">
-          <div>
-            <div class="text-xs uppercase tracking-wider text-black/40 mb-1">Email</div>
-            <a href="mailto:annahilemanart@gmail.com" class="hover:underline">annahilemanart@gmail.com</a>
-          </div>
           <div>
             <div class="text-xs uppercase tracking-wider text-black/40 mb-1">Instagram</div>
             <a href="https://www.instagram.com/annahilemanart/" class="hover:underline" target="_blank" rel="noopener">@annahilemanart</a>
