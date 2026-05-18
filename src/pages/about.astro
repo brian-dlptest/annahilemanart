@@ -59,11 +59,11 @@ const bodyOfWork = [
   },
 ];
 
-const annaHeroImg = await resolveImage('website-anna.jpg');
+const annaHeroImg = await resolveImage('anna-headshot-2026.jpg');
 const studioImg = await resolveImage('Studio.jpg');
 const magLogoImg = await resolveImage('5280-Mag-Logo.png');
 const threefoldPressImg = await resolveImage('Threefold-Bakery-Interior-Mural-by-Anna-Hileman-Courtesy1600.jpeg');
-const ogImg = await getImage({ src: await resolveImage('Anna-Hileman-Artist-Colorado.png'), width: 1200, format: 'jpeg' });
+const ogImg = await getImage({ src: annaHeroImg, width: 1200, format: 'jpeg' });
 
 const resolvedBodyOfWork = await Promise.all(
   bodyOfWork.map(async (w) => ({
@@ -91,7 +91,7 @@ const resolvedBodyOfWork = await Promise.all(
             fetchpriority="high"
             loading="eager"
             decoding="async"
-            class="w-full rounded-lg shadow-2xl object-cover aspect-[3/4]"
+            class="w-full h-auto rounded-lg shadow-2xl"
           />
         </div>
         <div class="lg:col-span-6">
