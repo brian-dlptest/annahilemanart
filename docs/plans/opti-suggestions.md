@@ -19,7 +19,7 @@ Running list of SEO, performance, and code-quality improvements identified for t
   ```
 
 - [ ] **Add Schema.org / JSON-LD structured data** (biggest rich-result upside)
-  - `Person` + `LocalBusiness` / `ProfessionalService` on home + about (name, email, Colorado city, `sameAs` Instagram/Facebook, `areaServed`, `knowsAbout`).
+  - `Person` + `LocalBusiness` / `ProfessionalService` on home + about (name, Colorado city, `sameAs` Instagram/Facebook, `areaServed`, `knowsAbout`).
   - `VisualArtwork` on gallery pages (murals, garden-gems, portraits, restaurants).
   - `Service` / `Offer` with pricing for pet portraits (sizes/prices from `src/pages/portraits.astro:44-59`).
   - `FAQPage` for contact page (`src/pages/contact.astro:14-25`).
