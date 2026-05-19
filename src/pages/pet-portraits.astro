@@ -160,7 +160,7 @@ const ogImg = await getImage({ src: portraitOgSrcImg, width: 1200, format: 'jpeg
     </div>
     <div class="grid grid-cols-2 md:grid-cols-3 gap-4 lg:gap-6">
       {galleryThumbs.map((t) => (
-        <LightboxThumb src={t.src} alt={t.alt} />
+        <LightboxThumb src={t.src} alt={t.alt} hideCaption />
       ))}
     </div>
   </section>
