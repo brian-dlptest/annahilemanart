@@ -76,17 +76,17 @@ const articleBreadcrumbs = buildBreadcrumbs(Astro.site, [
       <div class="text-xs uppercase tracking-[0.2em] text-black/45">
         {post.data.category} · {dateFmt.format(post.data.publishDate)}
       </div>
-      <h1 class="mt-4 font-display text-4xl md:text-5xl leading-[1.08]">{post.data.title}</h1>
-      <p class="mt-6 text-lg text-black/70 leading-relaxed">{post.data.excerpt}</p>
       {post.data.featuredImage && (
         <img
           src={post.data.featuredImage}
           alt={post.data.featuredImageAlt ?? post.data.title}
-          class="mt-8 w-full rounded-lg object-cover border border-black/5"
+          class="mt-6 w-full rounded-lg object-cover border border-black/5"
           loading="eager"
           decoding="async"
         />
       )}
+      <h1 class="mt-8 font-display text-4xl md:text-5xl leading-[1.08]">{post.data.title}</h1>
+      <p class="mt-6 text-lg text-black/70 leading-relaxed">{post.data.excerpt}</p>
       {post.data.tags.length > 0 && (
         <ul class="mt-6 flex flex-wrap gap-2" aria-label="Tags">
           {post.data.tags.map((tag) => (
