@@ -48,7 +48,7 @@ const { pageNumber, totalPages, posts } = Astro.props;
             {post.data.category} · {formatNewsDate(post.data.publishDate)}
           </div>
           {post.data.featuredImage && (
-            <a href={`/news/${post.slug}/`} class="block mb-5">
+            <a href={`/news/${post.id}/`} class="block mb-5">
               <img
                 src={post.data.featuredImage}
                 alt={post.data.featuredImageAlt ?? post.data.title}
@@ -59,13 +59,13 @@ const { pageNumber, totalPages, posts } = Astro.props;
             </a>
           )}
           <h2 class="font-display text-3xl mb-4">
-            <a href={`/news/${post.slug}/`} class="hover:text-[color:var(--color-accent)] transition-colors">
+            <a href={`/news/${post.id}/`} class="hover:text-[color:var(--color-accent)] transition-colors">
               {post.data.title}
             </a>
           </h2>
           <p class="text-black/70 leading-relaxed">{post.data.excerpt}</p>
           <a
-            href={`/news/${post.slug}/`}
+            href={`/news/${post.id}/`}
             class="mt-5 inline-flex items-center gap-2 text-sm uppercase tracking-wider border-b border-[color:var(--color-ink)] pb-0.5 hover:text-[color:var(--color-accent)] hover:border-[color:var(--color-accent)]"
           >
             Read post

@@ -8,7 +8,7 @@ import { buildBreadcrumbs } from '../../data/schemas';
 export async function getStaticPaths() {
   const posts = await getCollection('news', ({ data }) => !data.draft);
   return posts.map((post) => ({
-    params: { slug: post.slug },
+    params: { slug: post.id },
     props: { post },
   }));
 }
@@ -26,7 +26,7 @@ const pageTitle = post.data.seoTitle ?? `${post.data.title} | News & Updates`;
 const pageDescription = post.data.seoDescription ?? post.data.excerpt;
 const socialImage = post.data.featuredImage ? toAbsoluteSiteUrl(Astro.site, post.data.featuredImage) : undefined;
 const siteOrigin = Astro.site ? Astro.site.origin : 'https://annahileman.com';
-const canonicalUrl = Astro.site ? new URL(Astro.url.pathname, Astro.site).href : `${siteOrigin}/news/${post.slug}/`;
+const canonicalUrl = Astro.site ? new URL(Astro.url.pathname, Astro.site).href : `${siteOrigin}/news/${post.id}/`;
 
 const articleSchema = {
   '@context': 'https://schema.org',
@@ -52,7 +52,7 @@ const articleSchema = {
 const articleBreadcrumbs = buildBreadcrumbs(Astro.site, [
   { name: 'Home', slug: '' },
   { name: 'News & Updates', slug: 'news' },
-  { name: post.data.title, slug: `news/${post.slug}` },
+  { name: post.data.title, slug: `news/${post.id}` },
 ]);
 ---
 
