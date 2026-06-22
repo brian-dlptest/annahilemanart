@@ -12,3 +12,9 @@ updates:
         update-types:
           - "minor"
           - "patch"
+    ignore:
+      # @tailwindcss/vite 4.3.x breaks the build with Astro 6's rolldown-based
+      # Vite ("Missing field `tsconfigPaths`"). Stay on 4.2.x until that is
+      # resolved upstream.
+      - dependency-name: "@tailwindcss/vite"
+        versions: [">=4.3.0"]
