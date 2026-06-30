@@ -9,7 +9,6 @@ updates:
     open-pull-requests-limit: 10
     ignore:
       - dependency-name: "@tailwindcss/vite"
-        versions: [">= 4.3.0"]
       - dependency-name: "tailwindcss"
         versions: [">= 4.3.0"]
     groups:
