@@ -13,7 +13,7 @@
     "reviews:fetch": "node scripts/fetch-google-reviews.mjs"
   },
   "dependencies": {
-    "@astrojs/rss": "^4.0.18",
+    "@astrojs/rss": "^4.0.19",
     "@astrojs/sitemap": "^3.7.3",
     "@formspree/ajax": "^1.1.5",
     "@tailwindcss/vite": "4.2.2",
