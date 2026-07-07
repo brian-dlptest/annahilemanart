@@ -11,6 +11,10 @@ updates:
       - dependency-name: "@tailwindcss/vite"
       - dependency-name: "tailwindcss"
         versions: [">= 4.3.0"]
+      # Astro majors need manual migration; PRs for them fail the Pages
+      # preview build and spam failure emails. Remove when ready for Astro 7.
+      - dependency-name: "astro"
+        update-types: ["version-update:semver-major"]
     groups:
       minor-and-patch:
         update-types:
