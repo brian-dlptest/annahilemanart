@@ -135,11 +135,13 @@ const faqs = [
   </section>
 
   <script>
-    import { initForm } from '@formspree/ajax';
+    // Import the ESM build directly: the package's `browser` field points to
+    // a global (non-module) build, which Vite 8 would otherwise resolve.
+    import { initForm } from '@formspree/ajax/dist/index.mjs';
 
     const form = document.getElementById('contact-form');
     const id = form?.dataset.formspreeId;
-    if (form && id) {
+    if (form instanceof HTMLFormElement && id) {
       initForm({
         formElement: form,
         formId: id,

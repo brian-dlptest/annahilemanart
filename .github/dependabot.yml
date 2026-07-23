@@ -8,12 +8,13 @@ updates:
     target-branch: "main"
     open-pull-requests-limit: 10
     ignore:
-      - dependency-name: "@tailwindcss/vite"
-      - dependency-name: "tailwindcss"
-        versions: [">= 4.3.0"]
-      # Astro majors need manual migration; PRs for them fail the Pages
-      # preview build and spam failure emails. Remove when ready for Astro 7.
+      # Majors need manual migration; PRs for them fail the Pages preview
+      # build and spam failure emails. Handle majors deliberately instead.
       - dependency-name: "astro"
+        update-types: ["version-update:semver-major"]
+      # @astrojs/check 0.9.x peer-depends on typescript ^5 || ^6; TS 7 PRs
+      # can't install. Remove when @astrojs/check supports TS 7.
+      - dependency-name: "typescript"
         update-types: ["version-update:semver-major"]
     groups:
       minor-and-patch:
