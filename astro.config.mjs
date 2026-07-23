@@ -26,6 +26,9 @@ const useProductionSitemap = isPrimaryProductionHostname(hostname);
 
 export default defineConfig({
   site: resolvedSite,
+  // Astro 7 changed the default to 'jsx', which strips whitespace between
+  // inline elements; keep the Astro 6 behavior so rendering is unchanged.
+  compressHTML: true,
   server: {
     port: 4322,
   },
