@@ -84,7 +84,7 @@ const diaThumbs = [
 
 const whatsIncludedItems = [
   {
-    text: "A collaborative design process tailored to your school's values and culture",
+    text: 'A collaborative design process tailored to your space, values, and culture',
     icon: 'message',
   },
   {
@@ -92,7 +92,7 @@ const whatsIncludedItems = [
     icon: 'mockup',
   },
   {
-    text: 'Imagery that reflects your mascot, community, and student experience',
+    text: 'Imagery that reflects your identity, community, and sense of place',
     icon: 'mascot',
   },
   {
@@ -100,7 +100,7 @@ const whatsIncludedItems = [
     icon: 'shield',
   },
   {
-    text: 'A custom poem written to complement the mural',
+    text: 'Optional original writing or storytelling elements to complement the mural',
     icon: 'feather',
   },
   {
@@ -165,17 +165,17 @@ const mesaThumbs = [
 const ogImg = await getImage({ src: diaHeroImg, width: 1200, format: 'jpeg' });
 ---
 <Layout
-  title="Custom School Murals in Colorado | Anna Hileman Art"
+  title="Custom Murals in Colorado | Anna Hileman Art"
   description="Custom school murals across Colorado by artist Anna Hileman. Collaborative design and hand-painted installations for K-12 campuses — from concept to classroom-ready finish."
   ogImage={ogImg.src}
   ogImageAlt="Dual Immersion Academy school mural hand-painted by Anna Hileman"
   preloadImage={diaHeroImg.src}
 >
   <MuralHero
-    eyebrow="School Murals"
+    eyebrow="Murals"
     title="These walls tell"
     titleSuffix="a story"
-    subhead="Lasting visual stories that remind students they are seen, supported, and capable of great things."
+    subhead="Lasting visual stories that connect people to a place, a purpose, and the community around them."
     ctaHref="/contact"
     ctaLabel="Commission a Mural"
     image="school-murals-dia-hero-cover.jpg"
@@ -192,21 +192,21 @@ const ogImg = await getImage({ src: diaHeroImg, width: 1200, format: 'jpeg' });
           <div class="text-xs uppercase tracking-[0.25em] text-[color:var(--color-gold)]">01 &middot; Listen</div>
           <h3 class="mt-3 font-display text-xl md:text-2xl">We start with a conversation.</h3>
           <p class="mt-3 text-sm text-black/70 leading-relaxed">
-            Every school has a story&mdash;its values, its mascot, the students who fill its halls. Before anything is sketched, I want to understand yours.
+            Every place has a story&mdash;its values, its people, and the feeling it wants to hold. Before anything is sketched, I want to understand yours.
           </p>
         </div>
         <div>
           <div class="text-xs uppercase tracking-[0.25em] text-[color:var(--color-gold)]">02 &middot; Design</div>
           <h3 class="mt-3 font-display text-xl md:text-2xl">I return with a full-color mockup.</h3>
           <p class="mt-3 text-sm text-black/70 leading-relaxed">
-            You&rsquo;ll see the design superimposed onto your actual space&mdash;mascot, imagery, and all&mdash;before a single brush touches the wall.
+            You&rsquo;ll see the design superimposed onto your actual space&mdash;imagery, palette, and scale&mdash;before a single brush touches the wall.
           </p>
         </div>
         <div>
           <div class="text-xs uppercase tracking-[0.25em] text-[color:var(--color-gold)]">03 &middot; Paint</div>
           <h3 class="mt-3 font-display text-xl md:text-2xl">I install it myself.</h3>
           <p class="mt-3 text-sm text-black/70 leading-relaxed">
-            Professional and insured, quietly out of the way of your school day. Each mural is finished with a clear protective coat and an original poem written to accompany the piece.
+            Professional and insured, with a clear plan for your schedule and space. Each mural is finished with a clear protective coat for lasting color and durability.
           </p>
         </div>
       </div>
@@ -214,7 +214,7 @@ const ogImg = await getImage({ src: diaHeroImg, width: 1200, format: 'jpeg' });
         <iframe
           class="block aspect-video w-full"
           src="https://www.youtube-nocookie.com/embed/9pqetnJ3CJ4?rel=0&mute=1&playsinline=1"
-          title="School mural process video"
+          title="Mural process video"
           loading="lazy"
           allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
           allowfullscreen></iframe>
@@ -226,7 +226,7 @@ const ogImg = await getImage({ src: diaHeroImg, width: 1200, format: 'jpeg' });
     <div class="max-w-5xl mx-auto px-6 lg:px-10 py-16 lg:py-24 text-center">
       <div class="w-14 h-px bg-[color:var(--color-gold)] mx-auto mb-4" aria-hidden="true"></div>
       <div class="text-sm uppercase tracking-[0.3em] text-[color:var(--color-gold)]">What&rsquo;s included</div>
-      <h2 class="mt-5 font-display text-3xl md:text-5xl text-[color:var(--color-ink)]">Every school mural includes</h2>
+      <h2 class="mt-5 font-display text-3xl md:text-5xl text-[color:var(--color-ink)]">Every mural project includes</h2>
       <ul class="mt-12 text-left grid grid-cols-1 sm:grid-cols-2 gap-x-14 gap-y-7 max-w-4xl mx-auto">
         {whatsIncludedItems.map((item) => (
           <li class="flex gap-4 text-base md:text-lg leading-relaxed text-black/85">
