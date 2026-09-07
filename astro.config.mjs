@@ -36,14 +36,14 @@ export default defineConfig({
     ...(useProductionSitemap
       ? [
           sitemap({
-            // /murals is a static redirect to /school-murals; omit from sitemap final URLs.
+            // /school-murals is a legacy redirect to /murals; omit it from sitemap final URLs.
             filter: (page) => {
               try {
                 let pathname = new URL(page).pathname;
                 if (pathname !== '/' && pathname.endsWith('/')) {
                   pathname = pathname.slice(0, -1);
                 }
-                return pathname !== '/murals';
+                return pathname !== '/school-murals';
               } catch {
                 return true;
               }
