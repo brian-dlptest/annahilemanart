@@ -10,17 +10,17 @@ import JsonLd from '../components/JsonLd.astro';
 import { buildServiceSchema, buildBreadcrumbs } from '../data/schemas';
 
 const diaHeroImg = await resolveImage('school-murals-dia-hero-cover.jpg');
-const schoolMuralsServiceSchema = buildServiceSchema(Astro.site, {
-  name: 'Custom School Murals',
-  slug: 'school-murals',
+const muralsServiceSchema = buildServiceSchema(Astro.site, {
+  name: 'Custom Murals',
+  slug: 'murals',
   description:
-    'Hand-painted school murals across Colorado — collaborative design and classroom-ready installation for K-12 campuses.',
+    'Hand-painted murals across Colorado for schools, businesses, and community spaces, from collaborative design through professional installation.',
   serviceType: 'Mural painting',
   image: diaHeroImg.src,
 });
-const schoolMuralsBreadcrumbs = buildBreadcrumbs(Astro.site, [
+const muralsBreadcrumbs = buildBreadcrumbs(Astro.site, [
   { name: 'Home', slug: '' },
-  { name: 'School Murals', slug: 'school-murals' },
+  { name: 'Murals', slug: 'murals' },
 ]);
 
 const diaSummary =
@@ -166,7 +166,7 @@ const ogImg = await getImage({ src: diaHeroImg, width: 1200, format: 'jpeg' });
 ---
 <Layout
   title="Custom Murals in Colorado | Anna Hileman Art"
-  description="Custom school murals across Colorado by artist Anna Hileman. Collaborative design and hand-painted installations for K-12 campuses — from concept to classroom-ready finish."
+  description="Custom murals across Colorado by artist Anna Hileman. Collaborative design and hand-painted installations for schools, businesses, and community spaces."
   ogImage={ogImg.src}
   ogImageAlt="Dual Immersion Academy school mural hand-painted by Anna Hileman"
   preloadImage={diaHeroImg.src}
@@ -351,6 +351,6 @@ const ogImg = await getImage({ src: diaHeroImg, width: 1200, format: 'jpeg' });
       </a>
     </div>
   </section>
-  <JsonLd json={schoolMuralsServiceSchema} />
-  <JsonLd json={schoolMuralsBreadcrumbs} />
+  <JsonLd json={muralsServiceSchema} />
+  <JsonLd json={muralsBreadcrumbs} />
 </Layout>
